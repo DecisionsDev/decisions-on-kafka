@@ -1,0 +1,15 @@
+language: java
+
+install:
+  - mvn install --settings travis-settings.xml -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+script:
+  # Do not deploy if default script command for Maven is failing
+  - mvn test --settings travis-settings.xml -B && mvn deploy --settings travis-settings.xml -DskipTests=true -B
+  - |-
+    curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Travis-API-Version: 3" -H "Authorization: token ${TRAVIS_ACCESS_TOKEN}" -d "{\"request\": {\"branch\":\"master\",\"message\":\"Triggered by upstream build of ${TRAVIS_REPO_SLUG} commit "`git rev-parse --short HEAD`"\"}}" https://travis.ibm.com/MYattara/ODM-DecisionServer-Kafka    
+    curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Travis-API-Version: 3" -H "Authorization: token ${TRAVIS_ACCESS_TOKEN}" -d "{\"request\": {\"branch\":\"master\",\"message\":\"Triggered by upstream build of ${TRAVIS_REPO_SLUG} commit "`git rev-parse --short HEAD`"\"}}" https://travis.ibm.com/api/repo/ibm-odm%2Fres-in-memory-persistence/requests    
+    curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Travis-API-Version: 3" -H "Authorization: token ${TRAVIS_ACCESS_TOKEN}" -d "{\"request\": {\"branch\":\"master\",\"message\":\"Triggered by upstream build of ${TRAVIS_REPO_SLUG} commit "`git rev-parse --short HEAD`"\"}}" https://travis.ibm.com/api/repo/ibm-odm%2Flambda-cada-bra/requests    
+
+cache:
+  directories:
+  - $HOME/.m2
