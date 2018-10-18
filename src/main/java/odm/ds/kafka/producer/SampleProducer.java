@@ -60,17 +60,17 @@ public class SampleProducer {
 		String topicName=topicname;
 		for(int i=0;i<6;i++)
 			producer.send(new ProducerRecord<String,String>(topicName,Integer.toString(i),Integer.toString(i)));
-			mylogger.info(mybundle.getString("notif_sent"));
-			producer.close();
+		mylogger.info(mybundle.getString("notif_sent"));
+		producer.close();
 		
 	}
 	
 	// Send a String message to a topic
 	public void sendmessageString(Producer<String, String> producer,String topicname,String message){
 		String topicName=topicname;
-			producer.send(new ProducerRecord<String,String>(topicName,"2",message));
-			mylogger.info(mybundle.getString("notif_sent"));
-			producer.close();
+		producer.send(new ProducerRecord<String,String>(topicName,"2",message));
+		mylogger.info(mybundle.getString("notif_sent"));
+		producer.close();
 		
 	}
 
