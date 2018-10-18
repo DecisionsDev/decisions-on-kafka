@@ -6,6 +6,8 @@
 
 ## Features
 
+This sample show how to use ODM with Kafka
+
 ## Requirments
 
 ## Dependencies

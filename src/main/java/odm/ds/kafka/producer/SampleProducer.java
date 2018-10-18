@@ -54,7 +54,7 @@ public class SampleProducer {
 	}
 	public void sendmessage(Producer<String, String> producer,String topicname){
 		String topicName=topicname;
-		for(int i=0;i<6;i++)
+		for(int i=0;i<9;i++)
 			producer.send(new ProducerRecord<String,String>(topicName,Integer.toString(i),Integer.toString(i)));
 			mylogger.info(mybundle.getString("notif_sent"));
 			producer.close();
