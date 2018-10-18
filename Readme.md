@@ -19,7 +19,7 @@ This sample show how to use IBM ODM with Kafka
 
 ## Deployment
 
-'mvn clean install'
+`mvn clean install`
 
 ## Contributing
 
