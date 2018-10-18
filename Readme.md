@@ -18,9 +18,9 @@ This sample show how to use IBM ODM with Kafka
 - Test
 
 ## Deployment
-Clone the repository from github
+* Clone the repository from github.
 `git clone --branch=master git@github.ibm.com:MYattara/ODM-DecisionServer-Kafka.git MYattara/ODM-DecisionServer-Kafka`
-Run the project localy
+* Run the project locally.
 `mvn clean install`
 
 ## Contributing
