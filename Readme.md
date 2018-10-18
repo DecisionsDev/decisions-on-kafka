@@ -26,6 +26,7 @@ This sample show how to use IBM ODM with Kafka
 ## Contributing
 
 ## References
+* [IBM Operational Decision Manager Developer Center](https://developer.ibm.com/odm/)
 
 ## Issues and contributions
 
