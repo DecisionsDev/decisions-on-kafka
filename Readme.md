@@ -9,6 +9,10 @@ This sample show how to use ODM with Kafka
 
 ## Requirments
 
+Kafka
+IBM ODM
+Maven
+
 ## Dependencies
 - Compile time
 - Test
