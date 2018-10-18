@@ -29,6 +29,8 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 public class SampleProducer {
 	final Logger mylogger=Logger.getLogger(SampleProducer.class.getName());
 	ResourceBundle mybundle=ResourceBundle.getBundle("MessagesBundle");
+	
+	// Create an instance of Producer
 	public Producer<String, String> producerInstance (String serverurl,int numberparam) 
 	{
 		mylogger.info("Current Locale: " + Locale.getDefault());
@@ -52,6 +54,8 @@ public class SampleProducer {
 		Producer<String,String> producer=new KafkaProducer<String,String>(props);
 		return producer;
 	}
+	
+	// Send a message the iterrative message to a topic
 	public void sendmessage(Producer<String, String> producer,String topicname){
 		String topicName=topicname;
 		for(int i=0;i<9;i++)
@@ -60,6 +64,8 @@ public class SampleProducer {
 			producer.close();
 		
 	}
+	
+	// Send a String message to a topic
 	public void sendmessageString(Producer<String, String> producer,String topicname,String message){
 		String topicName=topicname;
 			producer.send(new ProducerRecord<String,String>(topicName,"2",message));
@@ -69,7 +75,9 @@ public class SampleProducer {
 	}
 
 	public static void main(String args[]){
+		// Create an instance of producer
 		SampleProducer myProducer=new SampleProducer();
+		// Send a string message to a topic
 		myProducer.sendmessageString(myProducer.producerInstance(args[1].toString(),args.length), args[0].toString(),"Hello");
 	}
 

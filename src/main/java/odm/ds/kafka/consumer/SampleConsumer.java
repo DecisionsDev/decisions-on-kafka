@@ -34,6 +34,7 @@ public class SampleConsumer {
 	final Logger myLogger=Logger.getLogger(SampleConsumer.class.getName());
 	ResourceBundle mybundle = ResourceBundle.getBundle("MessagesBundle");
 	
+	// Create an Instance of a Consumer
 	public KafkaConsumer<String, String> consumerInstance(String serverurl, int numberparam, String consumergroup){
 		
 		myLogger.info("Current Locale: " + Locale.getDefault());
@@ -58,6 +59,7 @@ public class SampleConsumer {
 			return consumer;
 		}
 		
+	// Listen to a topic and Consume coming messages
 	public void consumeMessage(KafkaConsumer<String, String> consumer, String topicName){
 		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
             public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
@@ -86,7 +88,9 @@ public class SampleConsumer {
 		
 	}
 	public static void main(String args[]){
+		// Create an instance of Consumer
 		SampleConsumer myConsumer=new SampleConsumer();
+		// Consume the message
 		myConsumer.consumeMessage(myConsumer.consumerInstance(args[1].toString(), args.length,"test2"), args[0].toString());
 /*		Thread monthread=new Thread(()->{	
 		System.out.println("Thread 1");	
