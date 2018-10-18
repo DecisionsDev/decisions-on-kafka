@@ -34,18 +34,23 @@ public class SampleConsumer {
 	final Logger myLogger=Logger.getLogger(SampleConsumer.class.getName());
 	ResourceBundle mybundle = ResourceBundle.getBundle("MessagesBundle");
 	
-	// Create an Instance of a Consumer
+	/**
+	Create an Instance of a Consumer
+	@param serverurl
+	@param numberparam
+	@param consumergroup
+	*
+	*/
 	public KafkaConsumer<String, String> consumerInstance(String serverurl, int numberparam, String consumergroup){
 		
 		myLogger.info("Current Locale: " + Locale.getDefault());
-		
+		System.out.println("Hello 0");
 		if(numberparam==0){
 			myLogger.severe(mybundle.getString("no_topic_name"));
 		}
-		
-		String server=serverurl;
+		System.out.println("Hello 1");
 		Properties props=new Properties();
-		props.put("bootstrap.servers", server);
+		props.put("bootstrap.servers", serverurl);
 		//"localhost:9092"
 		props.put("group.id", consumergroup);
 		props.put("enable.auto.commit", "true");
@@ -55,6 +60,7 @@ public class SampleConsumer {
 		props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 		KafkaConsumer<String,String> consumer=new KafkaConsumer<String,String>(props);
 		myLogger.info("Groud id "+consumergroup);
+		System.out.println("Fin");
 		//consumer.subscribe(Arrays.asList(topicName));
 			return consumer;
 		}
