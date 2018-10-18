@@ -39,3 +39,4 @@ Thumbs.db
 .settings/
 .project
 target/
+bin/
