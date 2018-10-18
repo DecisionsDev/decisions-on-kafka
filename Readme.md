@@ -5,19 +5,21 @@
 
 ## Features
 
-This sample show how to use ODM with Kafka
+This sample show how to use IBM ODM with Kafka
 
 ## Requirments
 
-Kafka
-IBM ODM
-Maven
+* Kafka
+* IBM ODM
+* Maven
 
 ## Dependencies
 - Compile time
 - Test
 
 ## Deployment
+
+'mvn clean install'
 
 ## Contributing
 
