@@ -27,6 +27,7 @@ This sample show how to use IBM ODM with Kafka
 
 ## References
 * [IBM Operational Decision Manager Developer Center](https://developer.ibm.com/odm/)
+* [Java EE rule session](https://www.ibm.com/support/knowledgecenter/en/SSQP76_8.9.2/com.ibm.odm.dserver.rules.samples/res_smp_topics/smp_res_javaee.html)
 
 ## Issues and contributions
 
