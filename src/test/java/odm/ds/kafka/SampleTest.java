@@ -40,6 +40,7 @@ public class SampleTest extends Thread{
 	//String topicName="moussatest";
 	String topicName=System.getProperty("topicName");
 	String message=System.getProperty("message");
+	String ConsumerGroup=System.getProperty("groupid");
 	
 	
 	@Test
@@ -51,7 +52,7 @@ public class SampleTest extends Thread{
         myProducer1.sendmessageString(myProducer1.producerInstance(serverurl, 2),topicName,message);        
 		// Create the consumer listening to the localhost and being part of CustomerGroup test2
 		SampleConsumer myConsumer1=new SampleConsumer();
-		KafkaConsumer<String, String> consumer1= myConsumer1.consumerInstance("localhost:9092", 3, "test2");
+		KafkaConsumer<String, String> consumer1= myConsumer1.consumerInstance(serverurl, 3, ConsumerGroup);
 		//Soubscribe to the topic moussatest
 		consumer1.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
             public void onPartitionsRevoked(Collection<TopicPartition> partitions) {

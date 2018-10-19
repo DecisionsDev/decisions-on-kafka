@@ -8,7 +8,7 @@ jdk:
   - openjdk8
   
 install:
-  - mvn install --settings travis-settings.xml -DskipTests=true -Dmaven.javadoc.skip=true -Dmessage="go" -DtopicName="moussatest" -Dserverurl="localhost:9092" -B -V -e -U 
+  - mvn clean install --settings travis-settings.xml -DskipTests=true -Dmaven.javadoc.skip=true -Dmessage="go" -DtopicName="moussatest" -Dserverurl="localhost:9092" -Dgroupid="test2" -B -V -e -U 
 script:
   # Do not deploy if default script command for Maven is failing
   - mvn test --settings travis-settings.xml -B && mvn deploy --settings travis-settings.xml -DskipTests=true -B
