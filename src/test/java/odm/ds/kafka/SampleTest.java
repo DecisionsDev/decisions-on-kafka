@@ -104,11 +104,11 @@ public class SampleTest extends Thread{
 			// Consumer the message 
 			@SuppressWarnings("deprecation")
 			ConsumerRecords<String,String> records2=consumer2.poll(0100);
-			String value2=null;
+	//		String value2=null;
 			int i=0;
 			for(ConsumerRecord<String,String> record2:records2){
 				System.out.printf("Offset=%d, key=%s,value=%s\n",record2.offset(),record2.key(),record2.value());
-				value2=record2.value();
+		//		value2=record2.value();
 				i++;
 			}
 			assertEquals(430,i);
@@ -136,7 +136,7 @@ public class SampleTest extends Thread{
 				// Consumer the message 
 				@SuppressWarnings("deprecation")
 				ConsumerRecords<String,String> records3=consumer3.poll(0100);
-				String value3=null;
+//				String value3=null;
 				int j=0;
 				for(ConsumerRecord<String,String> record3:records3){
 					System.out.printf("Offset=%d, key=%s,value=%s\n",record3.offset(),record3.key(),record3.value());
@@ -163,11 +163,11 @@ public class SampleTest extends Thread{
 					// Consumer the message 
 					@SuppressWarnings("deprecation")
 					ConsumerRecords<String,String> records4=consumer4.poll(0100);
-					String value4=null;
+//					String value4=null;
 					int v=0;
-					for(ConsumerRecord<String,String> record3:records3){
-						System.out.printf("Offset=%d, key=%s,value=%s\n",record3.offset(),record3.key(),record3.value());
-						value3=record3.value();
+					for(ConsumerRecord<String,String> record4:records4){
+						System.out.printf("Offset=%d, key=%s,value=%s\n",record4.offset(),record4.key(),record4.value());
+//						value3=record3.value();
 						v++;
 					}
 					assertEquals(74,v);
