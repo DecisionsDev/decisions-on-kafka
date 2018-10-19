@@ -2,19 +2,13 @@ language: java
 
 jdk:
   - oraclejdk8
-  - oraclejdk9
-  - oraclejdk10
-  - oraclejdk-ea
-  - openjdk8
-  
+
 install:
   - mvn install --settings travis-settings.xml -DskipTests=true -Dmaven.javadoc.skip=true -Dmessage="go" -DtopicName="moussatest" -Dserverurl="9.84.96.29:9092" -Dgroupid="test2" -B -V -e -U 
 script:
   # Do not deploy if default script command for Maven is failing
   - mvn test --settings travis-settings.xml -Dmessage="go" -DtopicName="moussatest" -Dserverurl="9.84.96.29:9092" -Dgroupid="test2" -B && mvn deploy --settings travis-settings.xml -DskipTests=true -B 
   - |-
-    curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Travis-API-Version: 3" -H "Authorization: token ${TRAVIS_ACCESS_TOKEN}" -d "{\"request\": {\"branch\":\"master\",\"message\":\"Triggered by upstream build of ${TRAVIS_REPO_SLUG} commit "`git rev-parse --short HEAD`"\"}}" https://travis.ibm.com/MYattara/ODM-DecisionServer-Kafka    
-
 cache:
   directories:
   - $HOME/.m2
