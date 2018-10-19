@@ -23,6 +23,8 @@ This sample show how to use IBM ODM with Kafka
 `$ git clone --branch=master git@github.ibm.com:MYattara/ODM-DecisionServer-Kafka.git MYattara/ODM-DecisionServer-Kafka`
 * Run the project locally.
 `$ mvn clean install`
+* To run the main class SampleMain : `mvn exec:java -Dexec.mainClass="odm.ds.kafka.main.SampleMain" -Dexec.args="yourkafkahost:port topicname message" -Dmaven.test.skip=true`
+* To run the integration test : `mvn -Dtest=SampleTest -Dmessage="yourMessage" -DtopicName="topicName" -Dserverurl="yourkafkahost:port" test`
 
 ## Contributing
 
