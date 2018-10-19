@@ -13,15 +13,16 @@ This sample show how to use IBM ODM with Kafka
 * IBM ODM
 * Maven
 
+
 ## Dependencies
 - Compile time
 - Test
 
 ## Deployment
 * Clone the repository from github.
-`git clone --branch=master git@github.ibm.com:MYattara/ODM-DecisionServer-Kafka.git MYattara/ODM-DecisionServer-Kafka`
+`$ git clone --branch=master git@github.ibm.com:MYattara/ODM-DecisionServer-Kafka.git MYattara/ODM-DecisionServer-Kafka`
 * Run the project locally.
-`mvn clean install`
+`$ mvn clean install`
 
 ## Contributing
 

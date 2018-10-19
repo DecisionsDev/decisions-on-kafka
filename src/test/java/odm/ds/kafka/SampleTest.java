@@ -35,18 +35,25 @@ import org.junit.Test;
 
 public class SampleTest extends Thread{
 	
+    //String serverurl="localhost:9092";
+	String serverurl=System.getProperty("serverurl");
+	//String topicName="moussatest";
+	String topicName=System.getProperty("topicName");
+	String message=System.getProperty("message");
+	
+	
 	@Test
 	public void PublishAndConsumeOneMessage(){
 		// Create a Producer instance
 		SampleProducer myProducer1=new SampleProducer();
 		System.out.println("Start test");
 		//Send the String message 45
-        myProducer1.sendmessageString(myProducer1.producerInstance("localhost:9092", 2),"moussatest","go");        
+        myProducer1.sendmessageString(myProducer1.producerInstance(serverurl, 2),topicName,message);        
 		// Create the consumer listening to the localhost and being part of CustomerGroup test2
 		SampleConsumer myConsumer1=new SampleConsumer();
 		KafkaConsumer<String, String> consumer1= myConsumer1.consumerInstance("localhost:9092", 3, "test2");
 		//Soubscribe to the topic moussatest
-		consumer1.subscribe(Arrays.asList("moussatest"),new ConsumerRebalanceListener() {
+		consumer1.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
             public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
                 System.out.printf("%s topic-partitions are revoked from this consumer\n", Arrays.toString(partitions.toArray()));
             }
