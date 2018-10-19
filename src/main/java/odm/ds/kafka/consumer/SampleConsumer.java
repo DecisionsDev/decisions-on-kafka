@@ -93,26 +93,5 @@ public class SampleConsumer {
 
 		
 	}
-	public static void main(String args[]){
-		// Create an instance of Consumer
-		SampleConsumer myConsumer=new SampleConsumer();
-		// Consume the message
-		myConsumer.consumeMessage(myConsumer.consumerInstance(args[1].toString(), args.length,"test2"), args[0].toString());
-/*		Thread monthread=new Thread(()->{	
-		System.out.println("Thread 1");	
-		SampleConsumer myConsumer=new SampleConsumer();
-		myConsumer.consumerInstance(args[0].toString(), args[1].toString(), args.length,"test2");
-		});
-		monthread.start();
-		
-/*		Thread monthread2=new Thread(()->{	
-		System.out.println("Thread 2");	
-		SampleConsumer myConsumer2=new SampleConsumer();
-		myConsumer2.consumerInstance(args[0].toString(), args[1].toString(), args.length,"test3");
-		});
-		monthread2.start();
-*/
-	
-	}
 
 }

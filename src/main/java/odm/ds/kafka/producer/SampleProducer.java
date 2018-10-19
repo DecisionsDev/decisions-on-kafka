@@ -74,11 +74,4 @@ public class SampleProducer {
 		
 	}
 
-	public static void main(String args[]){
-		// Create an instance of producer
-		SampleProducer myProducer=new SampleProducer();
-		// Send a string message to a topic
-		myProducer.sendmessageString(myProducer.producerInstance(args[1].toString(),args.length), args[0].toString(),"Hello");
-	}
-
 }
