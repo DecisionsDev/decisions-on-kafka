@@ -76,7 +76,7 @@ public class SampleConsumer {
             }
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
-		long endTimeMillis = System.currentTimeMillis() + 10000;
+		long endTimeMillis = System.currentTimeMillis() + 1000;
 		while(true){
 		@SuppressWarnings("deprecation")
 		ConsumerRecords<String,String> records=consumer.poll(0100);
