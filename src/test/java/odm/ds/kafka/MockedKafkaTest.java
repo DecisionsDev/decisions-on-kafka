@@ -36,13 +36,13 @@ public class MockedKafkaTest {
     @Before
     public void setup() throws IOException {
         //zookeeper
-        startZK();
+    //    startZK();
         //start kafka
-        startKafka();
+    //    startKafka();
         // setup producer
-        setupProducer();
+   //     setupProducer();
         // setup consumer
-        setupConsumer();
+  //      setupConsumer();
         
         //Consumer listening
   //      liveConsumer();
@@ -134,7 +134,6 @@ public class MockedKafkaTest {
   				consumer.close();}
   			}
 
-    @Test
     public void testProducerConsumer() throws Exception {
 //    	ProducerRecord<String, String > record=new ProducerRecord<String, String>(TOPIC,Integer.toString(0),Integer.toString(0));
   //  	ProducerRecord<Integer, byte> record=new ProducerRecord<Integer, byte[]>(1,new Byte[]{1,2});
