@@ -8,7 +8,7 @@ install:
 script:
   # Do not deploy if default script command for Maven is failing
   #- mvn exec:java -Dexec.mainClass="odm.ds.kafka.main.SampleMain" -Dexec.args="9.79.64.98:9092 moussatest va" -Dmaven.test.skips=true
-  - mvn test --settings travis-settings.xml -Dmessage="go" -DtopicName="moussatest" -Dserverurl="9.79.64.98:9092" -Dgroupid="test2" -B 
+  - mvn test --settings travis-settings.xml -Dmessage="va" -DtopicName="moussatest" -Dserverurl="9.79.64.98:9092" -Dgroupid="test2" -B 
   #&& mvn deploy --settings travis-settings.xml -DskipTests=true -B 
   - |-
 cache:
