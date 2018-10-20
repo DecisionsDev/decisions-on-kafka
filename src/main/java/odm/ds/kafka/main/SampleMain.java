@@ -13,7 +13,7 @@ public class SampleMain {
 		SampleConsumer myConsumer=new SampleConsumer();
 		// Consume the message
 		myConsumer.consumeMessage(myConsumer.consumerInstance(args[0].toString(), args.length,args[2].toString()), args[1].toString());
-	
+//	
 	}
 
 }
