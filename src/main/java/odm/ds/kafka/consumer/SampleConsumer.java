@@ -77,7 +77,7 @@ public class SampleConsumer {
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
 		long endTimeMillis = System.currentTimeMillis() + 1000;
-		while(true){
+//		while(true){
 		@SuppressWarnings("deprecation")
 		ConsumerRecords<String,String> records=consumer.poll(0100);
 		for(ConsumerRecord<String,String> record:records)
@@ -85,11 +85,11 @@ public class SampleConsumer {
 //			System.out.printf("Offset=%d, key=%s,value=%s\n",record.offset(),record.key(),record.value());
 			//myLogger.info("Offset=%d, key=%s,value=%s\n "+record.offset()+record.key()+record.value());
 			myLogger.info(record.value());
-		if (System.currentTimeMillis() > endTimeMillis) {
+//		if (System.currentTimeMillis() > endTimeMillis) {
             // do some clean-up
-            return;
-		}
-	}
+  //          return;
+//		}
+//	}
 
 		
 	}
