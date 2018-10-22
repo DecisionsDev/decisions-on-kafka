@@ -12,7 +12,74 @@ public class Borrower implements java.io.Serializable{
 	private int yearlyIncome;
 	private String zipCode;
 	private int creditScore;
+	/**
+	 * 
+	 */
 	private Borrower spouse;
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Calendar getBirth() {
+		return birth;
+	}
+
+	public void setBirth(Calendar birth) {
+		this.birth = birth;
+	}
+
+	public SSN getSSN() {
+		return SSN;
+	}
+
+	public void setSSN(SSN sSN) {
+		SSN = sSN;
+	}
+
+	public int getYearlyIncome() {
+		return yearlyIncome;
+	}
+
+	public void setYearlyIncome(int yearlyIncome) {
+		this.yearlyIncome = yearlyIncome;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	public int getCreditScore() {
+		return creditScore;
+	}
+
+	public void setCreditScore(int creditScore) {
+		this.creditScore = creditScore;
+	}
+
+	public Borrower getSpouse() {
+		return spouse;
+	}
+
+	public void setSpouse(Borrower spouse) {
+		this.spouse = spouse;
+	}
 
 	public class SSN implements java.io.Serializable{
 		
