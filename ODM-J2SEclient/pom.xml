@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>odm.ds.kafka</groupId>
-  <artifactId>ODMJ2SEclient</artifactId>
+  <artifactId>ODM-J2SEclient</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>ODMJ2SEclient</name>
+  <name>ODM-J2SEclient</name>
   <url>http://maven.apache.org</url>
 
   <properties>

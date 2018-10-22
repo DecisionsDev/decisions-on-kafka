@@ -6,7 +6,7 @@
 	<artifactId>ODMJ2EEclient</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ODMJ2EEclient Maven Webapp</name>
+	<name>Decision Application Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
@@ -34,6 +34,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>ODMJ2EEclient</finalName>
+		<finalName>Decision Application</finalName>
 	</build>
 </project>
