@@ -1,0 +1,11 @@
+<!-- settings.xml -->
+<settings>
+	<servers>
+	    <server>
+	        <!-- IBM GHE -->
+	        <id>github</id>
+	        <username>${env.GHE_USERNAME}</username>
+	        <password>${env.GHE_PASSWORD}</password>
+	    </server>
+	</servers>
+</settings>

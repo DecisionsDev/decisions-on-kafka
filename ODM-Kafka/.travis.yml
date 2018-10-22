@@ -1,0 +1,18 @@
+language: java
+
+jdk:
+  - oraclejdk8
+
+install:
+
+   - mvn install --settings travis-settings.xml -Dmessage="go" -DtopicName="moussatest" -Dserverurl="vtt-odm653.fr.eurolabs.ibm.com:9092" -Dgroupid="test2" -B 
+ # - mvn install --settings travis-settings.xml -DskipTests=true -Dmaven.javadoc.skip=true -Dmessage="go" -DtopicName="moussatest" -Dserverurl="9.79.64.98:9092" -Dgroupid="test2" -B -V -e -U 
+script:
+  # Do not deploy if default script command for Maven is failing
+  #- mvn exec:java -Dexec.mainClass="odm.ds.kafka.main.SampleMain" -Dexec.args="9.79.64.98:9092 moussatest va" -Dmaven.test.skips=true
+  #- mvn test --settings travis-settings.xml -Dmessage="va" -DtopicName="moussatest" -Dserverurl="vtt-odm653.fr.eurolabs.ibm.com:9092" -Dgroupid="test2" -B 
+  #&& mvn deploy --settings travis-settings.xml -DskipTests=true -B 
+  - |-
+cache:
+  directories:
+  - $HOME/.m2
