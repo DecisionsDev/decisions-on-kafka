@@ -27,6 +27,11 @@ public class Borrower implements java.io.Serializable{
 		this.SSN=new SSN(SSN);
 
 	}
+	
+	public String toString() {
+		
+		return null;
+	}
 	public String getFirstName() {
 		return firstName;
 	}
