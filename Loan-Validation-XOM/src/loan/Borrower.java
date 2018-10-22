@@ -1,6 +1,7 @@
 package loan;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class Borrower implements java.io.Serializable{
 
@@ -17,6 +18,15 @@ public class Borrower implements java.io.Serializable{
 	 */
 	private Borrower spouse;
 
+	public Borrower(String firstName, String lastName, Date birthDate, String SSN) {
+		this.firstName=firstName;
+		this.lastName=lastName;
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(birthDate);
+		this.birth=cal;
+		this.SSN=new SSN(SSN);
+
+	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -83,7 +93,12 @@ public class Borrower implements java.io.Serializable{
 
 	public class SSN implements java.io.Serializable{
 		
+		public SSN(String number) {
+			
+		}
+		
 	}
+
 }
 
 
