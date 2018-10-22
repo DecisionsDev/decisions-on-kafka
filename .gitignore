@@ -42,3 +42,4 @@ target/
 bin/
 Servers/
 RemoteSystemsTempFiles/
+/.metadata/
