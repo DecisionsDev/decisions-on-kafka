@@ -40,7 +40,9 @@ public class SampleTest extends Thread{
 	//String topicName="moussatest";
 	String topicName=System.getProperty("topicName");
 	String message=System.getProperty("message");
+	//String message="go";
 	String ConsumerGroup=System.getProperty("groupid");
+	//String ConsumerGroup="test2";
 	
 	
 	@Test
@@ -75,22 +77,21 @@ public class SampleTest extends Thread{
 
 	}
 	
-
+	
 	public void MultiConsumerSingleTopic(){
 		// Create a Producer instance
 		SampleProducer myProducer2=new SampleProducer();
 		System.out.println("Start server");
 		//Send the String message 45
- //      myProducer2.sendmessageString(myProducer2.producerInstance("localhost:9092", 2),"partitiontest","20");
+		//myProducer2.sendmessageString(myProducer2.producerInstance("localhost:9092", 2),"partitiontest","20");
 		myProducer2.sendmessage(myProducer2.producerInstance("localhost:9092", 2), "partitiontest");
 
-//		Thread monthread=new Thread(()->{	
-					// Create the consumer listening to the localhost and being part of CustomerGroup test2
+		// Create the consumer listening to the localhost and being part of CustomerGroup test2
 			System.out.println("Start Thread 1");
 			SampleConsumer myConsumer2=new SampleConsumer();
 			
 			KafkaConsumer<String, String> consumer2= myConsumer2.consumerInstance("localhost:9092", 3, "test2");
-			//Soubscribe to the topic moussatest
+		//Soubscribe to the topic moussatest
 			System.out.println("Parite 2");
 			consumer2.subscribe(Arrays.asList("partitiontest"),new ConsumerRebalanceListener() {
 	            public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
@@ -101,14 +102,14 @@ public class SampleTest extends Thread{
 	            }
 	        
 			});
-			// Consumer the message 
+		// Consumer the message 
 			@SuppressWarnings("deprecation")
 			ConsumerRecords<String,String> records2=consumer2.poll(0100);
 	//		String value2=null;
 			int i=0;
 			for(ConsumerRecord<String,String> record2:records2){
 				System.out.printf("Offset=%d, key=%s,value=%s\n",record2.offset(),record2.key(),record2.value());
-		//		value2=record2.value();
+		//		value2=r ecord2.value();
 				i++;
 			}
 			assertEquals(430,i);
