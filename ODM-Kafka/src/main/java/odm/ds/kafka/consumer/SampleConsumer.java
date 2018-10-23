@@ -39,6 +39,7 @@ public class SampleConsumer {
 	@param serverurl
 	@param numberparam
 	@param consumergroup
+	@return consumer
 	*
 	*/
 	public KafkaConsumer<String, String> consumerInstance(String serverurl, int numberparam, String consumergroup){
@@ -65,7 +66,13 @@ public class SampleConsumer {
 			return consumer;
 		}
 		
-	// Listen to a topic and Consume coming messages
+	/**
+	 * Listen to a topic and Consume coming messages
+	 *  @param consumer
+	 *  @param topicName
+	 *  
+	 */
+	
 	public void consumeMessage(KafkaConsumer<String, String> consumer, String topicName){
 		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
             public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
