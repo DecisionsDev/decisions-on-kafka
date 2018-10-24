@@ -43,3 +43,4 @@ bin/
 Servers/
 RemoteSystemsTempFiles/
 /.metadata/
+.recommenders/
