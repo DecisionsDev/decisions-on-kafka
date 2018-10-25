@@ -1,25 +1,51 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>odm.ds.kafka</groupId>
-  <artifactId>ODM-J2SEclient</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+	<groupId>odm.ds.kafka</groupId>
+	<artifactId>ODM-J2SEclient</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-  <name>ODM-J2SEclient</name>
-  <url>http://maven.apache.org</url>
+	<name>ODM-J2SEclient</name>
+	<url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<!-- IBM ODM DEPENDENCIES -->
+	<profiles>
+		<profile>
+			<id>mvn-repo</id>
+			<!-- DEPENDENCIES TO IBM ODM RES JSE EXECUTION STACK -->
+			<dependencies>
+				<dependency>
+					<groupId>javax.resource</groupId>
+					<artifactId>connector-api</artifactId>
+					<version>1.5-IBM</version>
+				</dependency>
+				<dependency>
+					<groupId>com.ilog.rules.executionserver</groupId>
+					<artifactId>jrules-res</artifactId>
+					<classifier>execution</classifier>
+					<version>${ibm.odm.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>com.ilog.rules.engine</groupId>
+					<artifactId>jrules-engine</artifactId>
+					<version>${ibm.odm.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 </project>
