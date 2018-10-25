@@ -22,19 +22,5 @@ import java.util.ResourceBundle;
 
 public class MessageFormatter {
 	
-private static final String MESSAGE_BUNDLE = "j2serulesession.messages"; // No_i18n
-    
-    private static ResourceBundle bundle;
-
-    String getMessage(String key, Object... arguments) {
-        return MessageFormat.format(getBundle().getString(key), arguments);
-    }
-
-    private ResourceBundle getBundle() {
-        if (bundle == null) {
-            bundle = ResourceBundle.getBundle(MESSAGE_BUNDLE);
-        }
-        return bundle;
-}
 
 }

@@ -13,16 +13,49 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<ibm.odm.version>8.9.2</ibm.odm.version>
 	</properties>
-
 	<dependencies>
+	<!-- JUNIT IN ORDER TO MAKE TESTING -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+	<!-- SYSTEM JUNIT LIBRARY FOR SYSTEM.EXIT TESTING-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.8.8</version>
+		</dependency>
+	<!--  -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.8.8</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+		<!-- JUNIT FOR TESTING PURPOSE -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- SYSTEM RULES JUNIT LIBRARY TO TEST System.exit() -->
+		<dependency>
+			<groupId>com.github.stefanbirkner</groupId>
+			<artifactId>system-rules</artifactId>
+			<version>1.18.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
+
 	<!-- IBM ODM DEPENDENCIES -->
 	<profiles>
 		<profile>
@@ -44,6 +77,43 @@
 					<groupId>com.ilog.rules.engine</groupId>
 					<artifactId>jrules-engine</artifactId>
 					<version>${ibm.odm.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<!-- USE install-dir PROFILE TO FETCH IBM ODM DEPENDENCIES FROM THE PRODUCT 
+				INSTALLATION DIRECTORY -->
+			<id>install-dir</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>
+			</properties>
+
+			<!-- DEPENDENCIES TO IBM ODM RES JSE EXECUTION STACK -->
+			<dependencies>
+				<dependency>
+					<groupId>javax.resource</groupId>
+					<artifactId>connector-api</artifactId>
+					<version>1.5-IBM</version>
+					<scope>system</scope>
+					<systemPath>${ibm.odm.install.dir}/executionserver/lib/j2ee_connector-1_5-fr.jar</systemPath>
+				</dependency>
+				<dependency>
+					<groupId>com.ilog.rules.executionserver</groupId>
+					<artifactId>jrules-res</artifactId>
+					<classifier>execution</classifier>
+					<version>${ibm.odm.version}</version>
+					<scope>system</scope>
+					<systemPath>${ibm.odm.install.dir}/executionserver/lib/jrules-res-execution.jar</systemPath>
+				</dependency>
+				<dependency>
+					<groupId>com.ilog.rules.engine</groupId>
+					<artifactId>jrules-engine</artifactId>
+					<version>${ibm.odm.version}</version>
+					<scope>system</scope>
+					<systemPath>${ibm.odm.install.dir}/executionserver/lib/jrules-engine.jar</systemPath>
 				</dependency>
 			</dependencies>
 		</profile>
