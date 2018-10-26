@@ -15,7 +15,7 @@ import ilog.rules.res.model.IlrPath;
 public class Main 
 {
 	   
-	   
+	   private static final Options OPTIONS=new Options();
 	   private enum SampleOption{
        	
 		
@@ -25,14 +25,16 @@ public class Main
 	        	
 	        }
 	        }
-    public static void main( String[] args )
+    public static void main( String...arguments )
     {
         System.out.println( "Hello World!" );
         Main main=new Main();
-        CommandLineParser parser=new DefaultParser();
-        
         try {
-        	
+        	  CommandLineParser parser=new DefaultParser();
+              CommandLine commandLine = parser.parse(OPTIONS, arguments);
+              IlrPath rulesetPath = main.getRulesetPath(commandLine, arguments);
+              String ruleAppArchive = main.getRuleAppArchive(commandLine);
+              RESJSEExecution execution = new RESJSEExecution();
         
         } catch (Throwable exception) {
         	
