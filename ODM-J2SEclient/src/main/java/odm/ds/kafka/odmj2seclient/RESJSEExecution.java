@@ -1,9 +1,11 @@
 package odm.ds.kafka.odmj2seclient;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import ilog.rules.res.model.IlrAlreadyExistException;
 import ilog.rules.res.model.IlrFormatException;
@@ -12,18 +14,37 @@ import ilog.rules.res.model.archive.IlrArchiveException;
 import ilog.rules.res.session.IlrJ2SESessionFactory;
 import ilog.rules.res.session.IlrSessionCreationException;
 import ilog.rules.res.session.IlrSessionException;
+import ilog.rules.res.session.IlrSessionFactory;
+import ilog.rules.res.session.config.IlrSessionFactoryConfig;
+import ilog.rules.res.session.config.IlrXUConfig;
+
+import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_FILE_NOT_FOUND;
+import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_CLASSLOADER_RESOURCE_NOT_FOUND;
+import static java.util.logging.Level.WARNING;
+import static ilog.rules.res.session.config.IlrPersistenceType.MEMORY;
 
 public class RESJSEExecution {
 	
 	
+	private final MessageFormatter formatter=new MessageFormatter();
+	private final IlrJ2SESessionFactory factory;
+	private static final Logger LOGGER=Logger.getLogger(RESJSEExecution.class.getName());
+	
 	/**
 	 * 
+	 * Create a J2SESessionFactory with a configuation of the XU
 	 * @return an IlrSessionFactory
+	 * 
 	 */
 	
 	 private static IlrJ2SESessionFactory createJ2SESessionFactory() {
 	
-		 return null;
+		 IlrSessionFactoryConfig factoryConfing=IlrJ2SESessionFactory.createDefaultConfig();
+		 IlrXUConfig xuconfig=factoryConfing.getXUConfig();
+		 xuconfig.setLogAutoFlushEnabled(true);
+		 xuconfig.getPersistenceConfig().setPersistenceType(MEMORY);
+		 xuconfig.getManagedXOMPersistenceConfig().setPersistenceType(MEMORY);
+		 return new IlrJ2SESessionFactory(factoryConfing);
 	 }
 	 /**
 	  *  Execute the rulePath using his path
@@ -37,14 +58,26 @@ public class RESJSEExecution {
 	 }
 	 
 	 /**
-	  *  To get the url of the RuleAppArchive
+	  *  Use to get the RuleAppArchive url, in the case there is not a ruleApp then it returns null, if there is a  ruleApp
+	  *  and the file exist then return the url
 	  * @param ruleAppArchiveName
 	  * @return
 	  * @throws MalformedURLException
 	  */
 	 private URL getRuleAppArchiveURL(String ruleAppArchiveName) throws MalformedURLException {
-		 
-		 return null;
+		 if(ruleAppArchiveName==null) {
+			 return null;
+		 }
+		 File file=new File(ruleAppArchiveName);
+		 if(file.exists()) {
+			 return file.toURI().toURL();
+		 }
+		 warning(RULEAPP_FILE_NOT_FOUND, ruleAppArchiveName);
+		 URL resource=this.getClass().getClassLoader().getResource(ruleAppArchiveName);
+		 if(resource==null) {
+			 warning(RULEAPP_CLASSLOADER_RESOURCE_NOT_FOUND, ruleAppArchiveName);
+		 }
+		 return resource;
 	 }
 	 
 	 /**
@@ -54,6 +87,7 @@ public class RESJSEExecution {
 	  * 
 	  */
 	 private void warning(String key, Object... arguments) {
+		 log(WARNING, key, arguments);
 		 
 	 }
 	 
@@ -70,13 +104,13 @@ public class RESJSEExecution {
 	 }
 	 
 	 /**
-	  * 
+	  *  base on the JDK logger to provide logs
 	  * @param level
 	  * @param key
 	  * @param arguments
 	  */
 	 private void log(Level level, String key, Object... arguments) {
-		 
+		 LOGGER.log(level, getMessage(key, arguments));
 	 }
 	 
 	 /**
@@ -106,6 +140,10 @@ public class RESJSEExecution {
      IlrArchiveException,
      IlrAlreadyExistException,
      IlrFormatException {
+		 if (ruleAppArchiveName==null) {
+			 return;
+		 }
+		 URL ruleAppArchiveURL=getRuleAppArchiveURL(ruleAppArchiveName);
 		 
 	 }
 	 
@@ -129,6 +167,6 @@ public class RESJSEExecution {
 	  * Constructor without argument
 	  */
 	 public RESJSEExecution() {
-		 
+		 this(createJ2SESessionFactory());
 	 }
 }

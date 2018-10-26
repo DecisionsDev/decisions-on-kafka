@@ -26,7 +26,6 @@ public class Main
 	   
 		private static final MessageFormatter formatter=new MessageFormatter();
 		private static String RULEAPP=formatter.getMessage(SAMPLE_RULEAPP);
-		private static final Options OPTIONS=new Options();
 	   
 		private enum SampleOption {
 		   RuleApp(
@@ -56,7 +55,10 @@ public class Main
 	        	this.defaultValue=defaultValue;
 	        }
 	       
-	        }
+	      }
+		private static final Options OPTIONS=new Options();
+		
+		
     public static void main( String...arguments )
     {
         System.out.println( "Hello World!" );
@@ -68,7 +70,7 @@ public class Main
               String ruleAppArchive = main.getRuleAppArchive(commandLine);
               RESJSEExecution execution = new RESJSEExecution();
               try {
-            	  
+            	  execution.loadRuleApp(ruleAppArchive);
             	  
               } finally {
             	  
