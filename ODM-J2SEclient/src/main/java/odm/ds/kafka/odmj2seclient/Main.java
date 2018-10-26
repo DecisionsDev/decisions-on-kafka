@@ -1,17 +1,18 @@
 package odm.ds.kafka.odmj2seclient;
 
 import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_RULEAPP;
+import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
+import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
+import ilog.rules.res.model.IlrFormatException;
 import ilog.rules.res.model.IlrPath;
 
 /**
@@ -68,7 +69,8 @@ public class Main
     }
     
     /**
-     *  To get the RulesetPath
+     *  Check if the rulesetPath provided as String is null or if the format is incorrect then throw the corresponding exception
+     *  otherwise return an IlrPath corresponding to the path
      * @param commandLine
      * @param arguments
      * 
@@ -76,8 +78,18 @@ public class Main
      */
     private IlrPath getRulesetPath(CommandLine commandLine, String[] arguments) throws IllegalArgumentException {
     	String rulesetPathArgumentAsString=getMandatoryRulesetPathArgument(commandLine, arguments);
-    	
-    	return null;
+    	if(rulesetPathArgumentAsString==null) {
+    		String errorMessage=getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH, getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH));
+    		throw new IllegalArgumentException(errorMessage);
+    	}
+    	try {
+    		
+    		return IlrPath.parsePath(rulesetPathArgumentAsString);
+    				
+    	} catch (IlrFormatException exception) {
+    		String errorMessage=getMessage(SAMPLE_ERROR_INVALID_RULESET_PATH, rulesetPathArgumentAsString);
+    		throw new IllegalArgumentException(errorMessage);	
+    	}
     }
     
     /**
@@ -89,7 +101,7 @@ public class Main
      */
     private String getMessage(String key, Object... arguments) {
     	
-    	return null;
+    	return formatter.getMessage(key, arguments);
     }
     
     /**

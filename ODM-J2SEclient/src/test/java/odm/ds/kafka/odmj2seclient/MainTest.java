@@ -1,4 +1,4 @@
-package odm.ds.kafka.ODMJ2SEclient;
+package odm.ds.kafka.odmj2seclient;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
