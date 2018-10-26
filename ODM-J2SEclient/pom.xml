@@ -15,6 +15,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<ibm.odm.version>8.9.2</ibm.odm.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>maven-repository</id>
+			<url>file:///${project.basedir}/maven-repository</url>
+		</repository>
+	</repositories>
 	<dependencies>
 	<!-- JUNIT IN ORDER TO MAKE TESTING -->
 		<dependency>
@@ -54,8 +60,33 @@
 			<version>1.18.0</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- DEPENDENCY TO JAVA XOM FOR COMPILATION PURPOSE -->
+		<dependency>
+			<groupId>my-xom</groupId>
+			<artifactId>my-xom</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
-
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/i18n</directory>
+			</resource>
+		</resources>
+	</build>
 	<!-- IBM ODM DEPENDENCIES -->
 	<profiles>
 		<profile>

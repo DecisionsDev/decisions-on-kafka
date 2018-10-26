@@ -71,6 +71,7 @@ public class Main
               RESJSEExecution execution = new RESJSEExecution();
               try {
             	  execution.loadRuleApp(ruleAppArchive);
+            	  execution.executeRuleset(rulesetPath);
             	  
               } finally {
             	  

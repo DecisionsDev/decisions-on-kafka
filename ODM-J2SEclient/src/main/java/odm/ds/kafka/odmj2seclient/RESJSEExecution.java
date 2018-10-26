@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.jar.JarInputStream;
@@ -25,6 +27,7 @@ import ilog.rules.res.session.IlrJ2SESessionFactory;
 import ilog.rules.res.session.IlrSessionCreationException;
 import ilog.rules.res.session.IlrSessionException;
 import ilog.rules.res.session.IlrSessionFactory;
+import ilog.rules.res.session.IlrSessionRequest;
 import ilog.rules.res.session.config.IlrSessionFactoryConfig;
 import ilog.rules.res.session.config.IlrXUConfig;
 
@@ -37,7 +40,7 @@ import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_PROCESSED;
 import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_NOT_PROCESSED;
 import static java.util.logging.Level.WARNING;
 import static ilog.rules.res.session.config.IlrPersistenceType.MEMORY;
-
+import loan.Report;
 
 public class RESJSEExecution {
 	
@@ -63,13 +66,20 @@ public class RESJSEExecution {
 		 return new IlrJ2SESessionFactory(factoryConfing);
 	 }
 	 /**
-	  *  Execute the rulePath using his path
+	  *  Execute the rulePath using his path, it creates in first a sessionRequest, make sure the latest version of ruleSet is in usage
 	  *  @param rulesetPath : The path of the ruleset
 	  *  
 	  */
 	 public void executeRuleset(IlrPath rulesetPath) throws IlrFormatException,
      IlrSessionCreationException,
      IlrSessionException {
+		 
+		 IlrSessionRequest sessionRequest=factory.createRequest();
+		 sessionRequest.setRulesetPath(rulesetPath);
+		 sessionRequest.setForceUptodate(true);
+		 Map<String, Object> inputParamters=new HashMap<String, Object>();
+//		 java.util.Date birthDate=
+		 
 		 
 	 }
 	 
