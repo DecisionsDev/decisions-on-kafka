@@ -3,6 +3,7 @@ package odm.ds.kafka.odmj2seclient;
 import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_RULEAPP;
 import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
 import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
+import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_RULEAPP_DESCRIPTION;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
 import ilog.rules.res.model.IlrFormatException;
@@ -24,15 +26,36 @@ public class Main
 	   
 		private static final MessageFormatter formatter=new MessageFormatter();
 		private static String RULEAPP=formatter.getMessage(SAMPLE_RULEAPP);
-	   private static final Options OPTIONS=new Options();
+		private static final Options OPTIONS=new Options();
 	   
-	   private enum SampleOption{
+		private enum SampleOption {
+		   RuleApp(
+				   "r",
+				   "ruleApp",
+				   RULEAPP,
+				   formatter.getMessage(SAMPLE_RULEAPP_DESCRIPTION),
+				   null,
+				   true,
+				   false
+				   );
 		
-	//	   private final Option option;
-	//	   private final String defaultValue;
-	        SampleOption(){
-	        	
+		   private final Option option;
+		   private final String defaultValue;
+		   
+		   public Option getOption() {
+			   return option;
+		   }
+		   
+		   public String getDefaultValue() {
+			   return defaultValue;
+		   }
+	       SampleOption(String shortName, String longName, String argumentName, String description, String defaultValue, boolean 
+	        		hasArgument, boolean required){
+	        	this.option=Option.builder(shortName).argName(argumentName).longOpt(longName).desc(description).hasArg(hasArgument)
+	        			.required(required).build();
+	        	this.defaultValue=defaultValue;
 	        }
+	       
 	        }
     public static void main( String...arguments )
     {
@@ -75,6 +98,7 @@ public class Main
      * @param arguments
      * 
      * @return the rulesetPath
+     * 
      */
     private IlrPath getRulesetPath(CommandLine commandLine, String[] arguments) throws IllegalArgumentException {
     	String rulesetPathArgumentAsString=getMandatoryRulesetPathArgument(commandLine, arguments);
