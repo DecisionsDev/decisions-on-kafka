@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -28,6 +29,8 @@ import ilog.rules.res.session.IlrSessionCreationException;
 import ilog.rules.res.session.IlrSessionException;
 import ilog.rules.res.session.IlrSessionFactory;
 import ilog.rules.res.session.IlrSessionRequest;
+import ilog.rules.res.session.IlrSessionResponse;
+import ilog.rules.res.session.IlrStatelessSession;
 import ilog.rules.res.session.config.IlrSessionFactoryConfig;
 import ilog.rules.res.session.config.IlrXUConfig;
 
@@ -40,6 +43,9 @@ import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_PROCESSED;
 import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_NOT_PROCESSED;
 import static java.util.logging.Level.WARNING;
 import static ilog.rules.res.session.config.IlrPersistenceType.MEMORY;
+
+import loan.Borrower;
+import loan.LoanRequest;
 import loan.Report;
 
 public class RESJSEExecution {
@@ -78,7 +84,17 @@ public class RESJSEExecution {
 		 sessionRequest.setRulesetPath(rulesetPath);
 		 sessionRequest.setForceUptodate(true);
 		 Map<String, Object> inputParamters=new HashMap<String, Object>();
-//		 java.util.Date birthDate=
+		 java.util.Date birthDate=loan.DateUtil.makeDate(1976, 1, 1);
+		 loan.Borrower borrower=new Borrower("Smith","John",birthDate,"11243344");
+		 borrower.setZipCode("75012");
+		 borrower.setCreditScore(200);
+		 borrower.setYearlyIncome(20000);
+		 inputParamters.put("borrower", borrower);
+		 loan.LoanRequest loan=new LoanRequest(new Date(), 48, 100000, 1.2);
+		 inputParamters.put("loan", loan);
+		 sessionRequest.setInputParameters(inputParamters);
+		 IlrStatelessSession session=factory.createStatelessSession();
+		 IlrSessionResponse sessionResponse=session.execute(sessionRequest);
 		 
 		 
 	 }
