@@ -2,6 +2,10 @@ package odm.ds.kafka.odmj2seclient;
 
 import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_RULEAPP;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -71,7 +75,7 @@ public class Main
      * @return the rulesetPath
      */
     private IlrPath getRulesetPath(CommandLine commandLine, String[] arguments) throws IllegalArgumentException {
-    	
+    	String rulesetPathArgumentAsString=getMandatoryRulesetPathArgument(commandLine, arguments);
     	
     	return null;
     }
@@ -98,13 +102,23 @@ public class Main
     }
     
     /**
-     * To get MandatoryRulesetPathArgument
+     * To get the rulesetPAth as a String
      * @param commandLine
      * @param arguments
      * 
      */
     private String getMandatoryRulesetPathArgument(CommandLine commandLine, String[] arguments) {
-    	
+    	int nbOfArguments=arguments.length;
+    	if(nbOfArguments!=0) {
+    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
+    		if(!unprocessedArguments.isEmpty()) {
+    			String rulesetPathArgumentAsString=arguments[nbOfArguments-1];
+    			if(unprocessedArguments.contains(rulesetPathArgumentAsString)) {
+    				return rulesetPathArgumentAsString;
+    			}
+    		}
+    		
+    	}
     	return null;
     }
 }
