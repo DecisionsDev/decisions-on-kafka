@@ -2,15 +2,25 @@ package odm.ds.kafka.odmj2seclient;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.jar.JarInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import ilog.rules.res.model.IlrAlreadyExistException;
 import ilog.rules.res.model.IlrFormatException;
+import ilog.rules.res.model.IlrMutableRepository;
+import ilog.rules.res.model.IlrMutableRuleAppInformation;
+import ilog.rules.res.model.IlrMutableRulesetArchiveInformation;
 import ilog.rules.res.model.IlrPath;
+import ilog.rules.res.model.IlrRepositoryFactory;
 import ilog.rules.res.model.archive.IlrArchiveException;
+import ilog.rules.res.model.archive.IlrArchiveManager;
 import ilog.rules.res.session.IlrJ2SESessionFactory;
 import ilog.rules.res.session.IlrSessionCreationException;
 import ilog.rules.res.session.IlrSessionException;
@@ -20,8 +30,14 @@ import ilog.rules.res.session.config.IlrXUConfig;
 
 import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_FILE_NOT_FOUND;
 import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_CLASSLOADER_RESOURCE_NOT_FOUND;
+import static odm.ds.kafka.odmj2seclient.MessageCode.EMPTY_RULEAPP;
+import static odm.ds.kafka.odmj2seclient.MessageCode.RULESET_ADDED;
+import static odm.ds.kafka.odmj2seclient.MessageCode.RULESETS_ADDED;
+import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_PROCESSED;
+import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_NOT_PROCESSED;
 import static java.util.logging.Level.WARNING;
 import static ilog.rules.res.session.config.IlrPersistenceType.MEMORY;
+
 
 public class RESJSEExecution {
 	
@@ -114,7 +130,8 @@ public class RESJSEExecution {
 	 }
 	 
 	 /**
-	  *  To get info
+	  *  Load the ruleAppArchive using the RuleAppArchiveURL, in the case the RuleSetPath is empty then there is not a RuleApp, in the case we have only
+	  *  one RuleApp or more then notify also and afterwards add the RuleApp to the repository
 	  * @param key
 	  * @param arguments
 	  * 
@@ -144,6 +161,48 @@ public class RESJSEExecution {
 			 return;
 		 }
 		 URL ruleAppArchiveURL=getRuleAppArchiveURL(ruleAppArchiveName);
+		 if(ruleAppArchiveURL!=null) {
+			 try(InputStream inputStream=ruleAppArchiveURL.openStream()){
+				 if(inputStream!=null) {
+					 try(JarInputStream jarInputStream=new JarInputStream(inputStream)){
+						 IlrArchiveManager archiveManager=new IlrArchiveManager();
+						 IlrRepositoryFactory repositoryFactory=factory.createManagementSession().getRepositoryFactory();
+						 IlrMutableRepository repository=repositoryFactory.createRepository();
+						 archiveManager.read(repositoryFactory, jarInputStream).stream().forEach(new Consumer<IlrMutableRuleAppInformation>(){
+
+							@Override
+							public void accept(IlrMutableRuleAppInformation ruleApp) {
+								// TODO Auto-generated method stub
+								Set<IlrPath> rulesetPaths=new HashSet<>();
+								ruleApp.getRulesets().stream().map(IlrMutableRulesetArchiveInformation::getCanonicalPath).forEach(rulesetPaths::add);
+								if(rulesetPaths.isEmpty()) {
+									info(EMPTY_RULEAPP, ruleApp.getCanonicalPath());
+								} else if (rulesetPaths.size()==1) {
+								
+									info(RULESET_ADDED, rulesetPaths.stream().findFirst());
+								} else {
+									info(RULESETS_ADDED, rulesetPaths);
+								}
+								try {
+									repository.addRuleApp(ruleApp);
+								} catch(IlrAlreadyExistException exception) {
+									
+								}	
+								
+							}
+							 
+						 });
+						 info(RULEAPP_PROCESSED, ruleAppArchiveName);
+						 return;
+					 }
+					 
+				 }
+				 
+				 
+			 }
+			 
+		 }
+		 throw new IllegalArgumentException(formatter.getMessage(RULEAPP_NOT_PROCESSED, ruleAppArchiveName));
 		 
 	 }
 	 
@@ -160,7 +219,7 @@ public class RESJSEExecution {
 	  * 
 	  */
 	 private RESJSEExecution(IlrJ2SESessionFactory factory) {
-		 
+		 this.factory=factory;
 	 }
 	 
 	 /**
