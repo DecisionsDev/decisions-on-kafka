@@ -16,7 +16,7 @@
  *
  */
 
-package odm.ds.kafka.ODMJ2SEclient;
+package odm.ds.kafka.odmj2seclient;
 
 class MessageCode {
 	

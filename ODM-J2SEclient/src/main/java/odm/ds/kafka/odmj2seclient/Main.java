@@ -1,4 +1,6 @@
-package odm.ds.kafka.ODMJ2SEclient;
+package odm.ds.kafka.odmj2seclient;
+
+import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_RULEAPP;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -15,9 +17,11 @@ import ilog.rules.res.model.IlrPath;
 public class Main 
 {
 	   
+		private static final MessageFormatter formatter=new MessageFormatter();
+		private static String RULEAPP=formatter.getMessage(SAMPLE_RULEAPP);
 	   private static final Options OPTIONS=new Options();
+	   
 	   private enum SampleOption{
-       	
 		
 	//	   private final Option option;
 	//	   private final String defaultValue;
@@ -35,6 +39,12 @@ public class Main
               IlrPath rulesetPath = main.getRulesetPath(commandLine, arguments);
               String ruleAppArchive = main.getRuleAppArchive(commandLine);
               RESJSEExecution execution = new RESJSEExecution();
+              try {
+            	  
+            	  
+              } finally {
+            	  
+              }
         
         } catch (Throwable exception) {
         	
@@ -61,6 +71,7 @@ public class Main
      * @return the rulesetPath
      */
     private IlrPath getRulesetPath(CommandLine commandLine, String[] arguments) throws IllegalArgumentException {
+    	
     	
     	return null;
     }

@@ -15,7 +15,7 @@
  *   limitations under the License.
  *
  */
-package odm.ds.kafka.ODMJ2SEclient;
+package odm.ds.kafka.odmj2seclient;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
@@ -23,4 +23,30 @@ import java.util.ResourceBundle;
 public class MessageFormatter {
 	
 
+	private static final String  MESSAGE_BUNDLE="messages";
+	private static ResourceBundle bundle;
+	/**
+	 * 
+	 * @param key
+	 * @param arguments
+	 * @return message : the message formated
+	 * 
+	 */
+	String getMessage(String key, Object...arguments) {
+		return null;
+	}
+	/**
+	 *  To get the message in the right format
+	 * @return
+	 * 
+	 */
+	
+	private ResourceBundle getBundle() {
+		
+		if(bundle==null) {
+			bundle=ResourceBundle.getBundle("MESSAGE_BUNDLE");
+		}
+		return bundle;
+		
+	}
 }
