@@ -95,6 +95,8 @@ public class RESJSEExecution {
 		 sessionRequest.setInputParameters(inputParamters);
 		 IlrStatelessSession session=factory.createStatelessSession();
 		 IlrSessionResponse sessionResponse=session.execute(sessionRequest);
+		 Report report=(Report)(sessionResponse.getOutputParameters().get("report"));
+		 System.out.println(report.toString());
 		 
 		 
 	 }
@@ -236,6 +238,7 @@ public class RESJSEExecution {
 	  * 
 	  */
 	 public void release() {
+		 factory.release();
 		 
 	 }
 	 

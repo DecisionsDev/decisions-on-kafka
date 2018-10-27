@@ -4,6 +4,9 @@ import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_RULEAPP;
 import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
 import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
 import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_RULEAPP_DESCRIPTION;
+import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_FOOTER_TAB;
+import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_FOOTER;
+import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_RULESET_PATH;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,8 +14,10 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 import ilog.rules.res.model.IlrFormatException;
 import ilog.rules.res.model.IlrPath;
@@ -74,10 +79,14 @@ public class Main
             	  execution.executeRuleset(rulesetPath);
             	  
               } finally {
-            	  
+            	  execution.release();
               }
         
-        } catch (Throwable exception) {
+        } catch (ParseException | IllegalArgumentException exception) {
+            System.err.println(exception.getMessage());
+            main.exitWithUsageMessage(OPTIONS);
+        	
+        } catch(Throwable exception) {
         	
         }
      
@@ -133,11 +142,17 @@ public class Main
     
     /**
      * The exit message with usage in case of error
+     * Format the displayed message about the rulesetPath is not valid.
      * @param option
      * 
      */
     private void exitWithUsageMessage(Options options) {
-    	
+    	HelpFormatter formater=new HelpFormatter();
+    	String footer_tab = getMessage(SAMPLE_FOOTER_TAB);
+    	String rulesetPath=getMessage(SAMPLE_RULESET_PATH);
+    	String footer=getMessage(SAMPLE_FOOTER, rulesetPath, footer_tab);
+    	String CommandLineSyntax=Main.class.getName()+ " [-j <" + RULEAPP + ">] <" + rulesetPath + ">";
+    	formater.printHelp(120, CommandLineSyntax, null, options, footer);
     }
     
     /**
