@@ -15,6 +15,10 @@ import java.util.jar.JarInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ilog.rules.res.model.IlrAlreadyExistException;
 import ilog.rules.res.model.IlrFormatException;
 import ilog.rules.res.model.IlrMutableRepository;
@@ -47,6 +51,7 @@ import static ilog.rules.res.session.config.IlrPersistenceType.MEMORY;
 import loan.Borrower;
 import loan.LoanRequest;
 import loan.Report;
+import odm.ds.kafka.producer.SampleProducer;
 
 public class RESJSEExecution {
 	
@@ -78,7 +83,7 @@ public class RESJSEExecution {
 	  */
 	 public void executeRuleset(IlrPath rulesetPath) throws IlrFormatException,
      IlrSessionCreationException,
-     IlrSessionException {
+     IlrSessionException, JsonGenerationException, JsonMappingException, IOException {
 		 
 		 IlrSessionRequest sessionRequest=factory.createRequest();
 		 sessionRequest.setRulesetPath(rulesetPath);
@@ -97,6 +102,12 @@ public class RESJSEExecution {
 		 IlrSessionResponse sessionResponse=session.execute(sessionRequest);
 		 Report report=(Report)(sessionResponse.getOutputParameters().get("report"));
 		 System.out.println(report.toString());
+		 SampleProducer myProducer=new SampleProducer();
+		 ObjectMapper mapper = new ObjectMapper();
+//		 borrower obj = mapper.readValue(jsonInString, borrower.class);
+		 String jsonInString = "{\"lastName\":\"mkyong\",\"firstName\":7500,\"skills\":[\"java\",\"python\"]}";
+		 loan.Borrower borrower1=mapper.readValue(jsonInString, loan.Borrower.class);
+		 
 		 
 		 
 	 }
