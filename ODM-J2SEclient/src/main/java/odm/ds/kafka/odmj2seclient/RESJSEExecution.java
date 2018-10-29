@@ -3,6 +3,7 @@ package odm.ds.kafka.odmj2seclient;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
@@ -16,7 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ilog.rules.res.model.IlrAlreadyExistException;
@@ -52,6 +56,8 @@ import loan.Borrower;
 import loan.LoanRequest;
 import loan.Report;
 import odm.ds.kafka.producer.SampleProducer;
+import scala.io.Codec;
+import scala.util.parsing.json.JSONObject;
 
 public class RESJSEExecution {
 	
@@ -76,11 +82,63 @@ public class RESJSEExecution {
 		 xuconfig.getManagedXOMPersistenceConfig().setPersistenceType(MEMORY);
 		 return new IlrJ2SESessionFactory(factoryConfing);
 	 }
+	 
 	 /**
 	  *  Execute the rulePath using his path, it creates in first a sessionRequest, make sure the latest version of ruleSet is in usage
 	  *  @param rulesetPath : The path of the ruleset
 	  *  
 	  */
+	 public static loan.Borrower borrowerJson(){
+		 ObjectMapper objectMapper=new ObjectMapper();
+		 loan.Borrower borrower=null;
+		 String loanJson =
+				    "{ \"lastName\" : \"Smith\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":20000}";
+
+			try {
+				borrower=objectMapper.readValue(loanJson, loan.Borrower.class);				
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+			return borrower;
+	 }
+	 public static loan.LoanRequest loanRequestJson(){
+
+		 ObjectMapper objectMapper=new ObjectMapper();
+		 LoanRequest loanrequest=null;
+		 String requestJson =
+				    "{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}";
+
+			try {
+				loanrequest=objectMapper.readValue(requestJson, loan.LoanRequest.class);
+				System.out.println("Loan Amout "+loanrequest.getAmount());
+				System.out.println("Loan Duration "+loanrequest.getDuration());
+				
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+			return loanrequest;
+
+	 }
+	 public static Loan loanJson() {
+		 
+		 String payload=System.getProperty("payload");
+		 ObjectMapper objectMapper=new ObjectMapper();
+		 Loan loan=null;
+		 String loanJson =
+			 "{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}}";
+				 
+
+			try {
+				loan=objectMapper.readValue(loanJson, Loan.class);
+				System.out.println("Loan Borrower "+loan.getBorrower());
+				System.out.println("Loan Request "+loan.getLoanrequest());
+				
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+			return loan;
+	
+	 }
 	 public void executeRuleset(IlrPath rulesetPath) throws IlrFormatException,
      IlrSessionCreationException,
      IlrSessionException, JsonGenerationException, JsonMappingException, IOException {
@@ -89,24 +147,16 @@ public class RESJSEExecution {
 		 sessionRequest.setRulesetPath(rulesetPath);
 		 sessionRequest.setForceUptodate(true);
 		 Map<String, Object> inputParamters=new HashMap<String, Object>();
-		 java.util.Date birthDate=loan.DateUtil.makeDate(1976, 1, 1);
-//		 loan.Borrower borrower=new Borrower("Smith","John",birthDate,"11243344");
-		 ObjectMapper mapper = new ObjectMapper();
-		 String jsonInString = "{\"lastName\":\"Smith\",\"firstName\":John,\"birthDate\":birthDate}";
-		 loan.Borrower borrower=mapper.readValue(jsonInString, loan.Borrower.class);
-		 /*borrower.setZipCode("75012");
-		 borrower.setCreditScore(200);
-		 borrower.setYearlyIncome(20000);*/
-		 inputParamters.put("borrower", borrower);
-		 loan.LoanRequest loan=new LoanRequest(new Date(), 48, 100000, 1.2);
-		 inputParamters.put("loan", loan);
+		 inputParamters.put("borrower",  loanJson().getBorrower());
+		 inputParamters.put("loan", loanJson().getLoanrequest());
 		 sessionRequest.setInputParameters(inputParamters);
 		 IlrStatelessSession session=factory.createStatelessSession();
 		 IlrSessionResponse sessionResponse=session.execute(sessionRequest);
 		 Report report=(Report)(sessionResponse.getOutputParameters().get("report"));
 		 System.out.println(report.toString());
-		 SampleProducer myProducer=new SampleProducer();
+//		 SampleProducer myProducer=new SampleProducer(); */
 //		 borrower obj = mapper.readValue(jsonInString, borrower.class);
+//		 borrowerJson();
 
 		 
 		 

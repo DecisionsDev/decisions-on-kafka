@@ -63,20 +63,40 @@ public class Main
 	      }
 		private static final Options OPTIONS=new Options();
 		
-		
+	
+	public static String getPayload(CommandLine commandLine, String[] arguments) {
+		int nbOfArguments=arguments.length;
+    	if(nbOfArguments!=0) {
+    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
+    		if(!unprocessedArguments.isEmpty()) {
+    			String payloadAsString=arguments[1];
+    			if(unprocessedArguments.contains(payloadAsString)) {
+    				return payloadAsString;
+    			}
+    		}
+    		
+    	}
+    	return null;
+	}
     public static void main( String...arguments )
     {
         System.out.println( "Hello World!" );
         Main main=new Main();
         try {
         	  CommandLineParser parser=new DefaultParser();
+        	  System.out.println("partie 1");
               CommandLine commandLine = parser.parse(OPTIONS, arguments);
+              System.out.println("partie 2");
               IlrPath rulesetPath = main.getRulesetPath(commandLine, arguments);
+              System.out.println("partie 3");
               String ruleAppArchive = main.getRuleAppArchive(commandLine);
+              System.out.println("partie 4");
               RESJSEExecution execution = new RESJSEExecution();
               try {
             	  execution.loadRuleApp(ruleAppArchive);
+            	  System.out.println("partie 5");
             	  execution.executeRuleset(rulesetPath);
+            	  System.out.println("partie 6");
             	  
               } finally {
             	  execution.release();
@@ -99,8 +119,9 @@ public class Main
      * 
      */
     private String getRuleAppArchive( CommandLine commandLine) {
-    	
-    	return null;
+        SampleOption option = SampleOption.RuleApp;
+        String optionValue = commandLine.getOptionValue(option.getOption().getOpt());
+        return (optionValue == null) ? option.getDefaultValue() : optionValue;
     }
     
     /**
@@ -114,16 +135,21 @@ public class Main
      */
     private IlrPath getRulesetPath(CommandLine commandLine, String[] arguments) throws IllegalArgumentException {
     	String rulesetPathArgumentAsString=getMandatoryRulesetPathArgument(commandLine, arguments);
+    	System.out.println("partie 2-1");
     	if(rulesetPathArgumentAsString==null) {
     		String errorMessage=getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH, getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH));
+    		System.out.println("partie 2-2");
     		throw new IllegalArgumentException(errorMessage);
     	}
     	try {
-    		
+    		System.out.println("partie 2-3");
     		return IlrPath.parsePath(rulesetPathArgumentAsString);
     				
     	} catch (IlrFormatException exception) {
+    		System.out.println("partie 2-4");
+    		System.out.println(rulesetPathArgumentAsString);
     		String errorMessage=getMessage(SAMPLE_ERROR_INVALID_RULESET_PATH, rulesetPathArgumentAsString);
+    		System.out.println(errorMessage);
     		throw new IllegalArgumentException(errorMessage);	
     	}
     }
@@ -162,11 +188,14 @@ public class Main
      * 
      */
     private String getMandatoryRulesetPathArgument(CommandLine commandLine, String[] arguments) {
+    	System.out.println("Inside getMandatory");
     	int nbOfArguments=arguments.length;
     	if(nbOfArguments!=0) {
     		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
     		if(!unprocessedArguments.isEmpty()) {
-    			String rulesetPathArgumentAsString=arguments[nbOfArguments-1];
+    			String rulesetPathArgumentAsString=arguments[0];
+    			System.out.println("rulesetPathArgumentAsString "+arguments[0]);
+    			System.out.println("lenght "+arguments[1]);
     			if(unprocessedArguments.contains(rulesetPathArgumentAsString)) {
     				return rulesetPathArgumentAsString;
     			}
