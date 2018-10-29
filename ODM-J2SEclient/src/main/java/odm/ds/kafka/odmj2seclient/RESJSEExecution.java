@@ -88,58 +88,8 @@ public class RESJSEExecution {
 	  *  @param rulesetPath : The path of the ruleset
 	  *  
 	  */
-	 public static loan.Borrower borrowerJson(){
-		 ObjectMapper objectMapper=new ObjectMapper();
-		 loan.Borrower borrower=null;
-		 String loanJson =
-				    "{ \"lastName\" : \"Smith\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":20000}";
 
-			try {
-				borrower=objectMapper.readValue(loanJson, loan.Borrower.class);				
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
-			return borrower;
-	 }
-	 public static loan.LoanRequest loanRequestJson(){
-
-		 ObjectMapper objectMapper=new ObjectMapper();
-		 LoanRequest loanrequest=null;
-		 String requestJson =
-				    "{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}";
-
-			try {
-				loanrequest=objectMapper.readValue(requestJson, loan.LoanRequest.class);
-				System.out.println("Loan Amout "+loanrequest.getAmount());
-				System.out.println("Loan Duration "+loanrequest.getDuration());
-				
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
-			return loanrequest;
-
-	 }
-	 public static Loan loanJson() {
-		 
-		 String payload=System.getProperty("payload");
-		 ObjectMapper objectMapper=new ObjectMapper();
-		 Loan loan=null;
-		 String loanJson =
-			 "{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}}";
-				 
-
-			try {
-				loan=objectMapper.readValue(loanJson, Loan.class);
-				System.out.println("Loan Borrower "+loan.getBorrower());
-				System.out.println("Loan Request "+loan.getLoanrequest());
-				
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
-			return loan;
-	
-	 }
-	 public void executeRuleset(IlrPath rulesetPath) throws IlrFormatException,
+	 public void executeRuleset(IlrPath rulesetPath, Loan loan) throws IlrFormatException,
      IlrSessionCreationException,
      IlrSessionException, JsonGenerationException, JsonMappingException, IOException {
 		 
@@ -147,8 +97,8 @@ public class RESJSEExecution {
 		 sessionRequest.setRulesetPath(rulesetPath);
 		 sessionRequest.setForceUptodate(true);
 		 Map<String, Object> inputParamters=new HashMap<String, Object>();
-		 inputParamters.put("borrower",  loanJson().getBorrower());
-		 inputParamters.put("loan", loanJson().getLoanrequest());
+		 inputParamters.put("borrower",  loan.getBorrower());
+		 inputParamters.put("loan", loan.getLoanrequest());
 		 sessionRequest.setInputParameters(inputParamters);
 		 IlrStatelessSession session=factory.createStatelessSession();
 		 IlrSessionResponse sessionResponse=session.execute(sessionRequest);

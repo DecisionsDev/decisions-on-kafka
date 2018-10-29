@@ -8,6 +8,7 @@ import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_FOOTER_TAB;
 import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_FOOTER;
 import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_RULESET_PATH;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,8 +20,11 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ilog.rules.res.model.IlrFormatException;
 import ilog.rules.res.model.IlrPath;
+import loan.LoanRequest;
 
 /**
  * Hello world!
@@ -95,7 +99,7 @@ public class Main
               try {
             	  execution.loadRuleApp(ruleAppArchive);
             	  System.out.println("partie 5");
-            	  execution.executeRuleset(rulesetPath);
+            	  execution.executeRuleset(rulesetPath, loanJson(getPayload(commandLine, arguments)));
             	  System.out.println("partie 6");
             	  
               } finally {
@@ -204,4 +208,55 @@ public class Main
     	}
     	return null;
     }
+	 public static loan.Borrower borrowerJson(){
+		 ObjectMapper objectMapper=new ObjectMapper();
+		 loan.Borrower borrower=null;
+		 String loanJson =
+				    "{ \"lastName\" : \"Smith\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":20000}";
+
+			try {
+				borrower=objectMapper.readValue(loanJson, loan.Borrower.class);				
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+			return borrower;
+	 }
+	 public static loan.LoanRequest loanRequestJson(){
+
+		 ObjectMapper objectMapper=new ObjectMapper();
+		 LoanRequest loanrequest=null;
+		 String requestJson =
+				    "{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}";
+
+			try {
+				loanrequest=objectMapper.readValue(requestJson, loan.LoanRequest.class);
+				System.out.println("Loan Amout "+loanrequest.getAmount());
+				System.out.println("Loan Duration "+loanrequest.getDuration());
+				
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+			return loanrequest;
+
+	 }
+	 public static Loan loanJson( String payload) {
+		 
+		 ObjectMapper objectMapper=new ObjectMapper();
+		 Loan loan=null;
+		 String loanJson =
+			 "{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}}";
+				 
+
+			try {
+				loan=objectMapper.readValue(payload, Loan.class);
+				System.out.println("Loan Borrower "+loan.getBorrower());
+				System.out.println("Loan Request "+loan.getLoanrequest());
+				
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+			return loan;
+	
+	 }
+
 }
