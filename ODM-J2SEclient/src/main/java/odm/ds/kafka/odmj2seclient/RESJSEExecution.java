@@ -90,10 +90,13 @@ public class RESJSEExecution {
 		 sessionRequest.setForceUptodate(true);
 		 Map<String, Object> inputParamters=new HashMap<String, Object>();
 		 java.util.Date birthDate=loan.DateUtil.makeDate(1976, 1, 1);
-		 loan.Borrower borrower=new Borrower("Smith","John",birthDate,"11243344");
-		 borrower.setZipCode("75012");
+//		 loan.Borrower borrower=new Borrower("Smith","John",birthDate,"11243344");
+		 ObjectMapper mapper = new ObjectMapper();
+		 String jsonInString = "{\"lastName\":\"Smith\",\"firstName\":John,\"birthDate\":birthDate}";
+		 loan.Borrower borrower=mapper.readValue(jsonInString, loan.Borrower.class);
+		 /*borrower.setZipCode("75012");
 		 borrower.setCreditScore(200);
-		 borrower.setYearlyIncome(20000);
+		 borrower.setYearlyIncome(20000);*/
 		 inputParamters.put("borrower", borrower);
 		 loan.LoanRequest loan=new LoanRequest(new Date(), 48, 100000, 1.2);
 		 inputParamters.put("loan", loan);
@@ -103,10 +106,8 @@ public class RESJSEExecution {
 		 Report report=(Report)(sessionResponse.getOutputParameters().get("report"));
 		 System.out.println(report.toString());
 		 SampleProducer myProducer=new SampleProducer();
-		 ObjectMapper mapper = new ObjectMapper();
 //		 borrower obj = mapper.readValue(jsonInString, borrower.class);
-		 String jsonInString = "{\"lastName\":\"mkyong\",\"firstName\":7500,\"skills\":[\"java\",\"python\"]}";
-		 loan.Borrower borrower1=mapper.readValue(jsonInString, loan.Borrower.class);
+
 		 
 		 
 		 
