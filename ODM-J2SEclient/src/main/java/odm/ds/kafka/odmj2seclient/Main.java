@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ilog.rules.res.model.IlrFormatException;
 import ilog.rules.res.model.IlrPath;
 import loan.LoanRequest;
+import odm.ds.kafka.consumer.SampleConsumer;
 import odm.ds.kafka.producer.SampleProducer;
 
 public class Main 
@@ -92,7 +93,17 @@ public class Main
  //             SampleProducer myproducer=new SampleProducer();
               try {
             	  execution.loadRuleApp(ruleAppArchive);
-            	  execution.executeRuleset(rulesetPath, loanJson(getPayload(commandLine, arguments)), getPayload(commandLine, arguments));
+         		 SampleProducer myproducer=new SampleProducer();
+        		 String serverurl="localhost:9092";
+        		 String topicName="moussatest";;
+        		 String message="go";
+        		 int numberparam=2;
+        		 String consumergroup="test2";
+        		 myproducer.sendmessageString(myproducer.producerInstance(serverurl, numberparam), topicName, getPayload(commandLine, arguments));
+            	  // Le consommateur doit être à ce niveau pour servir executreRulet avec le payload
+        		 SampleConsumer myConsumer=new SampleConsumer();
+        		 myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicName);
+            	 execution.executeRuleset(rulesetPath, loanJson(getPayload(commandLine, arguments)), getPayload(commandLine, arguments));
             	  
               } finally {
             	  execution.release();

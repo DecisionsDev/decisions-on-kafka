@@ -82,14 +82,6 @@ public class RESJSEExecution {
 	 public void executeRuleset(IlrPath rulesetPath, Loan loan, String payload) throws IlrFormatException,
      IlrSessionCreationException,
      IlrSessionException, JsonGenerationException, JsonMappingException, IOException {
-		 SampleProducer myproducer=new SampleProducer();
-		 String serverurl="localhost:9092";
-		 String topicName="moussatest";;
-		 String message="go";
-		 String ConsumerGroup="test2";
-		 int numberparam=2;
-		 String consumergroup="test2";
-		 myproducer.sendmessageString(myproducer.producerInstance(serverurl, numberparam), topicName, payload);
 //		 SampleConsumer myConsumer=new SampleConsumer();
 //		 myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicName);		 
 		 IlrSessionRequest sessionRequest=factory.createRequest();

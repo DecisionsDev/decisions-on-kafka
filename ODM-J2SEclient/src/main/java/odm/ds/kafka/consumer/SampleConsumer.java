@@ -83,10 +83,12 @@ public class SampleConsumer {
             }
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
-		long endTimeMillis = System.currentTimeMillis() + 1000;
-//		while(true){
+//		long endTimeMillis = System.currentTimeMillis() + 1000;
+		System.out.println("Inside consume message");
+		while(true){
 		@SuppressWarnings("deprecation")
 		ConsumerRecords<String,String> records=consumer.poll(0100);
+		if(!records.isEmpty()) {
 		for(ConsumerRecord<String,String> record:records)
 
 //			System.out.printf("Offset=%d, key=%s,value=%s\n",record.offset(),record.key(),record.value());
@@ -95,7 +97,9 @@ public class SampleConsumer {
 //		if (System.currentTimeMillis() > endTimeMillis) {
             // do some clean-up
   //          return;
-//		}
+		}
+		break;
+		}
 //	}
 
 		
