@@ -95,6 +95,7 @@ public class Main
      		 String message="go";
      		 int numberparam=2;
      		 String consumergroup="test2";
+     		 String consumergroup2="test2";
      		 String topicNameR="repliestest";
  //             SampleProducer myproducer=new SampleProducer();
               try {
@@ -104,11 +105,12 @@ public class Main
             	 // Le consommateur doit être à ce niveau pour servir executreRulet avec le payload
         		 SampleConsumer myConsumer=new SampleConsumer();
         		 myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicName);
+        		
             	 execution.executeRuleset(rulesetPath, loanJson(getPayload(commandLine, arguments)), getPayload(commandLine, arguments),serverurl,topicName);
             	 
               } finally {
             	  SampleConsumer myConsumer1=new SampleConsumer();
-            	  myConsumer1.consumeMessage(myConsumer1.consumerInstance(serverurl, numberparam, consumergroup), topicNameR);
+            	  myConsumer1.consumeMessage(myConsumer1.consumerInstance(serverurl, numberparam, consumergroup2), topicNameR);
             	  execution.release();
               }
         

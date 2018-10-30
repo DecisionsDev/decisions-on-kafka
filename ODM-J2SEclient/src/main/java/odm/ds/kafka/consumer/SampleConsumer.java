@@ -97,9 +97,11 @@ public class SampleConsumer {
 //		if (System.currentTimeMillis() > endTimeMillis) {
             // do some clean-up
   //          return;
-		}
+			}
 		break;
+	
 		}
+		consumer.close();
 //	}
 
 		
