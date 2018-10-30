@@ -33,6 +33,11 @@ public class Main
 	   
 		private static final MessageFormatter formatter=new MessageFormatter();
 		private static String RULEAPP=formatter.getMessage(SAMPLE_RULEAPP);
+		private static String serverurl=null;
+		private static String topicNameRq=null;
+		private static String topicNameRp=null;
+		private static String consumergroup=null;
+		
 	   
 		private enum SampleOption {
 		   RuleApp(
@@ -65,7 +70,22 @@ public class Main
 	      }
 		private static final Options OPTIONS=new Options();
 		
-	
+	public static void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
+
+		int nbOfArguments=arguments.length;
+    	if(nbOfArguments!=0) {
+    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
+    		if(!unprocessedArguments.isEmpty()) {
+    			serverurl=arguments[2];
+    			topicNameRq=arguments[3];
+    			topicNameRp=arguments[4];
+    			consumergroup=arguments[5];
+    			
+    		}
+    		
+    	}
+
+	}
 	public static String getPayload(CommandLine commandLine, String[] arguments) {
 		int nbOfArguments=arguments.length;
     	if(nbOfArguments!=0) {
@@ -90,28 +110,26 @@ public class Main
               IlrPath rulesetPath = main.getRulesetPath(commandLine, arguments);
               String ruleAppArchive = main.getRuleAppArchive(commandLine);
               RESJSEExecution execution = new RESJSEExecution();
-              String serverurl="localhost:9092";
-     		 String topicName="moussatest";;
-     		 String message="go";
      		 int numberparam=2;
-     		 String consumergroup="test2";
-     		 String consumergroup2="test2";
-     		 String topicNameR="repliestest";
      		 String valeur=null;
  //             SampleProducer myproducer=new SampleProducer();
               try {
             	  execution.loadRuleApp(ruleAppArchive);
+            	  setUpkafkaParam(commandLine, arguments);
+            	  System.out.println("serverul "+serverurl);
+            	  System.out.println("topicNameRq"+topicNameRq);
+            	  System.out.println("topicNameRp "+topicNameRp);
          		 SampleProducer myproducer=new SampleProducer();
-         		 myproducer.sendmessageString(myproducer.producerInstance(serverurl, numberparam), topicName, getPayload(commandLine, arguments));
+         		 myproducer.sendmessageString(myproducer.producerInstance(serverurl, numberparam), topicNameRq, getPayload(commandLine, arguments));
             	 // Le consommateur doit être à ce niveau pour servir executreRulet avec le payload
         		 SampleConsumer myConsumer=new SampleConsumer();
-        		 valeur=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicName);
+        		 valeur=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
         		 System.out.println("valeur "+valeur);
-            	 execution.executeRuleset(rulesetPath, loanJson(valeur), serverurl, topicName);
+            	 execution.executeRuleset(rulesetPath, loanJson(valeur), serverurl, topicNameRp);
             	 
               } finally {
             	  SampleConsumer myConsumer1=new SampleConsumer();
-            	  myConsumer1.consumeMessage(myConsumer1.consumerInstance(serverurl, numberparam, consumergroup2), topicNameR);
+            	  myConsumer1.consumeMessage(myConsumer1.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
             	  execution.release();
               }
         
