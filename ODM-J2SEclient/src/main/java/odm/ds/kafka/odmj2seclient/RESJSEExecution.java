@@ -45,6 +45,7 @@ import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_NOT_PROCESSED;
 import static java.util.logging.Level.WARNING;
 import static ilog.rules.res.session.config.IlrPersistenceType.MEMORY;
 import loan.Report;
+import odm.ds.kafka.consumer.SampleConsumer;
 import odm.ds.kafka.producer.SampleProducer;
 public class RESJSEExecution {
 	
@@ -61,12 +62,14 @@ public class RESJSEExecution {
 	 */
 	
 	 private static IlrJ2SESessionFactory createJ2SESessionFactory() {
-	
+		 
 		 IlrSessionFactoryConfig factoryConfing=IlrJ2SESessionFactory.createDefaultConfig();
+//		 SampleConsumer myConsumer=new SampleConsumer();
 		 IlrXUConfig xuconfig=factoryConfing.getXUConfig();
 		 xuconfig.setLogAutoFlushEnabled(true);
 		 xuconfig.getPersistenceConfig().setPersistenceType(MEMORY);
 		 xuconfig.getManagedXOMPersistenceConfig().setPersistenceType(MEMORY);
+		 SampleConsumer myConsumer=new SampleConsumer();
 		 return new IlrJ2SESessionFactory(factoryConfing);
 	 }
 	 
@@ -76,23 +79,32 @@ public class RESJSEExecution {
 	  *  
 	  */
 
-	 public void executeRuleset(IlrPath rulesetPath, Loan loan) throws IlrFormatException,
+	 public void executeRuleset(IlrPath rulesetPath, Loan loan, String payload) throws IlrFormatException,
      IlrSessionCreationException,
      IlrSessionException, JsonGenerationException, JsonMappingException, IOException {
-		 
+		 SampleProducer myproducer=new SampleProducer();
+		 String serverurl="localhost:9092";
+		 String topicName="moussatest";;
+		 String message="go";
+		 String ConsumerGroup="test2";
+		 int numberparam=2;
+		 String consumergroup="test2";
+		 myproducer.sendmessageString(myproducer.producerInstance(serverurl, numberparam), topicName, payload);
+//		 SampleConsumer myConsumer=new SampleConsumer();
+//		 myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicName);		 
 		 IlrSessionRequest sessionRequest=factory.createRequest();
 		 sessionRequest.setRulesetPath(rulesetPath);
 		 sessionRequest.setForceUptodate(true);
 		 Map<String, Object> inputParamters=new HashMap<String, Object>();
+		 // Il recupère ici le message du topic et l'affecte à la session
 		 inputParamters.put("borrower",  loan.getBorrower());
 		 inputParamters.put("loan", loan.getLoanrequest());
 		 sessionRequest.setInputParameters(inputParamters);
 		 IlrStatelessSession session=factory.createStatelessSession();
 		 IlrSessionResponse sessionResponse=session.execute(sessionRequest);
+		 // Au momment du report on creer le json de retour qu'on met dans l'autre topic
 		 Report report=(Report)(sessionResponse.getOutputParameters().get("report"));
-		 System.out.println(report.toString());
-		 SampleProducer myproducer=new SampleProducer();
-		 
+		 System.out.println("Display the json result "+report.toString());
 		 
 	 }
 	 

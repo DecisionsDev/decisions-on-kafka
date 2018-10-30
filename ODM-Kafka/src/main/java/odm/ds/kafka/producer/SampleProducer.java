@@ -33,6 +33,7 @@ public class SampleProducer {
 	// Create an instance of Producer
 	public Producer<String, String> producerInstance (String serverurl,int numberparam) 
 	{
+		System.out.println("Inside Producer 1");
 		mylogger.info("Current Locale: " + Locale.getDefault());
 		if(numberparam==0){
 			mylogger.severe(mybundle.getString("wrong_topic"));
@@ -52,6 +53,7 @@ public class SampleProducer {
 		props.put("partitions.0", "partition 0");
 		props.put("partitions.1", "partition 1");
 		Producer<String,String> producer=new KafkaProducer<String,String>(props);
+		System.out.println("Inside Producer 2");
 		return producer;
 	}
 	
@@ -67,9 +69,11 @@ public class SampleProducer {
 	
 	// Send a String message to a topic
 	public void sendmessageString(Producer<String, String> producer,String topicname,String message){
+		System.out.println("Inside Send message Partie 1");
 		String topicName=topicname;
 		producer.send(new ProducerRecord<String,String>(topicName,"2",message));
 		mylogger.info(mybundle.getString("notif_sent"));
+		System.out.println("Inside Send Message Partie 2");
 		producer.close();
 		
 	}

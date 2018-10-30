@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ilog.rules.res.model.IlrFormatException;
 import ilog.rules.res.model.IlrPath;
 import loan.LoanRequest;
+import odm.ds.kafka.producer.SampleProducer;
 
 public class Main 
 {
@@ -88,9 +89,10 @@ public class Main
               IlrPath rulesetPath = main.getRulesetPath(commandLine, arguments);
               String ruleAppArchive = main.getRuleAppArchive(commandLine);
               RESJSEExecution execution = new RESJSEExecution();
+ //             SampleProducer myproducer=new SampleProducer();
               try {
             	  execution.loadRuleApp(ruleAppArchive);
-            	  execution.executeRuleset(rulesetPath, loanJson(getPayload(commandLine, arguments)));
+            	  execution.executeRuleset(rulesetPath, loanJson(getPayload(commandLine, arguments)), getPayload(commandLine, arguments));
             	  
               } finally {
             	  execution.release();
