@@ -79,11 +79,12 @@ public class RESJSEExecution {
 	  *  
 	  */
 
-	 public void executeRuleset(IlrPath rulesetPath, Loan loan, String payload) throws IlrFormatException,
+	 public void executeRuleset(IlrPath rulesetPath, Loan loan, String payload, String serverurl, String topicNameR) throws IlrFormatException,
      IlrSessionCreationException,
      IlrSessionException, JsonGenerationException, JsonMappingException, IOException {
 //		 SampleConsumer myConsumer=new SampleConsumer();
-//		 myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicName);		 
+//		 myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicName);
+		 topicNameR="repliestest";
 		 IlrSessionRequest sessionRequest=factory.createRequest();
 		 sessionRequest.setRulesetPath(rulesetPath);
 		 sessionRequest.setForceUptodate(true);
@@ -97,6 +98,8 @@ public class RESJSEExecution {
 		 // Au momment du report on creer le json de retour qu'on met dans l'autre topic
 		 Report report=(Report)(sessionResponse.getOutputParameters().get("report"));
 		 System.out.println("Display the json result "+report.toString());
+		 SampleProducer myProducer=new SampleProducer();
+		 myProducer.sendmessageString(myProducer.producerInstance(serverurl, 3), topicNameR, report.toString());
 		 
 	 }
 	 

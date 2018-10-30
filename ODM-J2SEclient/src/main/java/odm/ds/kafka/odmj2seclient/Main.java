@@ -90,22 +90,25 @@ public class Main
               IlrPath rulesetPath = main.getRulesetPath(commandLine, arguments);
               String ruleAppArchive = main.getRuleAppArchive(commandLine);
               RESJSEExecution execution = new RESJSEExecution();
+              String serverurl="localhost:9092";
+     		 String topicName="moussatest";;
+     		 String message="go";
+     		 int numberparam=2;
+     		 String consumergroup="test2";
+     		 String topicNameR="repliestest";
  //             SampleProducer myproducer=new SampleProducer();
               try {
             	  execution.loadRuleApp(ruleAppArchive);
          		 SampleProducer myproducer=new SampleProducer();
-        		 String serverurl="localhost:9092";
-        		 String topicName="moussatest";;
-        		 String message="go";
-        		 int numberparam=2;
-        		 String consumergroup="test2";
-        		 myproducer.sendmessageString(myproducer.producerInstance(serverurl, numberparam), topicName, getPayload(commandLine, arguments));
-            	  // Le consommateur doit être à ce niveau pour servir executreRulet avec le payload
+         		 myproducer.sendmessageString(myproducer.producerInstance(serverurl, numberparam), topicName, getPayload(commandLine, arguments));
+            	 // Le consommateur doit être à ce niveau pour servir executreRulet avec le payload
         		 SampleConsumer myConsumer=new SampleConsumer();
         		 myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicName);
-            	 execution.executeRuleset(rulesetPath, loanJson(getPayload(commandLine, arguments)), getPayload(commandLine, arguments));
-            	  
+            	 execution.executeRuleset(rulesetPath, loanJson(getPayload(commandLine, arguments)), getPayload(commandLine, arguments),serverurl,topicName);
+            	 
               } finally {
+            	  SampleConsumer myConsumer1=new SampleConsumer();
+            	  myConsumer1.consumeMessage(myConsumer1.consumerInstance(serverurl, numberparam, consumergroup), topicNameR);
             	  execution.release();
               }
         
