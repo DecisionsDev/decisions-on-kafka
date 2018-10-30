@@ -73,7 +73,8 @@ public class SampleConsumer {
 	 *  
 	 */
 	
-	public void consumeMessage(KafkaConsumer<String, String> consumer, String topicName){
+	public String consumeMessage(KafkaConsumer<String, String> consumer, String topicName){
+		String data=null;
 		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
             public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
                 System.out.printf("%s topic-partitions are revoked from this consumer\n", Arrays.toString(partitions.toArray()));
@@ -89,21 +90,23 @@ public class SampleConsumer {
 		@SuppressWarnings("deprecation")
 		ConsumerRecords<String,String> records=consumer.poll(0100);
 		if(!records.isEmpty()) {
-		for(ConsumerRecord<String,String> record:records)
+		for(ConsumerRecord<String,String> record:records) {
 
 //			System.out.printf("Offset=%d, key=%s,value=%s\n",record.offset(),record.key(),record.value());
 			//myLogger.info("Offset=%d, key=%s,value=%s\n "+record.offset()+record.key()+record.value());
 			myLogger.info(record.value());
+			data=record.value();
 //		if (System.currentTimeMillis() > endTimeMillis) {
             // do some clean-up
   //          return;
 			}
+		}
 		break;
 	
 		}
 		consumer.close();
 //	}
-
+		return data;
 		
 	}
 

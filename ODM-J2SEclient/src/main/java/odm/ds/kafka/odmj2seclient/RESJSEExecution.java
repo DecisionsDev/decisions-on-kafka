@@ -79,7 +79,7 @@ public class RESJSEExecution {
 	  *  
 	  */
 
-	 public void executeRuleset(IlrPath rulesetPath, Loan loan, String payload, String serverurl, String topicNameR) throws IlrFormatException,
+	 public void executeRuleset(IlrPath rulesetPath, Loan loan, String serverurl, String topicNameR) throws IlrFormatException,
      IlrSessionCreationException,
      IlrSessionException, JsonGenerationException, JsonMappingException, IOException {
 //		 SampleConsumer myConsumer=new SampleConsumer();
