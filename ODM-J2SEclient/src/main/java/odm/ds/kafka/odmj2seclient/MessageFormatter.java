@@ -16,7 +16,6 @@
  *
  */
 package odm.ds.kafka.odmj2seclient;
-
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
@@ -33,7 +32,7 @@ public class MessageFormatter {
 	 * 
 	 */
 	String getMessage(String key, Object...arguments) {
-		return null;
+		return MessageFormat.format(getBundle().getString(key), arguments);
 	}
 	/**
 	 *  To get the message in the right format
@@ -44,7 +43,7 @@ public class MessageFormatter {
 	private ResourceBundle getBundle() {
 		
 		if(bundle==null) {
-			bundle=ResourceBundle.getBundle("MESSAGE_BUNDLE");
+			bundle=ResourceBundle.getBundle(MESSAGE_BUNDLE);
 		}
 		return bundle;
 		

@@ -3,10 +3,8 @@ package odm.ds.kafka.odmj2seclient;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,13 +13,9 @@ import java.util.function.Consumer;
 import java.util.jar.JarInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 import ilog.rules.res.model.IlrAlreadyExistException;
 import ilog.rules.res.model.IlrFormatException;
@@ -35,7 +29,6 @@ import ilog.rules.res.model.archive.IlrArchiveManager;
 import ilog.rules.res.session.IlrJ2SESessionFactory;
 import ilog.rules.res.session.IlrSessionCreationException;
 import ilog.rules.res.session.IlrSessionException;
-import ilog.rules.res.session.IlrSessionFactory;
 import ilog.rules.res.session.IlrSessionRequest;
 import ilog.rules.res.session.IlrSessionResponse;
 import ilog.rules.res.session.IlrStatelessSession;
@@ -51,14 +44,7 @@ import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_PROCESSED;
 import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_NOT_PROCESSED;
 import static java.util.logging.Level.WARNING;
 import static ilog.rules.res.session.config.IlrPersistenceType.MEMORY;
-
-import loan.Borrower;
-import loan.LoanRequest;
 import loan.Report;
-import odm.ds.kafka.producer.SampleProducer;
-import scala.io.Codec;
-import scala.util.parsing.json.JSONObject;
-
 public class RESJSEExecution {
 	
 	
@@ -104,10 +90,6 @@ public class RESJSEExecution {
 		 IlrSessionResponse sessionResponse=session.execute(sessionRequest);
 		 Report report=(Report)(sessionResponse.getOutputParameters().get("report"));
 		 System.out.println(report.toString());
-//		 SampleProducer myProducer=new SampleProducer(); */
-//		 borrower obj = mapper.readValue(jsonInString, borrower.class);
-//		 borrowerJson();
-
 		 
 		 
 		 
