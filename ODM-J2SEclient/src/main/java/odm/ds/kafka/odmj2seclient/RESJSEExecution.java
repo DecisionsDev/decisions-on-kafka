@@ -45,6 +45,7 @@ import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_NOT_PROCESSED;
 import static java.util.logging.Level.WARNING;
 import static ilog.rules.res.session.config.IlrPersistenceType.MEMORY;
 import loan.Report;
+import odm.ds.kafka.producer.SampleProducer;
 public class RESJSEExecution {
 	
 	
@@ -90,7 +91,7 @@ public class RESJSEExecution {
 		 IlrSessionResponse sessionResponse=session.execute(sessionRequest);
 		 Report report=(Report)(sessionResponse.getOutputParameters().get("report"));
 		 System.out.println(report.toString());
-		 
+		 SampleProducer myproducer=new SampleProducer();
 		 
 		 
 	 }

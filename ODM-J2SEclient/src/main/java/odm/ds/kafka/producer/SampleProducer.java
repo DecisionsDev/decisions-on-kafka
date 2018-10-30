@@ -30,7 +30,13 @@ public class SampleProducer {
 	final Logger mylogger=Logger.getLogger(SampleProducer.class.getName());
 	ResourceBundle mybundle=ResourceBundle.getBundle("MessagesBundle");
 	
-	// Create an instance of Producer
+	/**
+	 * 
+	 * @param serverurl
+	 * @param numberparam
+	 * @return
+	 * 
+	 */
 	public Producer<String, String> producerInstance (String serverurl,int numberparam) 
 	{
 		mylogger.info("Current Locale: " + Locale.getDefault());
@@ -55,7 +61,12 @@ public class SampleProducer {
 		return producer;
 	}
 	
-	// Send a message the iterrative message to a topic
+	/**
+	 * Send an iterative message to a topic
+	 * 
+	 * @param producer
+	 * @param topicname
+	 */
 	public void sendmessage(Producer<String, String> producer,String topicname){
 		String topicName=topicname;
 		for(int i=0;i<6;i++)
@@ -65,7 +76,13 @@ public class SampleProducer {
 		
 	}
 	
-	// Send a String message to a topic
+	/**
+	 * Send a String message to a topic
+	 * @param producer
+	 * @param topicname
+	 * @param message
+	 * 
+	 */
 	public void sendmessageString(Producer<String, String> producer,String topicname,String message){
 		String topicName=topicname;
 		producer.send(new ProducerRecord<String,String>(topicName,"2",message));

@@ -26,10 +26,6 @@ import ilog.rules.res.model.IlrFormatException;
 import ilog.rules.res.model.IlrPath;
 import loan.LoanRequest;
 
-/**
- * Hello world!
- *
- */
 public class Main 
 {
 	   
@@ -84,23 +80,17 @@ public class Main
 	}
     public static void main( String...arguments )
     {
-        System.out.println( "Hello World!" );
+
         Main main=new Main();
         try {
         	  CommandLineParser parser=new DefaultParser();
-        	  System.out.println("partie 1");
               CommandLine commandLine = parser.parse(OPTIONS, arguments);
-              System.out.println("partie 2");
               IlrPath rulesetPath = main.getRulesetPath(commandLine, arguments);
-              System.out.println("partie 3");
               String ruleAppArchive = main.getRuleAppArchive(commandLine);
-              System.out.println("partie 4");
               RESJSEExecution execution = new RESJSEExecution();
               try {
             	  execution.loadRuleApp(ruleAppArchive);
-            	  System.out.println("partie 5");
             	  execution.executeRuleset(rulesetPath, loanJson(getPayload(commandLine, arguments)));
-            	  System.out.println("partie 6");
             	  
               } finally {
             	  execution.release();
@@ -139,18 +129,14 @@ public class Main
      */
     private IlrPath getRulesetPath(CommandLine commandLine, String[] arguments) throws IllegalArgumentException {
     	String rulesetPathArgumentAsString=getMandatoryRulesetPathArgument(commandLine, arguments);
-    	System.out.println("partie 2-1");
     	if(rulesetPathArgumentAsString==null) {
     		String errorMessage=getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH, getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH));
-    		System.out.println("partie 2-2");
     		throw new IllegalArgumentException(errorMessage);
     	}
     	try {
-    		System.out.println("partie 2-3");
     		return IlrPath.parsePath(rulesetPathArgumentAsString);
     				
     	} catch (IlrFormatException exception) {
-    		System.out.println("partie 2-4");
     		System.out.println(rulesetPathArgumentAsString);
     		String errorMessage=getMessage(SAMPLE_ERROR_INVALID_RULESET_PATH, rulesetPathArgumentAsString);
     		System.out.println(errorMessage);
@@ -208,6 +194,7 @@ public class Main
     	}
     	return null;
     }
+    
 	 public static loan.Borrower borrowerJson(){
 		 ObjectMapper objectMapper=new ObjectMapper();
 		 loan.Borrower borrower=null;
