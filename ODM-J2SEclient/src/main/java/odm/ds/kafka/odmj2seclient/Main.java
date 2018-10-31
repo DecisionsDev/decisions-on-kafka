@@ -33,10 +33,10 @@ public class Main
 	   
 		private static final MessageFormatter formatter=new MessageFormatter();
 		private static String RULEAPP=formatter.getMessage(SAMPLE_RULEAPP);
-		private static String serverurl=null;
-		private static String topicNameRq=null;
-		private static String topicNameRp=null;
-		private static String consumergroup=null;
+		private static String serverurl;
+		private static String topicNameRq;
+		private static String topicNameRp;
+		private static String consumergroup;
 		
 	   
 		private enum SampleOption {
