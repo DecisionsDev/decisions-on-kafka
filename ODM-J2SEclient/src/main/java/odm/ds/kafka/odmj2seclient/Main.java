@@ -121,7 +121,6 @@ public class Main
             	  System.out.println("topicNameRp "+topicNameRp);
          		 SampleProducer myproducer=new SampleProducer();
          		 myproducer.sendmessageString(myproducer.producerInstance(serverurl, numberparam), topicNameRq, getPayload(commandLine, arguments));
-            	 // Le consommateur doit être à ce niveau pour servir executreRulet avec le payload
         		 SampleConsumer myConsumer=new SampleConsumer();
         		 valeur=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
         		 System.out.println("valeur "+valeur);

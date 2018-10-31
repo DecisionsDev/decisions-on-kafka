@@ -69,7 +69,6 @@ public class RESJSEExecution {
 		 xuconfig.setLogAutoFlushEnabled(true);
 		 xuconfig.getPersistenceConfig().setPersistenceType(MEMORY);
 		 xuconfig.getManagedXOMPersistenceConfig().setPersistenceType(MEMORY);
-		 SampleConsumer myConsumer=new SampleConsumer();
 		 return new IlrJ2SESessionFactory(factoryConfing);
 	 }
 	 
