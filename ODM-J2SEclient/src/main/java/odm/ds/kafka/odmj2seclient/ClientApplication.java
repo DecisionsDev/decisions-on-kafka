@@ -22,5 +22,8 @@ public class ClientApplication {
 		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
 	
 	}
+	
+	
+	
 
 }

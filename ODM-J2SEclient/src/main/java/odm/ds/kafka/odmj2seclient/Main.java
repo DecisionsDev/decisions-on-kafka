@@ -105,27 +105,26 @@ public class Main
 
         Main main=new Main();
         try {
-        	  CommandLineParser parser=new DefaultParser();
-              CommandLine commandLine = parser.parse(OPTIONS, arguments);
-              IlrPath rulesetPath = main.getRulesetPath(commandLine, arguments);
-              String ruleAppArchive = main.getRuleAppArchive(commandLine);
-              RESJSEExecution execution = new RESJSEExecution();
+        	 CommandLineParser parser=new DefaultParser();
+             CommandLine commandLine = parser.parse(OPTIONS, arguments);
+             IlrPath rulesetPath = main.getRulesetPath(commandLine, arguments);
+             RESJSEExecution execution = new RESJSEExecution();
      		 int numberparam=2;
      		 String valeur=null;
- //          SampleProducer myproducer=new SampleProducer();
+     		 setUpkafkaParam(commandLine, arguments);
+     		 ClientApplication.setUpClientApp(serverurl, numberparam, topicNameRq, getPayload(commandLine, arguments), consumergroup, topicNameRp);
               try {
-            	  execution.loadRuleApp(ruleAppArchive);
-            	  setUpkafkaParam(commandLine, arguments);
             	  System.out.println("serverul "+serverurl);
             	  System.out.println("topicNameRq"+topicNameRq);
             	  System.out.println("topicNameRp "+topicNameRp);
-         		 SampleProducer myproducer=new SampleProducer();
-         		 myproducer.sendmessageString(myproducer.producerInstance(serverurl, numberparam), topicNameRq, getPayload(commandLine, arguments));
-        		 SampleConsumer myConsumer=new SampleConsumer();
-        		 valeur=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
-        		 System.out.println("valeur "+valeur);
-            	 execution.executeRuleset(rulesetPath, loanJson(valeur), serverurl, topicNameRp);
-            	 
+ /*           	  SampleProducer myproducer=new SampleProducer();
+            	  myproducer.sendmessageString(myproducer.producerInstance(serverurl, numberparam), topicNameRq, getPayload(commandLine, arguments));
+ */           	  SampleConsumer myConsumer=new SampleConsumer(); 
+  //          	  valeur=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
+  //          	  System.out.println("valeur "+valeur);
+ //           	  execution.executeRuleset(rulesetPath, loanJson(valeur), serverurl, topicNameRp);
+            	  BusinessApplication.setUpBussinessApp(serverurl, numberparam, consumergroup, topicNameRq, rulesetPath, valeur);
+            	  
               } finally {
             	  SampleConsumer myConsumer1=new SampleConsumer();
             	  myConsumer1.consumeMessage(myConsumer1.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
@@ -262,24 +261,6 @@ public class Main
 			return loanrequest;
 
 	 }
-	 public static Loan loanJson( String payload) {
-		 
-		 ObjectMapper objectMapper=new ObjectMapper();
-		 Loan loan=null;
-		 String loanJson =
-			 "{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}}";
-				 
 
-			try {
-				loan=objectMapper.readValue(payload, Loan.class);
-				System.out.println("Loan Borrower "+loan.getBorrower());
-				System.out.println("Loan Request "+loan.getLoanrequest());
-				
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
-			return loan;
-	
-	 }
 
 }
