@@ -13,10 +13,27 @@ import odm.ds.kafka.consumer.SampleConsumer;
 
 public class BusinessApplication {
 
-	// Create a Consumer on topic Rq
-	// Execute the rulesetPath
-	// Create a Producer on topic Rp
 
+	/**
+	 * Create a Consumer on topic Rq
+	 * Execute the rulesetPath
+	 * Create a Producer on topic Rp
+	 * 
+	 * @param serverurl
+	 * @param numberparam
+	 * @param consumergroup
+	 * @param topicNameRq
+	 * @param rulesetPath
+	 * @param loan
+	 * @param topicNameRp
+	 * @throws IlrFormatException
+	 * @throws IlrSessionCreationException
+	 * @throws JsonGenerationException
+	 * @throws JsonMappingException
+	 * @throws IlrSessionException
+	 * @throws IOException
+	 * 
+	 */
 	public static void setUpBussinessApp(String serverurl, int numberparam, String consumergroup, String topicNameRq, IlrPath rulesetPath, Loan loan, String
 			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
 		SampleConsumer myConsumer=new SampleConsumer();
