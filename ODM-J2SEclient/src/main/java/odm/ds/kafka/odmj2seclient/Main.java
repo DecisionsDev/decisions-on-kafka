@@ -112,17 +112,14 @@ public class Main
      		 int numberparam=2;
      		 String valeur=null;
      		 setUpkafkaParam(commandLine, arguments);
-     		 ClientApplication.setUpClientApp(serverurl, numberparam, topicNameRq, getPayload(commandLine, arguments), consumergroup, topicNameRp);
+     		 for(int i=0;i<10;i++) {   		 
+     			 ClientApplication.setUpClientApp(serverurl, numberparam, topicNameRq, getPayload(commandLine, arguments), consumergroup, topicNameRp);
+     		 System.out.println("i is "+i);
+     		 }
               try {
             	  System.out.println("serverul "+serverurl);
             	  System.out.println("topicNameRq"+topicNameRq);
             	  System.out.println("topicNameRp "+topicNameRp);
- /*           	  SampleProducer myproducer=new SampleProducer();
-            	  myproducer.sendmessageString(myproducer.producerInstance(serverurl, numberparam), topicNameRq, getPayload(commandLine, arguments));
- */           	  SampleConsumer myConsumer=new SampleConsumer(); 
-  //          	  valeur=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
-  //          	  System.out.println("valeur "+valeur);
- //           	  execution.executeRuleset(rulesetPath, loanJson(valeur), serverurl, topicNameRp);
             	  BusinessApplication.setUpBussinessApp(serverurl, numberparam, consumergroup, topicNameRq, rulesetPath, valeur);
             	  
               } finally {

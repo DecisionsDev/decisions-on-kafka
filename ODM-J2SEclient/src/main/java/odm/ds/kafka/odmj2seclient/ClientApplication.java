@@ -18,8 +18,8 @@ public class ClientApplication {
 	public static void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String consumergroup, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
-		SampleConsumer myConsumer=new SampleConsumer();
-		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
+//		SampleConsumer myConsumer=new SampleConsumer();
+//		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
 	
 	}
 	

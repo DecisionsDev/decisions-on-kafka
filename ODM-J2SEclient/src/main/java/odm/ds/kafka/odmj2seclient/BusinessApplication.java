@@ -1,6 +1,16 @@
 package odm.ds.kafka.odmj2seclient;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.ResourceBundle;
+import java.util.logging.Logger;
+
+import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.TopicPartition;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -14,6 +24,9 @@ import odm.ds.kafka.consumer.SampleConsumer;
 
 public class BusinessApplication {
 
+	
+	final static Logger myLogger=Logger.getLogger(SampleConsumer.class.getName());
+	static ResourceBundle mybundle = ResourceBundle.getBundle("MessagesBundle");
 
 	/**
 	 * Create a Consumer on topic Rq
@@ -39,17 +52,55 @@ public class BusinessApplication {
 			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
 		SampleConsumer myConsumer=new SampleConsumer();
 		String payload=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
+//		String[] payloads=myConsumer.consumeMessage2(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
+//		for (String payload:payloads) System.out.println("payload is "+payload);
 		RESJSEExecution execution = new RESJSEExecution();
+//		for (String payload:payloads)
 		execution.executeRuleset(rulesetPath, loanJson(payload), serverurl, topicNameRp);
+//		consumeAndexec(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq, serverurl, rulesetPath, topicNameRp);
 		
+	}
+	
+	public static void consumeAndexec(KafkaConsumer<String, String> consumer, String topicName,String serverurl,IlrPath rulesetPath,String
+			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
+		RESJSEExecution execution = new RESJSEExecution();
+		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
+            public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
+                System.out.printf("%s topic-partitions are revoked from this consumer\n", Arrays.toString(partitions.toArray()));
+            }
+            public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
+                System.out.printf("%s topic-partitions are assigned to this consumer\n", Arrays.toString(partitions.toArray()));
+            }
+        });
+		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
+//		long endTimeMillis = System.currentTimeMillis() + 1000;
+		System.out.println("Inside consume message");
+		int i=0;
+		
+		while(true){
+		@SuppressWarnings("deprecation")
+		ConsumerRecords<String,String> records=consumer.poll(1000);
+		if(!records.isEmpty()) {
+		for(ConsumerRecord<String,String> record:records) {
+
+//			System.out.printf("Offset=%d, key=%s,value=%s\n",record.offset(),record.key(),record.value());
+			//myLogger.info("Offset=%d, key=%s,value=%s\n "+record.offset()+record.key()+record.value());
+			myLogger.info(record.value());
+//		if (System.currentTimeMillis() > endTimeMillis) {
+            // do some clean-up
+  //          return;
+			execution.executeRuleset(rulesetPath, loanJson(record.value()), serverurl, topicNameRp);
+			}
+		}
+		break;
+	
+		}
+		consumer.close();
 	}
 	 public static Loan loanJson( String payload) {
 		 
 		 ObjectMapper objectMapper=new ObjectMapper();
-		 Loan loan=null;
-		 String loanJson =
-			 "{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}}";
-				 
+		 Loan loan=null;				 
 
 			try {
 				loan=objectMapper.readValue(payload, Loan.class);

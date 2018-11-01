@@ -88,14 +88,56 @@ public class SampleConsumer {
 		System.out.println("Inside consume message");
 		while(true){
 		@SuppressWarnings("deprecation")
-		ConsumerRecords<String,String> records=consumer.poll(0100);
+		ConsumerRecords<String,String> records=consumer.poll(1000);
 		if(!records.isEmpty()) {
 		for(ConsumerRecord<String,String> record:records) {
 
 //			System.out.printf("Offset=%d, key=%s,value=%s\n",record.offset(),record.key(),record.value());
 			//myLogger.info("Offset=%d, key=%s,value=%s\n "+record.offset()+record.key()+record.value());
 			myLogger.info(record.value());
+			myLogger.info("partition numero %i "+record.partition());
 			data=record.value();
+//		if (System.currentTimeMillis() > endTimeMillis) {
+            // do some clean-up
+  //          return;
+			}
+		}
+		break;
+	
+		}
+		consumer.close();
+//	}
+		return data;
+		
+	}
+	
+	@SuppressWarnings("null")
+	public String[] consumeMessage2(KafkaConsumer<String, String> consumer, String topicName){
+		String[] data = null;
+		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
+            public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
+                System.out.printf("%s topic-partitions are revoked from this consumer\n", Arrays.toString(partitions.toArray()));
+            }
+            public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
+                System.out.printf("%s topic-partitions are assigned to this consumer\n", Arrays.toString(partitions.toArray()));
+            }
+        });
+		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
+//		long endTimeMillis = System.currentTimeMillis() + 1000;
+		System.out.println("Inside consume message");
+		int i=0;
+		
+		while(true){
+		@SuppressWarnings("deprecation")
+		ConsumerRecords<String,String> records=consumer.poll(1000);
+		if(!records.isEmpty()) {
+		for(ConsumerRecord<String,String> record:records) {
+
+//			System.out.printf("Offset=%d, key=%s,value=%s\n",record.offset(),record.key(),record.value());
+			//myLogger.info("Offset=%d, key=%s,value=%s\n "+record.offset()+record.key()+record.value());
+			myLogger.info(record.value());
+			data[i]=record.value();
+			i++;
 //		if (System.currentTimeMillis() > endTimeMillis) {
             // do some clean-up
   //          return;
