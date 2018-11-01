@@ -113,7 +113,7 @@ public class SampleConsumer {
 	
 	@SuppressWarnings("null")
 	public String[] consumeMessage2(KafkaConsumer<String, String> consumer, String topicName){
-		String[] data = new String[200];
+		String[] data = new String[10];
 		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
             public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
                 System.out.printf("%s topic-partitions are revoked from this consumer\n", Arrays.toString(partitions.toArray()));
