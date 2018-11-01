@@ -113,7 +113,7 @@ public class SampleConsumer {
 	
 	@SuppressWarnings("null")
 	public String[] consumeMessage2(KafkaConsumer<String, String> consumer, String topicName){
-		String[] data = null;
+		String[] data = new String[200];
 		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
             public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
                 System.out.printf("%s topic-partitions are revoked from this consumer\n", Arrays.toString(partitions.toArray()));
@@ -124,12 +124,12 @@ public class SampleConsumer {
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
 //		long endTimeMillis = System.currentTimeMillis() + 1000;
-		System.out.println("Inside consume message");
+		System.out.println("Inside consume message 2");
 		int i=0;
-		
 		while(true){
-		@SuppressWarnings("deprecation")
+		System.out.println("Inside the while loop");
 		ConsumerRecords<String,String> records=consumer.poll(1000);
+		System.out.println("Inside the while loop 2");
 		if(!records.isEmpty()) {
 		for(ConsumerRecord<String,String> record:records) {
 
@@ -148,6 +148,7 @@ public class SampleConsumer {
 		}
 		consumer.close();
 //	}
+		System.out.println("Before returning value");
 		return data;
 		
 	}

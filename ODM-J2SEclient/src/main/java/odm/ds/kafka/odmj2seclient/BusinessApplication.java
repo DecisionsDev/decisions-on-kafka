@@ -51,12 +51,12 @@ public class BusinessApplication {
 	public static void setUpBussinessApp(String serverurl, int numberparam, String consumergroup, String topicNameRq, IlrPath rulesetPath, String
 			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
 		SampleConsumer myConsumer=new SampleConsumer();
-		String payload=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
-//		String[] payloads=myConsumer.consumeMessage2(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
-//		for (String payload:payloads) System.out.println("payload is "+payload);
+//		String payload=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
+		String[] payloads=myConsumer.consumeMessage2(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
+		for (String payload:payloads) System.out.println("payload is "+payload);
 		RESJSEExecution execution = new RESJSEExecution();
 //		for (String payload:payloads)
-		execution.executeRuleset(rulesetPath, loanJson(payload), serverurl, topicNameRp);
+//		execution.executeRuleset(rulesetPath, loanJson(payload), serverurl, topicNameRp);
 //		consumeAndexec(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq, serverurl, rulesetPath, topicNameRp);
 		
 	}
