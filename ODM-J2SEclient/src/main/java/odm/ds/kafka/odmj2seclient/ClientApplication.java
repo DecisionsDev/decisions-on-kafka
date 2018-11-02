@@ -87,6 +87,21 @@ public class ClientApplication {
 	    	
 	    	return formatter.getMessage(key, arguments);
 	    } 
+	 
+		public static String getPayload(CommandLine commandLine, String[] arguments) {
+			int nbOfArguments=arguments.length;
+	    	if(nbOfArguments!=0) {
+	    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
+	    		if(!unprocessedArguments.isEmpty()) {
+	    			String payloadAsString=arguments[1];
+	    			if(unprocessedArguments.contains(payloadAsString)) {
+	    				return payloadAsString;
+	    			}
+	    		}
+	    		
+	    	}
+	    	return null;
+		}
 	
 	public static void main(String...args) {
 		
@@ -97,7 +112,7 @@ public class ClientApplication {
     		CommandLineParser parser=new DefaultParser();
 			CommandLine commandLine = parser.parse(OPTIONS, args);
 			IlrPath rulesetPath = myclApp.getRulesetPath(commandLine, args);
-			myclApp.setUpClientApp(serverurl, 2, topicNameRq, message, consumergroup, topicNameRp);
+			myclApp.setUpClientApp(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
 			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
