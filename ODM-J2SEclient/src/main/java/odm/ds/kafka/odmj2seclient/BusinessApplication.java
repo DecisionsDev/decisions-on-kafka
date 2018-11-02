@@ -1,11 +1,20 @@
 package odm.ds.kafka.odmj2seclient;
 
+import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
+import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -31,6 +40,8 @@ public class BusinessApplication {
 	private static String topicNameRq;
 	private static String topicNameRp;
 	private static String consumergroup;
+	private static final Options OPTIONS=new Options();
+	private static final MessageFormatter formatter=new MessageFormatter();
 
 	/**
 	 * Create a Consumer on topic Rq
@@ -117,11 +128,62 @@ public class BusinessApplication {
 			return loan;
 	
 	 }
+	  private String getMandatoryRulesetPathArgument(CommandLine commandLine, String[] arguments) {
+	    	System.out.println("Inside getMandatory");
+	    	int nbOfArguments=arguments.length;
+	    	if(nbOfArguments!=0) {
+	    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
+	    		if(!unprocessedArguments.isEmpty()) {
+	    			String rulesetPathArgumentAsString=arguments[0];
+	    			System.out.println("rulesetPathArgumentAsString "+arguments[0]);
+	    			System.out.println("lenght "+arguments[1]);
+	    			if(unprocessedArguments.contains(rulesetPathArgumentAsString)) {
+	    				return rulesetPathArgumentAsString;
+	    			}
+	    		}
+	    		
+	    	}
+	    	return null;
+	    }
+	  private IlrPath getRulesetPath(CommandLine commandLine, String[] arguments) throws IllegalArgumentException {
+	    	String rulesetPathArgumentAsString=getMandatoryRulesetPathArgument(commandLine, arguments);
+	    	if(rulesetPathArgumentAsString==null) {
+	    		String errorMessage=getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH, getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH));
+	    		throw new IllegalArgumentException(errorMessage);
+	    	}
+	    	try {
+	    		return IlrPath.parsePath(rulesetPathArgumentAsString);
+	    				
+	    	} catch (IlrFormatException exception) {
+	    		System.out.println(rulesetPathArgumentAsString);
+	    		String errorMessage=getMessage(SAMPLE_ERROR_INVALID_RULESET_PATH, rulesetPathArgumentAsString);
+	    		System.out.println(errorMessage);
+	    		throw new IllegalArgumentException(errorMessage);	
+	    	}
+	    }
+	  private String getMessage(String key, Object... arguments) {
+	    	
+	    	return formatter.getMessage(key, arguments);
+	    }
+	    
 	 public static void main(String...args) {
 		 
 		 BusinessApplication mybizApp=new BusinessApplication();
 		 System.out.println("Business Application");
-		// mybizApp.setUpBussinessApp(serverurl, numberparam, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+		 // Demarrer une biz application qui se comporte en consumer et producer
+		 
+		// mybizApp.setUpBussinessApp(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+		 try {
+	    	 CommandLineParser parser=new DefaultParser();
+	    	 CommandLine commandLine = parser.parse(OPTIONS, args);
+	    	 IlrPath rulesetPath = mybizApp.getRulesetPath(commandLine, args);
+	    	 
+			 
+		 } catch(IllegalArgumentException | ParseException exception) {
+			 System.err.println(exception.getMessage());
+		 }
+
+    	 
 		 
 	 }
 }
