@@ -76,6 +76,20 @@ public class BusinessApplication {
 		
 	}
 	
+	public static void setUpBussinessApp2(String serverurl, int numberparam, String consumergroup, String topicNameRq, IlrPath rulesetPath, String
+			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
+		SampleConsumer myConsumer=new SampleConsumer();
+//		String payload=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
+		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
+//		for (String payload:payloads) System.out.println("payload is "+payload);
+		RESJSEExecution execution = new RESJSEExecution();
+//		for (String payload:payloads)
+	//	execution.executeRuleset(rulesetPath, loanJson(payload), serverurl, topicNameRp);
+//		consumeAndexec(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq, serverurl, rulesetPath, topicNameRp);
+		
+	}
+	
+	
 	public static void consumeAndexec(KafkaConsumer<String, String> consumer, String topicName,String serverurl,IlrPath rulesetPath,String
 			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
 		RESJSEExecution execution = new RESJSEExecution();
@@ -194,7 +208,7 @@ public class BusinessApplication {
 	    	 CommandLine commandLine = parser.parse(OPTIONS, args);
 	    	 IlrPath rulesetPath = mybizApp.getRulesetPath(commandLine, args);
 	    	 setUpkafkaParam(commandLine, args);
-	    	 mybizApp.setUpBussinessApp(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+	    	 mybizApp.setUpBussinessApp2(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
 			 
 		 } catch(IllegalArgumentException | ParseException | IlrFormatException | IlrSessionException | IOException exception) {
 			 System.err.println(exception.getMessage());

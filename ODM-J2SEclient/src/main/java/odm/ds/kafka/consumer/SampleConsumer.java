@@ -153,6 +153,47 @@ public class SampleConsumer {
 		
 	}
 	
+	public void consumeMessage3(KafkaConsumer<String, String> consumer, String topicName){
+		String[] data = new String[10];
+		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
+            public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
+                System.out.printf("%s topic-partitions are revoked from this consumer\n", Arrays.toString(partitions.toArray()));
+            }
+            public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
+                System.out.printf("%s topic-partitions are assigned to this consumer\n", Arrays.toString(partitions.toArray()));
+            }
+        });
+		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
+//		long endTimeMillis = System.currentTimeMillis() + 1000;
+		System.out.println("Inside consume message 2");
+		int i=0;
+		while(true){
+		System.out.println("Inside the while loop");
+		ConsumerRecords<String,String> records=consumer.poll(1000);
+		System.out.println("Inside the while loop 2");
+		if(!records.isEmpty()) {
+		for(ConsumerRecord<String,String> record:records) {
+
+//			System.out.printf("Offset=%d, key=%s,value=%s\n",record.offset(),record.key(),record.value());
+			//myLogger.info("Offset=%d, key=%s,value=%s\n "+record.offset()+record.key()+record.value());
+			myLogger.info(record.value());
+			data[i]=record.value();
+			i++;
+//		if (System.currentTimeMillis() > endTimeMillis) {
+            // do some clean-up
+  //          return;
+			}
+		}
+	
+		}
+	//	consumer.close();
+//	}
+//		System.out.println("Before returning value");
+//		return data;
+		
+	}
+
+	
 
 
 }
