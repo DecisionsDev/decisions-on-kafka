@@ -27,6 +27,10 @@ public class BusinessApplication {
 	
 	final static Logger myLogger=Logger.getLogger(SampleConsumer.class.getName());
 	static ResourceBundle mybundle = ResourceBundle.getBundle("MessagesBundle");
+	private static String serverurl;
+	private static String topicNameRq;
+	private static String topicNameRp;
+	private static String consumergroup;
 
 	/**
 	 * Create a Consumer on topic Rq
@@ -112,5 +116,12 @@ public class BusinessApplication {
 			}
 			return loan;
 	
+	 }
+	 public static void main(String...args) {
+		 
+		 BusinessApplication mybizApp=new BusinessApplication();
+		 System.out.println("Business Application");
+		// mybizApp.setUpBussinessApp(serverurl, numberparam, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+		 
 	 }
 }
