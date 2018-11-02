@@ -29,11 +29,11 @@ This sample show how to use IBM ODM with Kafka
 * To run the main class SampleMain :$ `mvn exec:java -Dexec.mainClass="odm.ds.kafka.main.SampleMain" -Dexec.args="yourkafkahost:port topicname message" -Dmaven.test.skip=true`
 * To run the integration test : `$ mvn -Dtest=SampleTest -Dmessage="yourMessage" -DtopicName="topicName" -Dserverurl="yourkafkahost:port" test`
 * To run the Main Application of the J2SEclient Application : 
-mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.Main" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.Main" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 
 '{\"borrower\":{\"lastName\" : \"Yattara\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\"
 ,\"creditScore\":200,\"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178,
 \"amount\":100000,\"loanToValue\":1.20}}' 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test" 
--Dibm.odm.install.dir="C:\ODM8920"
+-Dibm.odm.install.dir="C:\ODM8920"`
 
 ## Contributing
 
