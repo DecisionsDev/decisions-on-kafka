@@ -35,6 +35,12 @@ This sample show how to use IBM ODM with Kafka
 \"amount\":100000,\"loanToValue\":1.20}}' 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test" 
 -Dibm.odm.install.dir="C:\ODM8920"`
 
+* To run the Business Application : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
+-Dexec.args="/test_deployment/loan_validation_with_score_and_grade '{\"borrower\":{\"lastName\" : \"Yattara\",\"firstName\" : \"John\", 
+\"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" :
+ 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}}' 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
+ -Dibm.odm.install.dir="C:\ODM8920" `
+
 ## Contributing
 
 ## References
