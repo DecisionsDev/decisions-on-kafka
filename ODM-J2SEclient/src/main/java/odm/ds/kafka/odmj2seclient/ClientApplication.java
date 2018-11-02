@@ -50,6 +50,13 @@ public class ClientApplication {
 //		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
 	
 	}
+	public static void setUpClientApp2(String serverurl, int numberparam, String topicNameRq, String message, String consumergroup, String topicNameRp) {
+		SampleProducer myProducer=new SampleProducer();
+		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
+		SampleConsumer myConsumer=new SampleConsumer();
+		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
+	
+	}
 	  private String getMandatoryRulesetPathArgument(CommandLine commandLine, String[] arguments) {
 	    	System.out.println("Inside getMandatory");
 	    	int nbOfArguments=arguments.length;
@@ -128,7 +135,7 @@ public class ClientApplication {
 			CommandLine commandLine = parser.parse(OPTIONS, args);
 			IlrPath rulesetPath = myclApp.getRulesetPath(commandLine, args);
 			setUpkafkaParam(commandLine, args);
-			myclApp.setUpClientApp(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
+			myclApp.setUpClientApp2(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
 			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
