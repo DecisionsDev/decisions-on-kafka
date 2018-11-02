@@ -7,6 +7,9 @@
 
 This sample show how to use IBM ODM with Kafka
 
+![Sample Architecture](docs/images/architecture.png)
+
+
 ## Requirments
 
 * Kafka
