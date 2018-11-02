@@ -172,14 +172,14 @@ public class BusinessApplication {
 		 System.out.println("Business Application");
 		 // Demarrer une biz application qui se comporte en consumer et producer
 		 
-		// mybizApp.setUpBussinessApp(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+		
 		 try {
 	    	 CommandLineParser parser=new DefaultParser();
 	    	 CommandLine commandLine = parser.parse(OPTIONS, args);
 	    	 IlrPath rulesetPath = mybizApp.getRulesetPath(commandLine, args);
-	    	 
+	    	 mybizApp.setUpBussinessApp(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
 			 
-		 } catch(IllegalArgumentException | ParseException exception) {
+		 } catch(IllegalArgumentException | ParseException | IlrFormatException | IlrSessionException | IOException exception) {
 			 System.err.println(exception.getMessage());
 		 }
 

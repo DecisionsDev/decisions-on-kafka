@@ -153,9 +153,6 @@ public class SampleConsumer {
 		
 	}
 	
-	public static void main(String...args) {
-		
-		
-	}
+
 
 }
