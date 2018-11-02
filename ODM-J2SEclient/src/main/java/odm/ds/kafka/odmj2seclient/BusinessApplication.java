@@ -165,7 +165,23 @@ public class BusinessApplication {
 	    	
 	    	return formatter.getMessage(key, arguments);
 	    }
-	    
+	   
+	  public static void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
+
+			int nbOfArguments=arguments.length;
+	    	if(nbOfArguments!=0) {
+	    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
+	    		if(!unprocessedArguments.isEmpty()) {
+	    			serverurl=arguments[2];
+	    			topicNameRq=arguments[3];
+	    			topicNameRp=arguments[4];
+	    			consumergroup=arguments[5];
+	    			
+	    		}
+	    		
+	    	}
+
+		}
 	 public static void main(String...args) {
 		 
 		 BusinessApplication mybizApp=new BusinessApplication();
@@ -177,6 +193,7 @@ public class BusinessApplication {
 	    	 CommandLineParser parser=new DefaultParser();
 	    	 CommandLine commandLine = parser.parse(OPTIONS, args);
 	    	 IlrPath rulesetPath = mybizApp.getRulesetPath(commandLine, args);
+	    	 setUpkafkaParam(commandLine, args);
 	    	 mybizApp.setUpBussinessApp(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
 			 
 		 } catch(IllegalArgumentException | ParseException | IlrFormatException | IlrSessionException | IOException exception) {

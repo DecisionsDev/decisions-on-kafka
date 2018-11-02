@@ -102,7 +102,22 @@ public class ClientApplication {
 	    	}
 	    	return null;
 		}
-	
+		 public static void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
+
+				int nbOfArguments=arguments.length;
+		    	if(nbOfArguments!=0) {
+		    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
+		    		if(!unprocessedArguments.isEmpty()) {
+		    			serverurl=arguments[2];
+		    			topicNameRq=arguments[3];
+		    			topicNameRp=arguments[4];
+		    			consumergroup=arguments[5];
+		    			
+		    		}
+		    		
+		    	}
+
+			}
 	public static void main(String...args) {
 		
 		System.out.println("Client Application");
@@ -112,6 +127,7 @@ public class ClientApplication {
     		CommandLineParser parser=new DefaultParser();
 			CommandLine commandLine = parser.parse(OPTIONS, args);
 			IlrPath rulesetPath = myclApp.getRulesetPath(commandLine, args);
+			setUpkafkaParam(commandLine, args);
 			myclApp.setUpClientApp(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
 			
 		} catch (ParseException e) {
