@@ -185,10 +185,10 @@ public class BusinessApplication {
 	    	if(nbOfArguments!=0) {
 	    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
 	    		if(!unprocessedArguments.isEmpty()) {
-	    			serverurl=arguments[2];
-	    			topicNameRq=arguments[3];
-	    			topicNameRp=arguments[4];
-	    			consumergroup=arguments[5];
+	    			serverurl=arguments[1];
+	    			topicNameRq=arguments[2];
+	    			topicNameRp=arguments[3];
+	    			consumergroup=arguments[4];
 	    			
 	    		}
 	    		
