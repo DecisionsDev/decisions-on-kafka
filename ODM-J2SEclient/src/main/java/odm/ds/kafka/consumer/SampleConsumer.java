@@ -168,17 +168,16 @@ public class SampleConsumer {
 		System.out.println("Inside consume message 2");
 		int i=0;
 		while(true){
-		System.out.println("Inside the while loop");
 		ConsumerRecords<String,String> records=consumer.poll(1000);
-		System.out.println("Inside the while loop 2");
+		System.out.println("Waiting for payload ");
 		if(!records.isEmpty()) {
 		for(ConsumerRecord<String,String> record:records) {
 
 //			System.out.printf("Offset=%d, key=%s,value=%s\n",record.offset(),record.key(),record.value());
 			//myLogger.info("Offset=%d, key=%s,value=%s\n "+record.offset()+record.key()+record.value());
 			myLogger.info(record.value());
-			data[i]=record.value();
-			i++;
+	//		data[i]=record.value();
+	//		i++;
 //		if (System.currentTimeMillis() > endTimeMillis) {
             // do some clean-up
   //          return;

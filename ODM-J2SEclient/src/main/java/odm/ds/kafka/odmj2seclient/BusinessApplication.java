@@ -80,12 +80,12 @@ public class BusinessApplication {
 			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
 		SampleConsumer myConsumer=new SampleConsumer();
 //		String payload=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
-		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
+//		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
 //		for (String payload:payloads) System.out.println("payload is "+payload);
-		RESJSEExecution execution = new RESJSEExecution();
+//		RESJSEExecution execution = new RESJSEExecution();
 //		for (String payload:payloads)
 	//	execution.executeRuleset(rulesetPath, loanJson(payload), serverurl, topicNameRp);
-//		consumeAndexec(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq, serverurl, rulesetPath, topicNameRp);
+		consumeAndexec(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq, serverurl, rulesetPath, topicNameRp);
 		
 	}
 	
@@ -109,6 +109,7 @@ public class BusinessApplication {
 		while(true){
 		@SuppressWarnings("deprecation")
 		ConsumerRecords<String,String> records=consumer.poll(1000);
+		System.out.println("Waiting for payload ");
 		if(!records.isEmpty()) {
 		for(ConsumerRecord<String,String> record:records) {
 
@@ -121,10 +122,8 @@ public class BusinessApplication {
 			execution.executeRuleset(rulesetPath, loanJson(record.value()), serverurl, topicNameRp);
 			}
 		}
-		break;
 	
 		}
-		consumer.close();
 	}
 	 public static Loan loanJson( String payload) {
 		 
@@ -208,7 +207,8 @@ public class BusinessApplication {
 	    	 CommandLine commandLine = parser.parse(OPTIONS, args);
 	    	 IlrPath rulesetPath = mybizApp.getRulesetPath(commandLine, args);
 	    	 setUpkafkaParam(commandLine, args);
-	    	 mybizApp.setUpBussinessApp2(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+	    	 BusinessApplication.setUpBussinessApp2(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+	    	 
 			 
 		 } catch(IllegalArgumentException | ParseException | IlrFormatException | IlrSessionException | IOException exception) {
 			 System.err.println(exception.getMessage());
