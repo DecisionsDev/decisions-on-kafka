@@ -100,7 +100,7 @@ public class ClientApplication {
 	    	if(nbOfArguments!=0) {
 	    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
 	    		if(!unprocessedArguments.isEmpty()) {
-	    			String payloadAsString=arguments[1];
+	    			String payloadAsString=arguments[0];
 	    			if(unprocessedArguments.contains(payloadAsString)) {
 	    				return payloadAsString;
 	    			}
@@ -115,10 +115,10 @@ public class ClientApplication {
 		    	if(nbOfArguments!=0) {
 		    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
 		    		if(!unprocessedArguments.isEmpty()) {
-		    			serverurl=arguments[2];
-		    			topicNameRq=arguments[3];
-		    			topicNameRp=arguments[4];
-		    			consumergroup=arguments[5];
+		    			serverurl=arguments[1];
+		    			topicNameRq=arguments[2];
+		    			topicNameRp=arguments[3];
+		    			consumergroup=arguments[4];
 		    			
 		    		}
 		    		
@@ -133,9 +133,8 @@ public class ClientApplication {
 
     		CommandLineParser parser=new DefaultParser();
 			CommandLine commandLine = parser.parse(OPTIONS, args);
-			IlrPath rulesetPath = myclApp.getRulesetPath(commandLine, args);
 			setUpkafkaParam(commandLine, args);
-			myclApp.setUpClientApp2(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
+			ClientApplication.setUpClientApp2(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
 			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
