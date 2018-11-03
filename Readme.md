@@ -4,11 +4,13 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Features
-### Workflow
+
 
 This sample show how to use IBM ODM with Kafka
 
 ![Sample Architecture](ODM-J2SEclient/docs/images/architecture.png)
+
+### Workflow Description
 
 1. We have n client application which reacte as kafka Producer and send their payload to the kafka topic named Requests
 
