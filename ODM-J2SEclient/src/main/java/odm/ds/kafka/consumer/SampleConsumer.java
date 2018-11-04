@@ -80,6 +80,7 @@ public class SampleConsumer {
             }
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
+		myLogger.info(" Waiting messages from topic "+topicName);
 //		long endTimeMillis = System.currentTimeMillis() + 1000;
 		while(true){
 		@SuppressWarnings("deprecation")

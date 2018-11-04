@@ -86,7 +86,7 @@ public class SampleProducer {
 	public void sendmessageString(Producer<String, String> producer,String topicname,String message){
 		String topicName=topicname;
 		producer.send(new ProducerRecord<String,String>(topicName,"2",message));
-		mylogger.info(mybundle.getString("notif_sent"));
+		mylogger.info(mybundle.getString("notif_sent")+" "+topicName);
 		producer.close();
 		
 	}

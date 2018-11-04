@@ -54,7 +54,7 @@ public class ClientApplication {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
 		SampleConsumer myConsumer=new SampleConsumer();
-		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
+		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
 	
 	}
 	  private String getMandatoryRulesetPathArgument(CommandLine commandLine, String[] arguments) {
@@ -116,9 +116,13 @@ public class ClientApplication {
 		    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
 		    		if(!unprocessedArguments.isEmpty()) {
 		    			serverurl=arguments[1];
+		    			System.out.println("The server url is "+serverurl);
 		    			topicNameRq=arguments[2];
+		    			System.out.println("The topic name for Request is "+topicNameRq);
 		    			topicNameRp=arguments[3];
+		    			System.out.println("The topic name for Replies is"+topicNameRp);
 		    			consumergroup=arguments[4];
+		    			System.out.println("The Consumer group is "+consumergroup);
 		    			
 		    		}
 		    		
@@ -127,7 +131,7 @@ public class ClientApplication {
 			}
 	public static void main(String...args) {
 		
-		System.out.println("Client Application");
+		System.out.println("The Client Application is Running");
 		ClientApplication myclApp=new ClientApplication();
     	 try {
 
