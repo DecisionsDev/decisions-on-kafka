@@ -103,7 +103,6 @@ public class BusinessApplication {
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
 //		long endTimeMillis = System.currentTimeMillis() + 1000;
-		System.out.println("Inside consume message");
 		int i=0;
 		
 		while(true){
@@ -142,14 +141,13 @@ public class BusinessApplication {
 	
 	 }
 	  private String getMandatoryRulesetPathArgument(CommandLine commandLine, String[] arguments) {
-	    	System.out.println("Inside getMandatory");
 	    	int nbOfArguments=arguments.length;
 	    	if(nbOfArguments!=0) {
 	    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
 	    		if(!unprocessedArguments.isEmpty()) {
 	    			String rulesetPathArgumentAsString=arguments[0];
-	    			System.out.println("rulesetPathArgumentAsString "+arguments[0]);
-	    			System.out.println("lenght "+arguments[1]);
+	    			System.out.println("The rulesetPath is "+arguments[0]);
+	    			System.out.println("The server url is "+arguments[1]);
 	    			if(unprocessedArguments.contains(rulesetPathArgumentAsString)) {
 	    				return rulesetPathArgumentAsString;
 	    			}
@@ -187,8 +185,11 @@ public class BusinessApplication {
 	    		if(!unprocessedArguments.isEmpty()) {
 	    			serverurl=arguments[1];
 	    			topicNameRq=arguments[2];
+	    			System.out.println("The kafka topic for Request is "+topicNameRq);
 	    			topicNameRp=arguments[3];
+	    			System.out.println("The kafka topic for replies is "+topicNameRp);
 	    			consumergroup=arguments[4];
+	    			System.out.println("The kafka consumer Group is "+consumergroup);
 	    			
 	    		}
 	    		
@@ -198,7 +199,7 @@ public class BusinessApplication {
 	 public static void main(String...args) {
 		 
 		 BusinessApplication mybizApp=new BusinessApplication();
-		 System.out.println("Business Application");
+		 System.out.println("The Business Application is running");
 		 // Demarrer une biz application qui se comporte en consumer et producer
 		 
 		

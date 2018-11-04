@@ -45,11 +45,9 @@ public class SampleConsumer {
 	public KafkaConsumer<String, String> consumerInstance(String serverurl, int numberparam, String consumergroup){
 		
 		myLogger.info("Current Locale: " + Locale.getDefault());
-		System.out.println("Hello 0");
 		if(numberparam==0){
 			myLogger.severe(mybundle.getString("no_topic_name"));
 		}
-		System.out.println("Hello 1");
 		Properties props=new Properties();
 		props.put("bootstrap.servers", serverurl);
 		//"localhost:9092"
@@ -60,8 +58,6 @@ public class SampleConsumer {
 		props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 		props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 		KafkaConsumer<String,String> consumer=new KafkaConsumer<String,String>(props);
-		myLogger.info("Groud id "+consumergroup);
-		System.out.println("Fin");
 		//consumer.subscribe(Arrays.asList(topicName));
 			return consumer;
 		}
@@ -85,7 +81,6 @@ public class SampleConsumer {
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
 //		long endTimeMillis = System.currentTimeMillis() + 1000;
-		System.out.println("Inside consume message");
 		while(true){
 		@SuppressWarnings("deprecation")
 		ConsumerRecords<String,String> records=consumer.poll(1000);
@@ -124,12 +119,9 @@ public class SampleConsumer {
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
 //		long endTimeMillis = System.currentTimeMillis() + 1000;
-		System.out.println("Inside consume message 2");
 		int i=0;
 		while(true){
-		System.out.println("Inside the while loop");
 		ConsumerRecords<String,String> records=consumer.poll(1000);
-		System.out.println("Inside the while loop 2");
 		if(!records.isEmpty()) {
 		for(ConsumerRecord<String,String> record:records) {
 
@@ -148,7 +140,6 @@ public class SampleConsumer {
 		}
 		consumer.close();
 //	}
-		System.out.println("Before returning value");
 		return data;
 		
 	}
@@ -165,7 +156,6 @@ public class SampleConsumer {
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
 //		long endTimeMillis = System.currentTimeMillis() + 1000;
-		System.out.println("Inside consume message 2");
 		int i=0;
 		while(true){
 		ConsumerRecords<String,String> records=consumer.poll(1000);
