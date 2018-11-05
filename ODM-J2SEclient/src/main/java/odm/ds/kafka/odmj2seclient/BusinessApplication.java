@@ -46,7 +46,6 @@ public class BusinessApplication {
 	private static String consumergroup;
 	private static final Options OPTIONS=new Options();
 	private static final MessageFormatter formatter=new MessageFormatter();
-	private static String key;
 
 	/**
 	 * Create a Consumer on topic Rq
@@ -76,7 +75,7 @@ public class BusinessApplication {
 //		for (String payload:payloads) System.out.println("payload is "+payload);
 		RESJSEExecution execution = new RESJSEExecution();
 		for (String payload:payloads)
-		execution.executeRuleset(rulesetPath, loanJson(payload), serverurl, topicNameRp);
+		execution.executeRuleset(rulesetPath, loanJson(payload),"123" , serverurl, topicNameRp);
 //		consumeAndexec(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq, serverurl, rulesetPath, topicNameRp);
 		
 	}
@@ -123,8 +122,8 @@ public class BusinessApplication {
 //		if (System.currentTimeMillis() > endTimeMillis) {
             // do some clean-up
   //          return;
-//			ExtractLoanFromJson(record.value());
-			execution.executeRuleset(rulesetPath, ExtractLoanFromJson(record.value()), serverurl, topicNameRp);
+			ExtractLoanFromJson(record.value());
+			execution.executeRuleset(rulesetPath, ExtractLoanFromJson(record.value()), ExtractkeyFromJson(record.value()),serverurl, topicNameRp);
 //			execution.executeRuleset(rulesetPath, loanJson(record.value()), serverurl, topicNameRp);
 			}
 		}
@@ -147,6 +146,24 @@ public class BusinessApplication {
 			return loan;
 	
 	 }
+	 public static String ExtractkeyFromJson( String payload) {
+//		 public static void ExtractLoanFromJson( String payload) {
+			 
+			 ObjectMapper objectMapper=new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			 Message mess=null;
+		//	 System.out.println("The json "+payload);
+			 Loan loan=new Loan();
+			 Borrower borrower=new Borrower();
+			 LoanRequest loanrequest=new LoanRequest();
+				try {
+					mess=objectMapper.readValue(payload, Message.class);
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+				return mess.getKey();
+		
+		 }
+
 	 public static Loan ExtractLoanFromJson( String payload) {
 //	 public static void ExtractLoanFromJson( String payload) {
 		 
@@ -164,7 +181,6 @@ public class BusinessApplication {
 		//		System.out.println("Loan Request "+mess.getKey());
 		//		System.out.println("+++++++++++++++++++++++++++++++++++++++++++------------------------------------------------------------------------");
 				System.out.println("the key is"+mess.getKey());
-				key=mess.getKey();
 				borrower=mess.getPayload().getBorrower();
 				loanrequest=mess.getPayload().getLoanrequest();
 				loan.setLoanrequest(loanrequest);
@@ -238,7 +254,7 @@ public class BusinessApplication {
 		  Message myMess=new Message();
 		  myMess.setPayload(myLoan);
 		  myMess.setKey("test123");
-		  ObjectMapper mapper = new ObjectMapper();
+		  ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);;
 		  String finalMess = mapper.writeValueAsString(myMess);
 		  return finalMess;
 	  }

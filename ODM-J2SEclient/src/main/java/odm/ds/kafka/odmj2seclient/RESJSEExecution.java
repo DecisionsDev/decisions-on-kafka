@@ -14,8 +14,9 @@ import java.util.jar.JarInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ilog.rules.res.model.IlrAlreadyExistException;
 import ilog.rules.res.model.IlrFormatException;
@@ -78,7 +79,15 @@ public class RESJSEExecution {
 	  *  
 	  */
 
-	 public void executeRuleset(IlrPath rulesetPath, Loan loan, String serverurl, String topicNameR) throws IlrFormatException,
+	  public static String BuildReply(Report report, String key) throws JsonProcessingException {
+		  Reply myReply=new Reply();
+		  myReply.setId(key);
+		  myReply.setReport(report);
+		  ObjectMapper mapper = new ObjectMapper();
+		  String finalMess = mapper.writeValueAsString(myReply);
+		  return finalMess;
+	  }
+	 public void executeRuleset(IlrPath rulesetPath, Loan loan, String key, String serverurl, String topicNameR) throws IlrFormatException,
      IlrSessionCreationException,
      IlrSessionException, JsonGenerationException, JsonMappingException, IOException {
 //		 SampleConsumer myConsumer=new SampleConsumer();
@@ -97,8 +106,10 @@ public class RESJSEExecution {
 		 // Au momment du report on creer le json de retour qu'on met dans l'autre topic
 		 Report report=(Report)(sessionResponse.getOutputParameters().get("report"));
 		 System.out.println("Display the json result "+report.toString());
+		 //BusinessApplication.BuildMessage(report.toString());
 		 SampleProducer myProducer1=new SampleProducer();
-		 myProducer1.sendmessageString(myProducer1.producerInstance(serverurl, 3), topicNameR, report.toString());
+//		 myProducer1.sendmessageString(myProducer1.producerInstance(serverurl, 3), topicNameR, report.toString());
+		 myProducer1.sendmessageString(myProducer1.producerInstance(serverurl, 3), topicNameR, BuildReply(report, key));
 		 
 	 }
 	 
