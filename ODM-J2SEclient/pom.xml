@@ -22,13 +22,6 @@
 		</repository>
 	</repositories>
 	<dependencies>
-		<!-- JUNIT IN ORDER TO MAKE TESTING -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
 		<!-- SYSTEM JUNIT LIBRARY FOR SYSTEM.EXIT TESTING -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

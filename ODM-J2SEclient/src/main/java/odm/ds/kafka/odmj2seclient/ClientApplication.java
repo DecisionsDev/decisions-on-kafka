@@ -46,8 +46,8 @@ public class ClientApplication {
 	public static void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String consumergroup, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
-//		SampleConsumer myConsumer=new SampleConsumer();
-//		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
+		SampleConsumer myConsumer=new SampleConsumer();
+		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
 	
 	}
 	public static void setUpClientApp2(String serverurl, int numberparam, String topicNameRq, String message, String consumergroup, String topicNameRp) {
@@ -138,7 +138,7 @@ public class ClientApplication {
     		CommandLineParser parser=new DefaultParser();
 			CommandLine commandLine = parser.parse(OPTIONS, args);
 			setUpkafkaParam(commandLine, args);
-			ClientApplication.setUpClientApp2(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
+			ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
 			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

@@ -196,8 +196,15 @@ public class BusinessApplication {
 	    	}
 
 		}
+	  public static String BuildMessage(String message) {
+		  String finalMess=null;
+		  Loan myLoan=loanJson(message);
+		  Message myMess=new Message();
+		  
+		  return null;
+	  }
 	 public static void main(String...args) {
-		 
+		
 		 BusinessApplication mybizApp=new BusinessApplication();
 		 System.out.println("The Business Application is running");
 		 // Demarrer une biz application qui se comporte en consumer et producer
