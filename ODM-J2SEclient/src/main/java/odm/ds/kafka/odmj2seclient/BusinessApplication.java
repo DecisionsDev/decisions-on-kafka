@@ -22,6 +22,8 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -29,6 +31,8 @@ import ilog.rules.res.model.IlrFormatException;
 import ilog.rules.res.model.IlrPath;
 import ilog.rules.res.session.IlrSessionCreationException;
 import ilog.rules.res.session.IlrSessionException;
+import loan.Borrower;
+import loan.LoanRequest;
 import odm.ds.kafka.consumer.SampleConsumer;
 
 public class BusinessApplication {
@@ -42,6 +46,7 @@ public class BusinessApplication {
 	private static String consumergroup;
 	private static final Options OPTIONS=new Options();
 	private static final MessageFormatter formatter=new MessageFormatter();
+	private static String key;
 
 	/**
 	 * Create a Consumer on topic Rq
@@ -118,7 +123,9 @@ public class BusinessApplication {
 //		if (System.currentTimeMillis() > endTimeMillis) {
             // do some clean-up
   //          return;
-			execution.executeRuleset(rulesetPath, loanJson(record.value()), serverurl, topicNameRp);
+//			ExtractLoanFromJson(record.value());
+			execution.executeRuleset(rulesetPath, ExtractLoanFromJson(record.value()), serverurl, topicNameRp);
+//			execution.executeRuleset(rulesetPath, loanJson(record.value()), serverurl, topicNameRp);
 			}
 		}
 	
@@ -140,6 +147,36 @@ public class BusinessApplication {
 			return loan;
 	
 	 }
+	 public static Loan ExtractLoanFromJson( String payload) {
+//	 public static void ExtractLoanFromJson( String payload) {
+		 
+		 ObjectMapper objectMapper=new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		 Message mess=null;
+	//	 System.out.println("The json "+payload);
+		 Loan loan=new Loan();
+		 Borrower borrower=new Borrower();
+		 LoanRequest loanrequest=new LoanRequest();
+			try {
+				mess=objectMapper.readValue(payload, Message.class);
+		//		System.out.println("+++++++++++++++++++------------------------------------------------------------------------+++++++++++++++++++++++++");
+		//		System.out.println("Loan Borrower "+mess.getPayload());
+		//		System.out.println("++++++++++++++++++++++++++++++++++++------------------------------------------------------------------------");
+		//		System.out.println("Loan Request "+mess.getKey());
+		//		System.out.println("+++++++++++++++++++++++++++++++++++++++++++------------------------------------------------------------------------");
+				System.out.println("the key is"+mess.getKey());
+				key=mess.getKey();
+				borrower=mess.getPayload().getBorrower();
+				loanrequest=mess.getPayload().getLoanrequest();
+				loan.setLoanrequest(loanrequest);
+				loan.setBorrower(borrower);
+				
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+			return loan;
+	
+	 }
+
 	  private String getMandatoryRulesetPathArgument(CommandLine commandLine, String[] arguments) {
 	    	int nbOfArguments=arguments.length;
 	    	if(nbOfArguments!=0) {
@@ -196,12 +233,14 @@ public class BusinessApplication {
 	    	}
 
 		}
-	  public static String BuildMessage(String message) {
-		  String finalMess=null;
+	  public static String BuildMessage(String message) throws JsonProcessingException {
 		  Loan myLoan=loanJson(message);
 		  Message myMess=new Message();
-		  
-		  return null;
+		  myMess.setPayload(myLoan);
+		  myMess.setKey("test123");
+		  ObjectMapper mapper = new ObjectMapper();
+		  String finalMess = mapper.writeValueAsString(myMess);
+		  return finalMess;
 	  }
 	 public static void main(String...args) {
 		

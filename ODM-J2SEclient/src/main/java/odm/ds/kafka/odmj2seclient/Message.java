@@ -2,8 +2,8 @@ package odm.ds.kafka.odmj2seclient;
 
 public class Message {
 	
-	String key;
-	Loan payload;
+	private String key;
+	private Loan payload;
 	public String getKey() {
 		return key;
 	}

@@ -3,6 +3,7 @@ package odm.ds.kafka.odmj2seclient;
 import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
 import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -13,6 +14,9 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ilog.rules.res.model.IlrFormatException;
 import ilog.rules.res.model.IlrPath;
@@ -129,7 +133,37 @@ public class ClientApplication {
 		    	}
 
 			}
-	public static void main(String...args) {
+		 
+		 public static Loan loanJson( String payload) {
+			 
+			 ObjectMapper objectMapper=new ObjectMapper();
+			 Loan loan=null;				 
+
+				try {
+					loan=objectMapper.readValue(payload, Loan.class);
+					System.out.println("Loan Borrower "+loan.getBorrower());
+					System.out.println("Loan Request "+loan.getLoanrequest());
+					
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+				return loan;
+		
+		 }
+
+		 
+		  public static String BuildMessage(String message) throws JsonProcessingException {
+			  Loan myLoan=loanJson(message);
+			  Message myMess=new Message();
+			  myMess.setPayload(myLoan);
+			  myMess.setKey("test123");
+			  ObjectMapper mapper = new ObjectMapper();
+			  String finalMess = mapper.writeValueAsString(myMess);
+			  return finalMess;
+		  }
+		  
+		  
+		  public static void main(String...args) {
 		
 		System.out.println("The Client Application is Running");
 		ClientApplication myclApp=new ClientApplication();
@@ -138,9 +172,11 @@ public class ClientApplication {
     		CommandLineParser parser=new DefaultParser();
 			CommandLine commandLine = parser.parse(OPTIONS, args);
 			setUpkafkaParam(commandLine, args);
-			ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
+			ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  BuildMessage(getPayload(commandLine, args)), consumergroup, topicNameRp);
+//			ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
 			
-		} catch (ParseException e) {
+		} catch (ParseException | JsonProcessingException e) {
+// 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
