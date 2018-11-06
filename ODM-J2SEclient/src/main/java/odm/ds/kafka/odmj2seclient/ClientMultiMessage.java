@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
@@ -23,10 +24,9 @@ import ilog.rules.res.model.IlrFormatException;
 import ilog.rules.res.model.IlrPath;
 import odm.ds.kafka.consumer.SampleConsumer;
 import odm.ds.kafka.producer.SampleProducer;
-import java.util.Random;
 
-
-public class ClientApplication {
+public class ClientMultiMessage {
+	
 	
 	
 
@@ -198,5 +198,6 @@ public class ClientApplication {
 		
 	}
 	
+
 
 }

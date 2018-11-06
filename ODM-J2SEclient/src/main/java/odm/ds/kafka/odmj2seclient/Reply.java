@@ -25,7 +25,6 @@ public class Reply {
 	private Report report;
 	
 	public static String ExtractkeyFromJson( String payload) {
-//		 public static void ExtractLoanFromJson( String payload) {
 			 
 			 ObjectMapper objectMapper=new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			 Reply reply=null;

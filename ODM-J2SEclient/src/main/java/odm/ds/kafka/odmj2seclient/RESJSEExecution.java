@@ -105,7 +105,8 @@ public class RESJSEExecution {
 		 IlrSessionResponse sessionResponse=session.execute(sessionRequest);
 		 // Au momment du report on creer le json de retour qu'on met dans l'autre topic
 		 Report report=(Report)(sessionResponse.getOutputParameters().get("report"));
-		 System.out.println("Display the json result "+report.toString());
+		 System.out.println("The key "+key);
+		 System.out.println("The execution result in json is "+report.toString());
 		 //BusinessApplication.BuildMessage(report.toString());
 		 SampleProducer myProducer1=new SampleProducer();
 //		 myProducer1.sendmessageString(myProducer1.producerInstance(serverurl, 3), topicNameR, report.toString());
