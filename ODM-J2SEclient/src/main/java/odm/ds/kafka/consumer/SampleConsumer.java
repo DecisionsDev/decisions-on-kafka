@@ -28,8 +28,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
-
-import odm.ds.kafka.odmj2seclient.Message;
 import odm.ds.kafka.odmj2seclient.Reply;
 
 public class SampleConsumer {
@@ -53,7 +51,6 @@ public class SampleConsumer {
 		}
 		Properties props=new Properties();
 		props.put("bootstrap.servers", serverurl);
-		//"localhost:9092"
 		props.put("group.id", consumergroup);
 		props.put("enable.auto.commit", "true");
 		props.put("enable.auto.commit.interval.ms", "1000");
@@ -61,7 +58,6 @@ public class SampleConsumer {
 		props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 		props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 		KafkaConsumer<String,String> consumer=new KafkaConsumer<String,String>(props);
-		//consumer.subscribe(Arrays.asList(topicName));
 			return consumer;
 		}
 		
@@ -84,33 +80,31 @@ public class SampleConsumer {
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
 		myLogger.info(" Waiting messages from topic "+topicName);
-//		long endTimeMillis = System.currentTimeMillis() + 1000;
 		while(true){
 		@SuppressWarnings("deprecation")
 		ConsumerRecords<String,String> records=consumer.poll(1000);
 		if(!records.isEmpty()) {
 		for(ConsumerRecord<String,String> record:records) {
-
-//			System.out.printf("Offset=%d, key=%s,value=%s\n",record.offset(),record.key(),record.value());
-			//myLogger.info("Offset=%d, key=%s,value=%s\n "+record.offset()+record.key()+record.value());
 			myLogger.info(record.value());
 			myLogger.info("partition numero %i "+record.partition());
 			data=record.value();
-//		if (System.currentTimeMillis() > endTimeMillis) {
-            // do some clean-up
-  //          return;
 			}
 		}
 		break;
 	
 		}
 		consumer.close();
-//	}
 		return data;
 		
 	}
 	
-	@SuppressWarnings("null")
+	/**
+	 * 
+	 * @param consumer
+	 * @param topicName
+	 * @return
+	 * 
+	 */
 	public String[] consumeMessage2(KafkaConsumer<String, String> consumer, String topicName){
 		String[] data = new String[10];
 		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
@@ -122,32 +116,31 @@ public class SampleConsumer {
             }
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
-//		long endTimeMillis = System.currentTimeMillis() + 1000;
 		int i=0;
 		while(true){
 		ConsumerRecords<String,String> records=consumer.poll(1000);
 		if(!records.isEmpty()) {
 		for(ConsumerRecord<String,String> record:records) {
-
-//			System.out.printf("Offset=%d, key=%s,value=%s\n",record.offset(),record.key(),record.value());
-			//myLogger.info("Offset=%d, key=%s,value=%s\n "+record.offset()+record.key()+record.value());
 			myLogger.info(record.value());
 			data[i]=record.value();
 			i++;
-//		if (System.currentTimeMillis() > endTimeMillis) {
-            // do some clean-up
-  //          return;
 			}
 		}
 		break;
 	
 		}
 		consumer.close();
-//	}
 		return data;
 		
 	}
 	
+	/**
+	 * 
+	 * @param consumer
+	 * @param key
+	 * @param topicName
+	 * 
+	 */
 	public void consumeMessage3(KafkaConsumer<String, String> consumer, String key, String topicName){
 		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
             public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
@@ -158,7 +151,6 @@ public class SampleConsumer {
             }
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
-//		long endTimeMillis = System.currentTimeMillis() + 1000;
 		while(true){
 		ConsumerRecords<String,String> records=consumer.poll(1000);
 		System.out.println("Waiting for payload ");
