@@ -80,20 +80,44 @@ public class BusinessApplication {
 		
 	}
 	
+	/**
+	 * 
+	 * @param serverurl
+	 * @param numberparam
+	 * @param consumergroup
+	 * @param topicNameRq
+	 * @param rulesetPath
+	 * @param topicNameRp
+	 * @throws IlrFormatException
+	 * @throws IlrSessionCreationException
+	 * @throws JsonGenerationException
+	 * @throws JsonMappingException
+	 * @throws IlrSessionException
+	 * @throws IOException
+	 * 
+	 */
 	public static void setUpBussinessApp2(String serverurl, int numberparam, String consumergroup, String topicNameRq, IlrPath rulesetPath, String
 			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
 		SampleConsumer myConsumer=new SampleConsumer();
-//		String payload=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
-//		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
-//		for (String payload:payloads) System.out.println("payload is "+payload);
-//		RESJSEExecution execution = new RESJSEExecution();
-//		for (String payload:payloads)
-	//	execution.executeRuleset(rulesetPath, loanJson(payload), serverurl, topicNameRp);
 		consumeAndexec(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq, serverurl, rulesetPath, topicNameRp);
 		
 	}
 	
-	
+	/**
+	 * 
+	 * @param consumer
+	 * @param topicName
+	 * @param serverurl
+	 * @param rulesetPath
+	 * @param topicNameRp
+	 * @throws IlrFormatException
+	 * @throws IlrSessionCreationException
+	 * @throws JsonGenerationException
+	 * @throws JsonMappingException
+	 * @throws IlrSessionException
+	 * @throws IOException
+	 * 
+	 */
 	public static void consumeAndexec(KafkaConsumer<String, String> consumer, String topicName,String serverurl,IlrPath rulesetPath,String
 			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
 		RESJSEExecution execution = new RESJSEExecution();
@@ -106,8 +130,6 @@ public class BusinessApplication {
             }
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
-//		long endTimeMillis = System.currentTimeMillis() + 1000;
-		int i=0;
 		
 		while(true){
 		@SuppressWarnings("deprecation")
@@ -116,15 +138,8 @@ public class BusinessApplication {
 		if(!records.isEmpty()) {
 		for(ConsumerRecord<String,String> record:records) {
 
-//			System.out.printf("Offset=%d, key=%s,value=%s\n",record.offset(),record.key(),record.value());
-			//myLogger.info("Offset=%d, key=%s,value=%s\n "+record.offset()+record.key()+record.value());
 			myLogger.info(record.value());
-//		if (System.currentTimeMillis() > endTimeMillis) {
-            // do some clean-up
-  //          return;
-//			ExtractLoanFromJson(record.value());
 			execution.executeRuleset(rulesetPath, ExtractLoanFromJson(record.value()), ExtractkeyFromJson(record.value()),serverurl, topicNameRp);
-//			execution.executeRuleset(rulesetPath, loanJson(record.value()), serverurl, topicNameRp);
 			}
 		}
 	
@@ -147,11 +162,9 @@ public class BusinessApplication {
 	
 	 }
 	 public static String ExtractkeyFromJson( String payload) {
-//		 public static void ExtractLoanFromJson( String payload) {
 			 
 			 ObjectMapper objectMapper=new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			 Message mess=null;
-		//	 System.out.println("The json "+payload);
 			 Loan loan=new Loan();
 			 Borrower borrower=new Borrower();
 			 LoanRequest loanrequest=new LoanRequest();
@@ -165,21 +178,13 @@ public class BusinessApplication {
 		 }
 
 	 public static Loan ExtractLoanFromJson( String payload) {
-//	 public static void ExtractLoanFromJson( String payload) {
 		 ObjectMapper objectMapper=new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		 Message mess=new Message();
-	//	 System.out.println("The json "+payload);
 		 Loan loan=new Loan();
 		 Borrower borrower=new Borrower();
 		 LoanRequest loanrequest=new LoanRequest();
 			try {
 				mess=objectMapper.readValue(payload, Message.class);
-		//		System.out.println("+++++++++++++++++++------------------------------------------------------------------------+++++++++++++++++++++++++");
-		//		System.out.println("Loan Borrower "+mess.getPayload());
-		//		System.out.println("++++++++++++++++++++++++++++++++++++------------------------------------------------------------------------");
-		//		System.out.println("Loan Request "+mess.getKey());
-		//		System.out.println("+++++++++++++++++++++++++++++++++++++++++++------------------------------------------------------------------------");
-				System.out.println("the key is"+mess.getKey());
 				borrower=mess.getPayload().getBorrower();
 				loanrequest=mess.getPayload().getLoanrequest();
 				loan.setLoanrequest(loanrequest);
@@ -260,10 +265,7 @@ public class BusinessApplication {
 	 public static void main(String...args) {
 		
 		 BusinessApplication mybizApp=new BusinessApplication();
-		 System.out.println("The Business Application is running");
-		 // Demarrer une biz application qui se comporte en consumer et producer
-		 
-		
+		 System.out.println("The Business Application is running");		 
 		 try {
 	    	 CommandLineParser parser=new DefaultParser();
 	    	 CommandLine commandLine = parser.parse(OPTIONS, args);

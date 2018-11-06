@@ -65,7 +65,6 @@ public class RESJSEExecution {
 	 private static IlrJ2SESessionFactory createJ2SESessionFactory() {
 		 
 		 IlrSessionFactoryConfig factoryConfing=IlrJ2SESessionFactory.createDefaultConfig();
-//		 SampleConsumer myConsumer=new SampleConsumer();
 		 IlrXUConfig xuconfig=factoryConfing.getXUConfig();
 		 xuconfig.setLogAutoFlushEnabled(true);
 		 xuconfig.getPersistenceConfig().setPersistenceType(MEMORY);
@@ -90,9 +89,6 @@ public class RESJSEExecution {
 	 public void executeRuleset(IlrPath rulesetPath, Loan loan, String key, String serverurl, String topicNameR) throws IlrFormatException,
      IlrSessionCreationException,
      IlrSessionException, JsonGenerationException, JsonMappingException, IOException {
-//		 SampleConsumer myConsumer=new SampleConsumer();
-//		 myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicName);
-		 topicNameR="repliestest";
 		 IlrSessionRequest sessionRequest=factory.createRequest();
 		 sessionRequest.setRulesetPath(rulesetPath);
 		 sessionRequest.setForceUptodate(true);
