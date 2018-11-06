@@ -5,6 +5,7 @@ import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_MISSING_RULESE
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
@@ -156,8 +157,10 @@ public class ClientApplication {
 		 }
 
 		 public static String generateKey() {
-			 String key="test123";
-			 return key;
+			Date date=new Date();
+			System.out.println(date.getTime());
+			String key=""+date.getTime();
+			return key;
 		 }
 		 
 		  public static String BuildMessage(String message, String key) throws JsonProcessingException {
