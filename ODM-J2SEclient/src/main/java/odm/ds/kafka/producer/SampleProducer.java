@@ -17,8 +17,10 @@
  */
 package odm.ds.kafka.producer;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
@@ -85,7 +87,13 @@ public class SampleProducer {
 	 */
 	public void sendmessageString(Producer<String, String> producer,String topicname,String message){
 		String topicName=topicname;
-		producer.send(new ProducerRecord<String,String>(topicName,"2",message));
+		Date date=new Date();
+		System.out.println(date.getTime());
+	//	Random rand = new Random();
+		Random rand = new Random(); 
+		int value = rand.nextInt(1000); 
+		String tkey=""+date.getTime()+""+value;
+		producer.send(new ProducerRecord<String,String>(topicName,tkey,message));
 		mylogger.info(mybundle.getString("notif_sent")+" "+topicName);
 		producer.close();
 		

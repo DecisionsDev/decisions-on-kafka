@@ -164,7 +164,8 @@ public class SampleConsumer {
 		System.out.println("Waiting for payload ");
 		if(!records.isEmpty()) {
 		for(ConsumerRecord<String,String> record:records) {
-			if(key.equals(Reply.ExtractkeyFromJson(record.value()))) {
+			if(key.equals(Reply.ExtractkeyFromJson(record.value()))) 
+			{
 			System.out.println("Inside the test");
 			myLogger.info(record.value());
 			System.out.println("The receive key is "+Reply.ExtractkeyFromJson(record.value()));

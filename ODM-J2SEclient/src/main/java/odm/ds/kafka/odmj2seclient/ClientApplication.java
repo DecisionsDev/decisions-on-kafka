@@ -17,15 +17,14 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ilog.rules.res.model.IlrFormatException;
 import ilog.rules.res.model.IlrPath;
-import loan.Borrower;
-import loan.LoanRequest;
 import odm.ds.kafka.consumer.SampleConsumer;
 import odm.ds.kafka.producer.SampleProducer;
+import java.util.Random;
+
 
 public class ClientApplication {
 	
@@ -55,7 +54,8 @@ public class ClientApplication {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
 		SampleConsumer myConsumer=new SampleConsumer();
-		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), key, topicNameRp);
+//		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), key, topicNameRp);
+		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
 	
 	}
 	
@@ -159,7 +159,10 @@ public class ClientApplication {
 		 public static String generateKey() {
 			Date date=new Date();
 			System.out.println(date.getTime());
-			String key=""+date.getTime();
+		//	Random rand = new Random();
+			Random rand = new Random(); 
+			int value = rand.nextInt(1000); 
+			String key=""+date.getTime()+""+value;
 			return key;
 		 }
 		 
@@ -183,9 +186,10 @@ public class ClientApplication {
 				CommandLine commandLine = parser.parse(OPTIONS, args);
 				setUpkafkaParam(commandLine, args);
 				String mykey=generateKey();
+				 for(int i=0;i<100;i++) {
 				ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  BuildMessage(getPayload(commandLine, args), mykey), mykey, consumergroup, topicNameRp);
 	//			ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
-				
+				 }
 					} catch (ParseException | JsonProcessingException e) {
 			// 		} catch (ParseException e) {
 						// TODO Auto-generated catch block

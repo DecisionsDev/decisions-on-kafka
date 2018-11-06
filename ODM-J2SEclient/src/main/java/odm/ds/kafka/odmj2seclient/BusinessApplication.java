@@ -166,7 +166,6 @@ public class BusinessApplication {
 
 	 public static Loan ExtractLoanFromJson( String payload) {
 //	 public static void ExtractLoanFromJson( String payload) {
-		 
 		 ObjectMapper objectMapper=new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		 Message mess=new Message();
 	//	 System.out.println("The json "+payload);
