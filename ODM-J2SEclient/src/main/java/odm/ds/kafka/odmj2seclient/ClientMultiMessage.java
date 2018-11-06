@@ -54,11 +54,21 @@ public class ClientMultiMessage {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
 		SampleConsumer myConsumer=new SampleConsumer();
-//		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), key, topicNameRp);
 		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
 	
 	}
 	
+	
+	/**
+	 * 
+	 * @param serverurl
+	 * @param numberparam
+	 * @param topicNameRq
+	 * @param message
+	 * @param consumergroup
+	 * @param topicNameRp
+	 * 
+	 */
 	public static void setUpClientApp2(String serverurl, int numberparam, String topicNameRq, String message, String consumergroup, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
@@ -66,138 +76,196 @@ public class ClientMultiMessage {
 		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
 	
 	}
-	  private String getMandatoryRulesetPathArgument(CommandLine commandLine, String[] arguments) {
-	    	System.out.println("Inside getMandatory");
-	    	int nbOfArguments=arguments.length;
-	    	if(nbOfArguments!=0) {
-	    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
-	    		if(!unprocessedArguments.isEmpty()) {
-	    			String rulesetPathArgumentAsString=arguments[0];
-	    			System.out.println("rulesetPathArgumentAsString "+arguments[0]);
-	    			System.out.println("lenght "+arguments[1]);
-	    			if(unprocessedArguments.contains(rulesetPathArgumentAsString)) {
-	    				return rulesetPathArgumentAsString;
-	    			}
-	    		}
-	    		
-	    	}
-	    	return null;
-	    }
-	  private IlrPath getRulesetPath(CommandLine commandLine, String[] arguments) throws IllegalArgumentException {
-	    	String rulesetPathArgumentAsString=getMandatoryRulesetPathArgument(commandLine, arguments);
-	    	if(rulesetPathArgumentAsString==null) {
-	    		String errorMessage=getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH, getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH));
-	    		throw new IllegalArgumentException(errorMessage);
-	    	}
-	    	try {
-	    		return IlrPath.parsePath(rulesetPathArgumentAsString);
-	    				
-	    	} catch (IlrFormatException exception) {
-	    		System.out.println(rulesetPathArgumentAsString);
-	    		String errorMessage=getMessage(SAMPLE_ERROR_INVALID_RULESET_PATH, rulesetPathArgumentAsString);
-	    		System.out.println(errorMessage);
-	    		throw new IllegalArgumentException(errorMessage);	
-	    	}
-	    }
-	  private String getMessage(String key, Object... arguments) {
-	    	
-	    	return formatter.getMessage(key, arguments);
-	    } 
-	 
-		public static String getPayload(CommandLine commandLine, String[] arguments) {
-			int nbOfArguments=arguments.length;
-	    	if(nbOfArguments!=0) {
-	    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
-	    		if(!unprocessedArguments.isEmpty()) {
-	    			String payloadAsString=arguments[0];
-	    			if(unprocessedArguments.contains(payloadAsString)) {
-	    				return payloadAsString;
-	    			}
-	    		}
-	    		
-	    	}
-	    	return null;
-		}
-		 public static void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
+	
 
-				int nbOfArguments=arguments.length;
-		    	if(nbOfArguments!=0) {
-		    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
-		    		if(!unprocessedArguments.isEmpty()) {
-		    			serverurl=arguments[1];
-		    			System.out.println("The server url is "+serverurl);
-		    			topicNameRq=arguments[2];
-		    			System.out.println("The topic name for Request is "+topicNameRq);
-		    			topicNameRp=arguments[3];
-		    			System.out.println("The topic name for Replies is"+topicNameRp);
-		    			consumergroup=arguments[4];
-		    			System.out.println("The Consumer group is "+consumergroup);
-		    			
-		    		}
-		    		
-		    	}
-
-			}
-		 
-		 public static Loan loanJson( String payload) {
-			 
-			 ObjectMapper objectMapper=new ObjectMapper();
-			 Loan loan=null;				 
-
-				try {
-					loan=objectMapper.readValue(payload, Loan.class);
-					System.out.println("Loan Borrower "+loan.getBorrower());
-					System.out.println("Loan Request "+loan.getLoanrequest());
-					
-				} catch(IOException e) {
-					e.printStackTrace();
+	/**
+	 * 
+	 * @param commandLine
+	 * @param arguments
+	 * @return
+	 * 
+	 */
+	private String getMandatoryRulesetPathArgument(CommandLine commandLine, String[] arguments) {
+		System.out.println("Inside getMandatory");
+		int nbOfArguments = arguments.length;
+		if (nbOfArguments != 0) {
+			List<String> unprocessedArguments = Arrays.asList(commandLine.getArgs());
+			if (!unprocessedArguments.isEmpty()) {
+				String rulesetPathArgumentAsString = arguments[0];
+				System.out.println("rulesetPathArgumentAsString " + arguments[0]);
+				System.out.println("lenght " + arguments[1]);
+				if (unprocessedArguments.contains(rulesetPathArgumentAsString)) {
+					return rulesetPathArgumentAsString;
 				}
-				return loan;
-		
-		 }
+			}
 
-		 public static String generateKey() {
-			Date date=new Date();
-			System.out.println(date.getTime());
-		//	Random rand = new Random();
-			Random rand = new Random(); 
-			int value = rand.nextInt(1000); 
-			String key=""+date.getTime()+""+value;
-			return key;
-		 }
-		 
-		  public static String BuildMessage(String message, String key) throws JsonProcessingException {
-			  Loan myLoan=loanJson(message);
-			  Message myMess=new Message();
-			  myMess.setPayload(myLoan);
-			  myMess.setKey(key);
-			  ObjectMapper mapper = new ObjectMapper();
-			  String finalMess = mapper.writeValueAsString(myMess);
-			  return finalMess;
-		  }
-		  
+		}
+		return null;
+	}
 
-		  public static void main(String...args) {
-		
-			  System.out.println("The Client Application is Running");
-			  try {
+	/**
+	 * 
+	 * @param commandLine
+	 * @param arguments
+	 * @return
+	 * @throws IllegalArgumentException
+	 * 
+	 */
+	private IlrPath getRulesetPath(CommandLine commandLine, String[] arguments) throws IllegalArgumentException {
+		String rulesetPathArgumentAsString = getMandatoryRulesetPathArgument(commandLine, arguments);
+		if (rulesetPathArgumentAsString == null) {
+			String errorMessage = getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH,
+					getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH));
+			throw new IllegalArgumentException(errorMessage);
+		}
+		try {
+			return IlrPath.parsePath(rulesetPathArgumentAsString);
 
-	    		CommandLineParser parser=new DefaultParser();
-				CommandLine commandLine = parser.parse(OPTIONS, args);
-				setUpkafkaParam(commandLine, args);
-				 for(int i=0;i<10;i++) {
-				String mykey=generateKey();
-				ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  BuildMessage(getPayload(commandLine, args), mykey), mykey, consumergroup, topicNameRp);
-	//			ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
-				 }
-					} catch (ParseException | JsonProcessingException e) {
-			// 		} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		
+		} catch (IlrFormatException exception) {
+			System.out.println(rulesetPathArgumentAsString);
+			String errorMessage = getMessage(SAMPLE_ERROR_INVALID_RULESET_PATH, rulesetPathArgumentAsString);
+			System.out.println(errorMessage);
+			throw new IllegalArgumentException(errorMessage);
+		}
 	}
 	
+
+	/**
+	 * 
+	 * @param key
+	 * @param arguments
+	 * @return
+	 * 
+	 */
+	private String getMessage(String key, Object... arguments) {
+
+		return formatter.getMessage(key, arguments);
+	}
+	 
+	/**
+	 * 
+	 * @param commandLine
+	 * @param arguments
+	 * @return
+	 * 
+	 */
+	public static String getPayload(CommandLine commandLine, String[] arguments) {
+		int nbOfArguments = arguments.length;
+		if (nbOfArguments != 0) {
+			List<String> unprocessedArguments = Arrays.asList(commandLine.getArgs());
+			if (!unprocessedArguments.isEmpty()) {
+				String payloadAsString = arguments[0];
+				if (unprocessedArguments.contains(payloadAsString)) {
+					return payloadAsString;
+				}
+			}
+
+		}
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param commandLine
+	 * @param arguments
+	 * 
+	 */
+	public static void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
+
+		int nbOfArguments = arguments.length;
+		if (nbOfArguments != 0) {
+			List<String> unprocessedArguments = Arrays.asList(commandLine.getArgs());
+			if (!unprocessedArguments.isEmpty()) {
+				serverurl = arguments[1];
+				System.out.println("The server url is " + serverurl);
+				topicNameRq = arguments[2];
+				System.out.println("The topic name for Request is " + topicNameRq);
+				topicNameRp = arguments[3];
+				System.out.println("The topic name for Replies is" + topicNameRp);
+				consumergroup = arguments[4];
+				System.out.println("The Consumer group is " + consumergroup);
+
+			}
+
+		}
+
+	}
+		
+	/**
+	 * 
+	 * @param payload
+	 * @return
+	 * 
+	 */
+	public static Loan loanJson(String payload) {
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		Loan loan = null;
+
+		try {
+			loan = objectMapper.readValue(payload, Loan.class);
+			System.out.println("Loan Borrower " + loan.getBorrower());
+			System.out.println("Loan Request " + loan.getLoanrequest());
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return loan;
+
+	}
+	
+	
+
+	/**
+	 * 
+	 * @return
+	 * 
+	 */
+	public static String generateKey() {
+		Date date = new Date();
+		System.out.println(date.getTime());
+		Random rand = new Random();
+		int value = rand.nextInt(1000);
+		String key = "" + date.getTime() + "" + value;
+		return key;
+	}
+	
+	/**
+	 * 
+	 * @param message
+	 * @param key
+	 * @return
+	 * @throws JsonProcessingException
+	 * 
+	 */
+	public static String BuildMessage(String message, String key) throws JsonProcessingException {
+		Loan myLoan = loanJson(message);
+		Message myMess = new Message();
+		myMess.setPayload(myLoan);
+		myMess.setKey(key);
+		ObjectMapper mapper = new ObjectMapper();
+		String finalMess = mapper.writeValueAsString(myMess);
+		return finalMess;
+	}		  
+
+	public static void main(String... args) {
+
+		System.out.println("The Client Application is Running");
+		try {
+
+			CommandLineParser parser = new DefaultParser();
+			CommandLine commandLine = parser.parse(OPTIONS, args);
+			setUpkafkaParam(commandLine, args);
+			for (int i = 0; i < 10; i++) {
+				String mykey = generateKey();
+				ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,
+						BuildMessage(getPayload(commandLine, args), mykey), mykey, consumergroup, topicNameRp);
+			}
+		} catch (ParseException | JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+	}	
 
 
 }

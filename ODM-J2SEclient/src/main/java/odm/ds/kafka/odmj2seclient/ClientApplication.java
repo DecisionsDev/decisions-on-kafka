@@ -58,6 +58,16 @@ public class ClientApplication {
 	
 	}
 	
+	/**
+	 * 
+	 * @param serverurl
+	 * @param numberparam
+	 * @param topicNameRq
+	 * @param message
+	 * @param consumergroup
+	 * @param topicNameRp
+	 * 
+	 */
 	public static void setUpClientApp2(String serverurl, int numberparam, String topicNameRq, String message, String consumergroup, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
@@ -65,6 +75,13 @@ public class ClientApplication {
 		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
 	
 	}
+	/**
+	 * 
+	 * @param commandLine
+	 * @param arguments
+	 * @return
+	 * 
+	 */
 	  private String getMandatoryRulesetPathArgument(CommandLine commandLine, String[] arguments) {
 	    	System.out.println("Inside getMandatory");
 	    	int nbOfArguments=arguments.length;
@@ -82,6 +99,14 @@ public class ClientApplication {
 	    	}
 	    	return null;
 	    }
+	  /**
+	   * 
+	   * @param commandLine
+	   * @param arguments
+	   * @return
+	   * @throws IllegalArgumentException
+	   * 
+	   */
 	  private IlrPath getRulesetPath(CommandLine commandLine, String[] arguments) throws IllegalArgumentException {
 	    	String rulesetPathArgumentAsString=getMandatoryRulesetPathArgument(commandLine, arguments);
 	    	if(rulesetPathArgumentAsString==null) {
@@ -98,11 +123,24 @@ public class ClientApplication {
 	    		throw new IllegalArgumentException(errorMessage);	
 	    	}
 	    }
+	  /**
+	   * 
+	   * @param key
+	   * @param arguments
+	   * @return
+	   * 
+	   */
 	  private String getMessage(String key, Object... arguments) {
 	    	
 	    	return formatter.getMessage(key, arguments);
 	    } 
-	 
+	 /**
+	  * 
+	  * @param commandLine
+	  * @param arguments
+	  * @return
+	  * 
+	  */
 		public static String getPayload(CommandLine commandLine, String[] arguments) {
 			int nbOfArguments=arguments.length;
 	    	if(nbOfArguments!=0) {
@@ -117,6 +155,13 @@ public class ClientApplication {
 	    	}
 	    	return null;
 		}
+		
+		/**
+		 * 
+		 * @param commandLine
+		 * @param arguments
+		 * 
+		 */
 		 public static void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
 
 				int nbOfArguments=arguments.length;
@@ -137,7 +182,12 @@ public class ClientApplication {
 		    	}
 
 			}
-		 
+		 /**
+		  * 
+		  * @param payload
+		  * @return
+		  * 
+		  */
 		 public static Loan loanJson( String payload) {
 			 
 			 ObjectMapper objectMapper=new ObjectMapper();
@@ -155,16 +205,27 @@ public class ClientApplication {
 		
 		 }
 
+		 /**
+		  * 
+		  * @return
+		  * 
+		  */
 		 public static String generateKey() {
 			Date date=new Date();
 			System.out.println(date.getTime());
-		//	Random rand = new Random();
 			Random rand = new Random(); 
 			int value = rand.nextInt(1000); 
 			String key=""+date.getTime()+""+value;
 			return key;
 		 }
-		 
+		 /**
+		  * 
+		  * @param message
+		  * @param key
+		  * @return
+		  * @throws JsonProcessingException
+		  * 
+		  */
 		  public static String BuildMessage(String message, String key) throws JsonProcessingException {
 			  Loan myLoan=loanJson(message);
 			  Message myMess=new Message();
@@ -186,10 +247,7 @@ public class ClientApplication {
 				setUpkafkaParam(commandLine, args);
 				String mykey=generateKey();
 				ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  BuildMessage(getPayload(commandLine, args), mykey), mykey, consumergroup, topicNameRp);
-	//			ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
 					} catch (ParseException | JsonProcessingException e) {
-			// 		} catch (ParseException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 		
