@@ -113,7 +113,7 @@ public class Main
      		 String valeur=null;
      		 setUpkafkaParam(commandLine, arguments);
      		 for(int i=0;i<10;i++) {   		 
-     			 ClientApplication.setUpClientApp(serverurl, numberparam, topicNameRq, getPayload(commandLine, arguments), consumergroup, topicNameRp);
+     			 ClientApplication.setUpClientApp(serverurl, numberparam, topicNameRq, getPayload(commandLine, arguments),i+"12", consumergroup, topicNameRp);
      		 System.out.println("i is "+i);
      		 }
               try {

@@ -16,10 +16,13 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ilog.rules.res.model.IlrFormatException;
 import ilog.rules.res.model.IlrPath;
+import loan.Borrower;
+import loan.LoanRequest;
 import odm.ds.kafka.consumer.SampleConsumer;
 import odm.ds.kafka.producer.SampleProducer;
 
@@ -47,13 +50,14 @@ public class ClientApplication {
 	 * 
 	 */
 	
-	public static void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String consumergroup, String topicNameRp) {
+	public static void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
 		SampleConsumer myConsumer=new SampleConsumer();
-		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
+		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), key, topicNameRp);
 	
 	}
+	
 	public static void setUpClientApp2(String serverurl, int numberparam, String topicNameRq, String message, String consumergroup, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
@@ -151,35 +155,39 @@ public class ClientApplication {
 		
 		 }
 
+		 public static String generateKey() {
+			 String key="test123";
+			 return key;
+		 }
 		 
-		  public static String BuildMessage(String message) throws JsonProcessingException {
+		  public static String BuildMessage(String message, String key) throws JsonProcessingException {
 			  Loan myLoan=loanJson(message);
 			  Message myMess=new Message();
 			  myMess.setPayload(myLoan);
-			  myMess.setKey("test123");
+			  myMess.setKey(key);
 			  ObjectMapper mapper = new ObjectMapper();
 			  String finalMess = mapper.writeValueAsString(myMess);
 			  return finalMess;
 		  }
 		  
-		  
+
 		  public static void main(String...args) {
 		
-		System.out.println("The Client Application is Running");
-		ClientApplication myclApp=new ClientApplication();
-    	 try {
+			  System.out.println("The Client Application is Running");
+			  try {
 
-    		CommandLineParser parser=new DefaultParser();
-			CommandLine commandLine = parser.parse(OPTIONS, args);
-			setUpkafkaParam(commandLine, args);
-			ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  BuildMessage(getPayload(commandLine, args)), consumergroup, topicNameRp);
-//			ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
-			
-		} catch (ParseException | JsonProcessingException e) {
-// 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    		CommandLineParser parser=new DefaultParser();
+				CommandLine commandLine = parser.parse(OPTIONS, args);
+				setUpkafkaParam(commandLine, args);
+				String mykey=generateKey();
+				ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  BuildMessage(getPayload(commandLine, args), mykey), mykey, consumergroup, topicNameRp);
+	//			ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  getPayload(commandLine, args), consumergroup, topicNameRp);
+				
+					} catch (ParseException | JsonProcessingException e) {
+			// 		} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 		
 	}
 	

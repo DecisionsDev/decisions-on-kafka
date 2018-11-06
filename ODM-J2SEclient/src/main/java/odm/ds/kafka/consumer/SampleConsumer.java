@@ -29,6 +29,9 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 
+import odm.ds.kafka.odmj2seclient.Message;
+import odm.ds.kafka.odmj2seclient.Reply;
+
 public class SampleConsumer {
 
 	final Logger myLogger=Logger.getLogger(SampleConsumer.class.getName());
@@ -145,8 +148,7 @@ public class SampleConsumer {
 		
 	}
 	
-	public void consumeMessage3(KafkaConsumer<String, String> consumer, String topicName){
-		String[] data = new String[10];
+	public void consumeMessage3(KafkaConsumer<String, String> consumer, String key, String topicName){
 		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
             public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
                 System.out.printf("%s topic-partitions are revoked from this consumer\n", Arrays.toString(partitions.toArray()));
@@ -157,29 +159,20 @@ public class SampleConsumer {
         });
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
 //		long endTimeMillis = System.currentTimeMillis() + 1000;
-		int i=0;
 		while(true){
 		ConsumerRecords<String,String> records=consumer.poll(1000);
 		System.out.println("Waiting for payload ");
 		if(!records.isEmpty()) {
 		for(ConsumerRecord<String,String> record:records) {
-
-//			System.out.printf("Offset=%d, key=%s,value=%s\n",record.offset(),record.key(),record.value());
-			//myLogger.info("Offset=%d, key=%s,value=%s\n "+record.offset()+record.key()+record.value());
+			if(key.equals(Reply.ExtractkeyFromJson(record.value()))) {
+			System.out.println("Inside the test");
 			myLogger.info(record.value());
-	//		data[i]=record.value();
-	//		i++;
-//		if (System.currentTimeMillis() > endTimeMillis) {
-            // do some clean-up
-  //          return;
+			System.out.println("The receive key is "+Reply.ExtractkeyFromJson(record.value()));
+				}
 			}
 		}
 	
 		}
-	//	consumer.close();
-//	}
-//		System.out.println("Before returning value");
-//		return data;
 		
 	}
 

@@ -17,4 +17,5 @@ public class Message {
 		this.payload = payload;
 	}
 
+
 }

@@ -122,7 +122,7 @@ public class BusinessApplication {
 //		if (System.currentTimeMillis() > endTimeMillis) {
             // do some clean-up
   //          return;
-			ExtractLoanFromJson(record.value());
+//			ExtractLoanFromJson(record.value());
 			execution.executeRuleset(rulesetPath, ExtractLoanFromJson(record.value()), ExtractkeyFromJson(record.value()),serverurl, topicNameRp);
 //			execution.executeRuleset(rulesetPath, loanJson(record.value()), serverurl, topicNameRp);
 			}
@@ -168,7 +168,7 @@ public class BusinessApplication {
 //	 public static void ExtractLoanFromJson( String payload) {
 		 
 		 ObjectMapper objectMapper=new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		 Message mess=null;
+		 Message mess=new Message();
 	//	 System.out.println("The json "+payload);
 		 Loan loan=new Loan();
 		 Borrower borrower=new Borrower();
