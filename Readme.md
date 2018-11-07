@@ -33,9 +33,13 @@ This sample show how to use IBM ODM with Kafka
 `$ git clone --branch=master git@github.ibm.com:MYattara/ODM-DecisionServer-J2SE-Kafka.git`
 * In the pom file set the property <ibm.odm.install.dir></ibm.odm.install.dir> with your odm installation directory.
 
-## Deployment
+## Scenario Deployment
 
-### Scenario 1 :
+According to the sub-scenario we'll use one or many Client Application sending one or many payload to one or many business Application.
+the client Application is a J2SE Applications which sends a payload with information about the Borrower and a Loan Request, and wait for the approval or a reject of his loan request.
+The business Application is a J2SE ODM execution server in Memory application, which execute the payload against ODM loan validation sample and then return a result which should be approved or reject to J2SE Client Application
+
+### Sub-scenario 1 :
 
 * Run the project locally.
 `$ mvn clean install -Dmessage="yourMessage" -DtopicName="topicName" -Dserverurl="yourkafkahost:9092" -Dgroupid="ConsumerGroupid"`
@@ -57,9 +61,9 @@ This sample show how to use IBM ODM with Kafka
  \"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}}' 'localhost:9092' 
  'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"`
 
-### Scenario 2 :
+### Sub-scenario 2 :
 
-### Scenario 3 :
+### Sub-scenario 3 :
 
 
 ## Contributing
