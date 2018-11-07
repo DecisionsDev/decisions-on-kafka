@@ -41,7 +41,7 @@ public class ClientMultiMessage {
 	 * 
 	 */
 	
-	public static void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
+	public static void setUpClientAppforMulti(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
 		SampleConsumer myConsumer=new SampleConsumer();
@@ -49,25 +49,6 @@ public class ClientMultiMessage {
 	
 	}
 	
-	
-	/**
-	 * 
-	 * @param serverurl
-	 * @param numberparam
-	 * @param topicNameRq
-	 * @param message
-	 * @param consumergroup
-	 * @param topicNameRp
-	 * 
-	 */
-	public static void setUpClientApp2(String serverurl, int numberparam, String topicNameRq, String message, String consumergroup, String topicNameRp) {
-		SampleProducer myProducer=new SampleProducer();
-		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
-		SampleConsumer myConsumer=new SampleConsumer();
-		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
-	
-	}
-	 
 	/**
 	 * 
 	 * @param commandLine
@@ -184,7 +165,7 @@ public class ClientMultiMessage {
 			setUpkafkaParam(commandLine, args);
 			for (int i = 0; i < 10; i++) {
 				String mykey = generateKey();
-				ClientMultiMessage.setUpClientApp(serverurl, 2, topicNameRq,
+				ClientMultiMessage.setUpClientAppforMulti(serverurl, 2, topicNameRq,
 						BuildMessage(getPayload(commandLine, args), mykey), mykey, consumergroup, topicNameRp);
 			}
 		} catch (ParseException | JsonProcessingException e) {

@@ -53,24 +53,6 @@ public class ClientApplication {
 	
 	}
 	
-	/**
-	 * 
-	 * @param serverurl
-	 * @param numberparam
-	 * @param topicNameRq
-	 * @param message
-	 * @param consumergroup
-	 * @param topicNameRp
-	 * 
-	 */
-	public static void setUpClientApp2(String serverurl, int numberparam, String topicNameRq, String message, String consumergroup, String topicNameRp) {
-		SampleProducer myProducer=new SampleProducer();
-		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
-		SampleConsumer myConsumer=new SampleConsumer();
-		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
-	
-	}
-	
 	 /**
 	  * 
 	  * @param commandLine
