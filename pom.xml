@@ -142,7 +142,8 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>
+<!--  	<ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>-->	
+				<ibm.odm.install.dir>.</ibm.odm.install.dir>
 			</properties>
 
 			<!-- DEPENDENCIES TO IBM ODM RES JSE EXECUTION STACK -->
