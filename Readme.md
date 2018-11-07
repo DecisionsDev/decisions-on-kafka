@@ -27,10 +27,13 @@ This sample show how to use IBM ODM with Kafka
 ## Dependencies
 - Compile time
 - Test
+## Deployment
+* Make sure you have kafka installed, start kafka by launching zookeeper and kafka-server
+* Clone the project repository from github.
+`$ git clone --branch=master git@github.ibm.com:MYattara/ODM-DecisionServer-Kafka.git MYattara/ODM-DecisionServer-J2SE-Kafka`
+* In the pom file set the property <ibm.odm.install.dir></ibm.odm.install.dir> with your odm installation directory.
 
 ## Deployment
-* Clone the repository from github.
-`$ git clone --branch=master git@github.ibm.com:MYattara/ODM-DecisionServer-Kafka.git MYattara/ODM-DecisionServer-Kafka`
 * Run the project locally.
 `$ mvn clean install -Dmessage="yourMessage" -DtopicName="topicName" -Dserverurl="yourkafkahost:9092" -Dgroupid="ConsumerGroupid"`
 * To run the main class SampleMain :$ `mvn exec:java -Dexec.mainClass="odm.ds.kafka.main.SampleMain" -Dexec.args="yourkafkahost:port topicname message" -Dmaven.test.skip=true`
