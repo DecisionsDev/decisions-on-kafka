@@ -22,8 +22,6 @@ import odm.ds.kafka.producer.SampleProducer;
 public class ClientMultiMessage {
 	
 	
-	
-
 	private static final Options OPTIONS=new Options();
 	final static Logger myLogger=Logger.getLogger(SampleConsumer.class.getName());
 	static ResourceBundle mybundle = ResourceBundle.getBundle("MessagesBundle");
