@@ -22,7 +22,6 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,39 +45,6 @@ public class BusinessApplication {
 	private static String consumergroup;
 	private static final Options OPTIONS=new Options();
 	private static final MessageFormatter formatter=new MessageFormatter();
-
-	/**
-	 * Create a Consumer on topic Rq
-	 * Execute the rulesetPath
-	 * Create a Producer on topic Rp
-	 * 
-	 * @param serverurl
-	 * @param numberparam
-	 * @param consumergroup
-	 * @param topicNameRq
-	 * @param rulesetPath
-	 * @param loan
-	 * @param topicNameRp
-	 * @throws IlrFormatException
-	 * @throws IlrSessionCreationException
-	 * @throws JsonGenerationException
-	 * @throws JsonMappingException
-	 * @throws IlrSessionException
-	 * @throws IOException
-	 * 
-	 */
-	public static void setUpBussinessApp(String serverurl, int numberparam, String consumergroup, String topicNameRq, IlrPath rulesetPath, String
-			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
-		SampleConsumer myConsumer=new SampleConsumer();
-//		String payload=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
-		String[] payloads=myConsumer.consumeMessage2(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq);
-//		for (String payload:payloads) System.out.println("payload is "+payload);
-		RESJSEExecution execution = new RESJSEExecution();
-		for (String payload:payloads)
-		execution.executeRuleset(rulesetPath, loanJson(payload),"123" , serverurl, topicNameRp);
-//		consumeAndexec(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq, serverurl, rulesetPath, topicNameRp);
-		
-	}
 	
 	/**
 	 * 
@@ -96,7 +62,7 @@ public class BusinessApplication {
 	 * @throws IOException
 	 * 
 	 */
-	public static void setUpBussinessApp2(String serverurl, int numberparam, String consumergroup, String topicNameRq, IlrPath rulesetPath, String
+	public static void setUpBussinessApp(String serverurl, int numberparam, String consumergroup, String topicNameRq, IlrPath rulesetPath, String
 			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
 		SampleConsumer myConsumer=new SampleConsumer();
 		consumeAndexec(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq, serverurl, rulesetPath, topicNameRp);
@@ -154,7 +120,7 @@ public class BusinessApplication {
 	public static Loan loanJson(String payload) {
 
 		ObjectMapper objectMapper = new ObjectMapper();
-		Loan loan = null;
+		Loan loan = new Loan();
 
 		try {
 			loan = objectMapper.readValue(payload, Loan.class);
@@ -178,10 +144,7 @@ public class BusinessApplication {
 
 		ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
 				false);
-		Message mess = null;
-		Loan loan = new Loan();
-		Borrower borrower = new Borrower();
-		LoanRequest loanrequest = new LoanRequest();
+		Message mess = new Message();
 		try {
 			mess = objectMapper.readValue(payload, Message.class);
 		} catch (IOException e) {
@@ -306,24 +269,6 @@ public class BusinessApplication {
 
 	}
 
-	/**
-	 * 
-	 * @param message
-	 * @return
-	 * @throws JsonProcessingException
-	 * 
-	 */
-	public static String BuildMessage(String message) throws JsonProcessingException {
-		Loan myLoan = loanJson(message);
-		Message myMess = new Message();
-		myMess.setPayload(myLoan);
-		myMess.setKey("test123");
-		ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		;
-		String finalMess = mapper.writeValueAsString(myMess);
-		return finalMess;
-	}
-
 	public static void main(String... args) {
 
 		BusinessApplication mybizApp = new BusinessApplication();
@@ -333,7 +278,7 @@ public class BusinessApplication {
 			CommandLine commandLine = parser.parse(OPTIONS, args);
 			IlrPath rulesetPath = mybizApp.getRulesetPath(commandLine, args);
 			setUpkafkaParam(commandLine, args);
-			BusinessApplication.setUpBussinessApp2(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+			BusinessApplication.setUpBussinessApp(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
 
 		} catch (IllegalArgumentException | ParseException | IlrFormatException | IlrSessionException
 				| IOException exception) {
