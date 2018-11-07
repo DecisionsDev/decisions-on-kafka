@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>odm.ds.kafka</groupId>
-	<artifactId>ODM-J2SEclient</artifactId>
+	<artifactId>ODM-DecisionServer-J2SE-Kafka</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 

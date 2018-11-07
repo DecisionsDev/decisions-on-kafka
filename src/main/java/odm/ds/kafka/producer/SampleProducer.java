@@ -89,7 +89,6 @@ public class SampleProducer {
 		String topicName=topicname;
 		Date date=new Date();
 		System.out.println(date.getTime());
-	//	Random rand = new Random();
 		Random rand = new Random(); 
 		int value = rand.nextInt(1000); 
 		String tkey=""+date.getTime()+""+value;

@@ -86,6 +86,22 @@ public class RESJSEExecution {
 		  String finalMess = mapper.writeValueAsString(myReply);
 		  return finalMess;
 	  }
+	  
+	  /**
+	   * 
+	   * @param rulesetPath
+	   * @param loan
+	   * @param key
+	   * @param serverurl
+	   * @param topicNameR
+	   * @throws IlrFormatException
+	   * @throws IlrSessionCreationException
+	   * @throws IlrSessionException
+	   * @throws JsonGenerationException
+	   * @throws JsonMappingException
+	   * @throws IOException
+	   * 
+	   */
 	 public void executeRuleset(IlrPath rulesetPath, Loan loan, String key, String serverurl, String topicNameR) throws IlrFormatException,
      IlrSessionCreationException,
      IlrSessionException, JsonGenerationException, JsonMappingException, IOException {
@@ -93,7 +109,6 @@ public class RESJSEExecution {
 		 sessionRequest.setRulesetPath(rulesetPath);
 		 sessionRequest.setForceUptodate(true);
 		 Map<String, Object> inputParamters=new HashMap<String, Object>();
-		 // Il recupère ici le message du topic et l'affecte à la session
 		 inputParamters.put("borrower",  loan.getBorrower());
 		 inputParamters.put("loan", loan.getLoanrequest());
 		 sessionRequest.setInputParameters(inputParamters);

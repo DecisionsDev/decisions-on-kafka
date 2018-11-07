@@ -258,7 +258,7 @@ public class ClientMultiMessage {
 			setUpkafkaParam(commandLine, args);
 			for (int i = 0; i < 10; i++) {
 				String mykey = generateKey();
-				ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,
+				ClientMultiMessage.setUpClientApp(serverurl, 2, topicNameRq,
 						BuildMessage(getPayload(commandLine, args), mykey), mykey, consumergroup, topicNameRp);
 			}
 		} catch (ParseException | JsonProcessingException e) {
