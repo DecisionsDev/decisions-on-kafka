@@ -1,8 +1,5 @@
 package odm.ds.kafka.odmj2seclient;
 
-import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
-import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
@@ -19,9 +16,6 @@ import org.apache.commons.cli.ParseException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import ilog.rules.res.model.IlrFormatException;
-import ilog.rules.res.model.IlrPath;
 import odm.ds.kafka.consumer.SampleConsumer;
 import odm.ds.kafka.producer.SampleProducer;
 
@@ -31,7 +25,6 @@ public class ClientMultiMessage {
 	
 
 	private static final Options OPTIONS=new Options();
-	private static final MessageFormatter formatter=new MessageFormatter();
 	final static Logger myLogger=Logger.getLogger(SampleConsumer.class.getName());
 	static ResourceBundle mybundle = ResourceBundle.getBundle("MessagesBundle");
 	private static String serverurl;
@@ -75,71 +68,6 @@ public class ClientMultiMessage {
 		SampleConsumer myConsumer=new SampleConsumer();
 		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRp);
 	
-	}
-	
-
-	/**
-	 * 
-	 * @param commandLine
-	 * @param arguments
-	 * @return
-	 * 
-	 */
-	private String getMandatoryRulesetPathArgument(CommandLine commandLine, String[] arguments) {
-		System.out.println("Inside getMandatory");
-		int nbOfArguments = arguments.length;
-		if (nbOfArguments != 0) {
-			List<String> unprocessedArguments = Arrays.asList(commandLine.getArgs());
-			if (!unprocessedArguments.isEmpty()) {
-				String rulesetPathArgumentAsString = arguments[0];
-				System.out.println("rulesetPathArgumentAsString " + arguments[0]);
-				System.out.println("lenght " + arguments[1]);
-				if (unprocessedArguments.contains(rulesetPathArgumentAsString)) {
-					return rulesetPathArgumentAsString;
-				}
-			}
-
-		}
-		return null;
-	}
-
-	/**
-	 * 
-	 * @param commandLine
-	 * @param arguments
-	 * @return
-	 * @throws IllegalArgumentException
-	 * 
-	 */
-	private IlrPath getRulesetPath(CommandLine commandLine, String[] arguments) throws IllegalArgumentException {
-		String rulesetPathArgumentAsString = getMandatoryRulesetPathArgument(commandLine, arguments);
-		if (rulesetPathArgumentAsString == null) {
-			String errorMessage = getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH,
-					getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH));
-			throw new IllegalArgumentException(errorMessage);
-		}
-		try {
-			return IlrPath.parsePath(rulesetPathArgumentAsString);
-
-		} catch (IlrFormatException exception) {
-			System.out.println(rulesetPathArgumentAsString);
-			String errorMessage = getMessage(SAMPLE_ERROR_INVALID_RULESET_PATH, rulesetPathArgumentAsString);
-			System.out.println(errorMessage);
-			throw new IllegalArgumentException(errorMessage);
-		}
-	}
-	
-
-	/**
-	 * 
-	 * @param key
-	 * @param arguments
-	 * @return
-	 * 
-	 */
-	private String getMessage(String key, Object... arguments) {
-
-		return formatter.getMessage(key, arguments);
 	}
 	 
 	/**
