@@ -56,9 +56,9 @@ public class SampleProducer {
 		props.put("buffer.memory", 33554432);
 		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-		props.put("PARTITIONER_CLASS_CONFIG",DataPartitioner.class.getCanonicalName());
-		props.put("partitions.0", "partition 0");
-		props.put("partitions.1", "partition 1");
+	//	props.put("PARTITIONER_CLASS_CONFIG",DataPartitioner.class.getCanonicalName());
+	//	props.put("partitions.0", "partition 0");
+	//	props.put("partitions.1", "partition 1");
 		Producer<String,String> producer=new KafkaProducer<String,String>(props);
 		return producer;
 	}
