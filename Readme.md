@@ -75,13 +75,14 @@ The goal of this sub-scenario is to show the load balancing between Business App
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
- -Dibm.odm.install.dir="C:\ODM8920" `> out1.txt
+ -Dibm.odm.install.dir="C:\ODM8920" > out1.txt `
 
 2. Run your second Business Application which is going to put it's result in out2.txt
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
- -Dibm.odm.install.dir="C:\ODM8920" `> out2.txt 
+ -Dibm.odm.install.dir="C:\ODM8920" > out2.txt` 
+ 
 3. Run a client Application which is going to send 10 message.
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientMutliMessage" -Dexec.args="'{\"borrower\":{\"lastName\" : 
