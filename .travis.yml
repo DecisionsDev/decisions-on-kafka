@@ -5,7 +5,7 @@ jdk:
 
 install:
 
-	- mvn eclise:eclipse
+- mvn eclise:eclipse --settings travis-settings.xml
   # - mvn install --settings travis-settings.xml -Dmessage="go" -DtopicName="moussatest" -Dserverurl="vtt-odm653.fr.eurolabs.ibm.com:9092" -Dgroupid="test2" -B 
  # - mvn install --settings travis-settings.xml -DskipTests=true -Dmaven.javadoc.skip=true -Dmessage="go" -DtopicName="moussatest" -Dserverurl="9.79.64.98:9092" -Dgroupid="test2" -B -V -e -U 
 script:
