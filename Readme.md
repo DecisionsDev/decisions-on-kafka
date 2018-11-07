@@ -87,7 +87,7 @@ The goal of this sub-scenario is to show the load balancing between Business App
  
 3. Run a client Application which is going to send 10 message.
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientMutliMessage" -Dexec.args="'{\"borrower\":{\"lastName\" : 
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientMultiMessage" -Dexec.args="'{\"borrower\":{\"lastName\" : 
  \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 
  'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"`
