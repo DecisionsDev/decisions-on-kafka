@@ -40,28 +40,29 @@ the client Application is a J2SE Applications which sends a payload with informa
 The business Application is a J2SE ODM execution server in Memory application, which execute the payload against ODM loan validation sample ruleset and then return a result which should be approved or reject to J2SE Client Application
 
 ### Sub-scenario 1 : N Client Applications Sending payload to one Business Application and waiting for the result
-The goal of this sub-scenario is to show each client Application got the right answer for his payload
+The goal of this sub-scenario is to show that each client Application got the right answer for his payload it sent to the Business Application.
+- Open a Command line in the project ODM-DecisionServer-J2SE-Kafka root folder.
 
+1. Send the first payload by the first client Application : 
 
-* Run the project locally.
-`$ mvn clean install -Dmessage="yourMessage" -DtopicName="topicName" -Dserverurl="yourkafkahost:9092" -Dgroupid="ConsumerGroupid"`
-* To run the main class SampleMain :$ `mvn exec:java -Dexec.mainClass="odm.ds.kafka.main.SampleMain" -Dexec.args="yourkafkahost:port topicname message" -Dmaven.test.skip=true`
-* To run the integration test : `$ mvn -Dtest=SampleTest -Dmessage="yourMessage" -DtopicName="topicName" -Dserverurl="yourkafkahost:port" test`
-* To run the Main Application of the J2SEclient Application : 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.Main" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 
-'{\"borrower\":{\"lastName\" : \"Yattara\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\"
-,\"creditScore\":200,\"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178,
-\"amount\":100000,\"loanToValue\":1.20}}' 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test" 
--Dibm.odm.install.dir="C:\ODM8920"`
-
-* To run the Business Application : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
--Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
- -Dibm.odm.install.dir="C:\ODM8920" `
- 
- * To run the Client Application : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
+ * The Client Application 1 : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
  \"Yattara\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}}' 'localhost:9092' 
  'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"`
+
+ 2. Send the second payload by the second Client Application :
+ 
+ * The Client Application 1 : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
+ \"Yattara\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,
+ \"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}}' 'localhost:9092' 
+ 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"`
+
+ 3. Run the Business Application :
+ 
+* The Business Application : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
+-Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
+ -Dibm.odm.install.dir="C:\ODM8920" `
+ 
 
 ### Sub-scenario 2 : N Client Applications Sending payload to N Business Applications
 
