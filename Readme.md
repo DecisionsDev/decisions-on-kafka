@@ -30,7 +30,7 @@ This sample show how to use IBM ODM with Kafka
 ## Deployment
 * Make sure you have kafka installed, start kafka by launching zookeeper and kafka-server
 * Clone the project repository from github.
-`$ git clone --branch=master git@github.ibm.com:MYattara/ODM-DecisionServer-Kafka.git MYattara/ODM-DecisionServer-J2SE-Kafka`
+`$ git clone --branch=master git@github.ibm.com:MYattara/ODM-DecisionServer-J2SE-Kafka.git`
 * In the pom file set the property <ibm.odm.install.dir></ibm.odm.install.dir> with your odm installation directory.
 
 ## Deployment
