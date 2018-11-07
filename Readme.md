@@ -8,7 +8,7 @@
 
 This sample show how to use IBM ODM with Kafka
 
-![Sample Architecture](ODM-J2SEclient/docs/images/architecture.png)
+![Sample Architecture](docs/images/architecture.png)
 
 ### Workflow Description
 
