@@ -73,6 +73,8 @@ In the fist client Application the loan request should be accepted and in the se
 
 The goal of this sub-scenario is to show the load balancing between Business Application.
 
+![use case 1](docs/images/usecase2.png)
+
 1. Run your first business Application which put it's result in out1.txt.
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
