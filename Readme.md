@@ -37,9 +37,11 @@ This sample show how to use IBM ODM with Kafka
 
 According to the sub-scenario we'll use one or many Client Application sending one or many payload to one or many business Application.
 the client Application is a J2SE Applications which sends a payload with information about the Borrower and a Loan Request, and wait for the approval or a reject of his loan request.
-The business Application is a J2SE ODM execution server in Memory application, which execute the payload against ODM loan validation sample and then return a result which should be approved or reject to J2SE Client Application
+The business Application is a J2SE ODM execution server in Memory application, which execute the payload against ODM loan validation sample ruleset and then return a result which should be approved or reject to J2SE Client Application
 
-### Sub-scenario 1 :
+### Sub-scenario 1 : N Client Applications Sending payload to Business Application and waiting for the result
+The goal of this sub-scenario is to show each client Application got the right answer for his payload
+
 
 * Run the project locally.
 `$ mvn clean install -Dmessage="yourMessage" -DtopicName="topicName" -Dserverurl="yourkafkahost:9092" -Dgroupid="ConsumerGroupid"`
@@ -61,9 +63,12 @@ The business Application is a J2SE ODM execution server in Memory application, w
  \"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}}' 'localhost:9092' 
  'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"`
 
-### Sub-scenario 2 :
+### Sub-scenario 2 : N Client Applications Sending payload to n Business Application
 
-### Sub-scenario 3 :
+The goal of this sub-scenario is to show the loadbalacing between Business Application
+
+
+### Sub-scenario 3 : Availability after one business Application has been down
 
 
 ## Contributing
