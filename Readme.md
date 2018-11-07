@@ -60,17 +60,39 @@ the yearlyIncome is 200000  :
 
  3. Run the Business Application :
  
-* The Business Application : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" `
 4. Result : 
 In the fist client Application the loan request should be accepted and in the second client Application the loan request should be rejected.
-For the next sub-scenario keep your business Application running.
 
 ### Sub-scenario 2 : N Client Applications Sending payload to N Business Applications
 
+
 The goal of this sub-scenario is to show the load balancing between Business Application.
 
+1. Run your first business Application which put it's result in out1.txt.
+
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
+-Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
+ -Dibm.odm.install.dir="C:\ODM8920" `> out1.txt
+
+2. Run your second Business Application which is going to put it's result in out2.txt
+
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
+-Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
+ -Dibm.odm.install.dir="C:\ODM8920" `> out2.txt
+
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientMutliMessage" -Dexec.args="'{\"borrower\":{\"lastName\" : 
+ \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
+ \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 
+ 'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"`
+
+
+ 
+3. Run a client Application which is going to send 10 message.
+
+4. Stop your two business Application and look at 
 
 ### Sub-scenario 3 : Availability after one Business Application has been down
 
