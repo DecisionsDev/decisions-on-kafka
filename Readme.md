@@ -38,22 +38,23 @@ This sample show how to use IBM ODM with Kafka
 According to the sub-scenario we'll use one or many Client Application sending one or many payload to one or many business Application.
 the client Application is a J2SE Applications which sends a payload with information about the Borrower and a Loan Request, and wait for the approval or a reject of his loan request.
 The business Application is a J2SE ODM execution server in Memory application, which execute the payload against ODM loan validation sample ruleset and then return a result which should be approved or reject to J2SE Client Application
+NB : The three sub-scenarios are related.
 
 ### Sub-scenario 1 : N Client Applications Sending payload to one Business Application and waiting for the result
 The goal of this sub-scenario is to show that each client Application got the right answer for his payload it sent to the Business Application.
-- Open a Command line in the project ODM-DecisionServer-J2SE-Kafka root folder.
 
-1. Send the first payload by the first client Application : 
+1. Create the first client Application : Open a command line in the project ODM-DecisionServer-J2SE-Kafka root folder then run the command below, it send a payload corresponding to the loan request. In this loan request the amount is 10000 and 
+the yearlyIncome is 200000  : 
 
  * The Client Application 1 : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
- \"Yattara\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,
- \"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}}' 'localhost:9092' 
+ \"Smith\",\"firstName\" : \"John\", \"birthDate\":800-12-0234,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,
+ \"yearlyIncome\":200000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}' 'localhost:9092' 
  'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"`
 
- 2. Send the second payload by the second Client Application :
+ 2. Create the second Client Application : Send the second payload by the second Client Application :
  
  * The Client Application 1 : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
- \"Yattara\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,
+ \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"11243344\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":20000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":100000,\"loanToValue\":1.20}}' 'localhost:9092' 
  'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"`
 
@@ -62,11 +63,13 @@ The goal of this sub-scenario is to show that each client Application got the ri
 * The Business Application : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" `
- 
+4. Result : 
+In the fist client Application the loan request should be accepted and in the second client Application the loan request should be rejected.
+For the next sub-scenario keep your business Application running.
 
 ### Sub-scenario 2 : N Client Applications Sending payload to N Business Applications
 
-The goal of this sub-scenario is to show the loadbalacing between Business Application
+The goal of this sub-scenario is to show the load balancing between Business Application.
 
 
 ### Sub-scenario 3 : Availability after one Business Application has been down
