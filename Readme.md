@@ -90,7 +90,7 @@ The goal of this sub-scenario is to show the load balancing between Business App
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 
  'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"`
 
-4. Stop your two business Application and look at 
+4. Stop your two business Application and look at the files out1.txt and out2.txt you will see that the ten payloads have been split between for execution between the two Business Applications.
 
 ### Sub-scenario 3 : Availability after one Business Application has been down
 
