@@ -43,6 +43,8 @@ NB : The three sub-scenarios are related.
 ### Sub-scenario 1 : N Client Applications Sending payload to one Business Application and waiting for the result
 The goal of this sub-scenario is to show that each client Application got the right answer for his payload it sent to the Business Application.
 
+![use case 1](docs/images/usecase1.png)
+
 1. Create the first client Application : Open a command line in the project ODM-DecisionServer-J2SE-Kafka root folder then run the command below, it send a payload corresponding to the loan request. In this loan request the amount is 10000 and 
 the yearlyIncome is 200000  : 
 
