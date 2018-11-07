@@ -145,140 +145,200 @@ public class BusinessApplication {
 	
 		}
 	}
-	 public static Loan loanJson( String payload) {
-		 
-		 ObjectMapper objectMapper=new ObjectMapper();
-		 Loan loan=null;				 
+	/**
+	 * 
+	 * @param payload
+	 * @return
+	 * 
+	 */
+	public static Loan loanJson(String payload) {
 
-			try {
-				loan=objectMapper.readValue(payload, Loan.class);
-				System.out.println("Loan Borrower "+loan.getBorrower());
-				System.out.println("Loan Request "+loan.getLoanrequest());
-				
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
-			return loan;
-	
-	 }
-	 public static String ExtractkeyFromJson( String payload) {
-			 
-			 ObjectMapper objectMapper=new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-			 Message mess=null;
-			 Loan loan=new Loan();
-			 Borrower borrower=new Borrower();
-			 LoanRequest loanrequest=new LoanRequest();
-				try {
-					mess=objectMapper.readValue(payload, Message.class);
-				} catch(IOException e) {
-					e.printStackTrace();
+		ObjectMapper objectMapper = new ObjectMapper();
+		Loan loan = null;
+
+		try {
+			loan = objectMapper.readValue(payload, Loan.class);
+			System.out.println("Loan Borrower " + loan.getBorrower());
+			System.out.println("Loan Request " + loan.getLoanrequest());
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return loan;
+
+	}
+
+	/**
+	 * 
+	 * @param payload
+	 * @return
+	 * 
+	 */
+	public static String ExtractkeyFromJson(String payload) {
+
+		ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
+				false);
+		Message mess = null;
+		Loan loan = new Loan();
+		Borrower borrower = new Borrower();
+		LoanRequest loanrequest = new LoanRequest();
+		try {
+			mess = objectMapper.readValue(payload, Message.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return mess.getKey();
+
+	}
+
+	/**
+	 * 
+	 * @param payload
+	 * @return
+	 * 
+	 */
+	public static Loan ExtractLoanFromJson(String payload) {
+		ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
+				false);
+		Message mess = new Message();
+		Loan loan = new Loan();
+		Borrower borrower = new Borrower();
+		LoanRequest loanrequest = new LoanRequest();
+		try {
+			mess = objectMapper.readValue(payload, Message.class);
+			borrower = mess.getPayload().getBorrower();
+			loanrequest = mess.getPayload().getLoanrequest();
+			loan.setLoanrequest(loanrequest);
+			loan.setBorrower(borrower);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return loan;
+
+	}
+
+	/**
+	 * 
+	 * @param commandLine
+	 * @param arguments
+	 * @return
+	 * 
+	 */
+	private String getMandatoryRulesetPathArgument(CommandLine commandLine, String[] arguments) {
+		int nbOfArguments = arguments.length;
+		if (nbOfArguments != 0) {
+			List<String> unprocessedArguments = Arrays.asList(commandLine.getArgs());
+			if (!unprocessedArguments.isEmpty()) {
+				String rulesetPathArgumentAsString = arguments[0];
+				System.out.println("The rulesetPath is " + arguments[0]);
+				System.out.println("The server url is " + arguments[1]);
+				if (unprocessedArguments.contains(rulesetPathArgumentAsString)) {
+					return rulesetPathArgumentAsString;
 				}
-				return mess.getKey();
-		
-		 }
-
-	 public static Loan ExtractLoanFromJson( String payload) {
-		 ObjectMapper objectMapper=new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		 Message mess=new Message();
-		 Loan loan=new Loan();
-		 Borrower borrower=new Borrower();
-		 LoanRequest loanrequest=new LoanRequest();
-			try {
-				mess=objectMapper.readValue(payload, Message.class);
-				borrower=mess.getPayload().getBorrower();
-				loanrequest=mess.getPayload().getLoanrequest();
-				loan.setLoanrequest(loanrequest);
-				loan.setBorrower(borrower);
-				
-			} catch(IOException e) {
-				e.printStackTrace();
 			}
-			return loan;
-	
-	 }
-
-	  private String getMandatoryRulesetPathArgument(CommandLine commandLine, String[] arguments) {
-	    	int nbOfArguments=arguments.length;
-	    	if(nbOfArguments!=0) {
-	    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
-	    		if(!unprocessedArguments.isEmpty()) {
-	    			String rulesetPathArgumentAsString=arguments[0];
-	    			System.out.println("The rulesetPath is "+arguments[0]);
-	    			System.out.println("The server url is "+arguments[1]);
-	    			if(unprocessedArguments.contains(rulesetPathArgumentAsString)) {
-	    				return rulesetPathArgumentAsString;
-	    			}
-	    		}
-	    		
-	    	}
-	    	return null;
-	    }
-	  private IlrPath getRulesetPath(CommandLine commandLine, String[] arguments) throws IllegalArgumentException {
-	    	String rulesetPathArgumentAsString=getMandatoryRulesetPathArgument(commandLine, arguments);
-	    	if(rulesetPathArgumentAsString==null) {
-	    		String errorMessage=getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH, getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH));
-	    		throw new IllegalArgumentException(errorMessage);
-	    	}
-	    	try {
-	    		return IlrPath.parsePath(rulesetPathArgumentAsString);
-	    				
-	    	} catch (IlrFormatException exception) {
-	    		System.out.println(rulesetPathArgumentAsString);
-	    		String errorMessage=getMessage(SAMPLE_ERROR_INVALID_RULESET_PATH, rulesetPathArgumentAsString);
-	    		System.out.println(errorMessage);
-	    		throw new IllegalArgumentException(errorMessage);	
-	    	}
-	    }
-	  private String getMessage(String key, Object... arguments) {
-	    	
-	    	return formatter.getMessage(key, arguments);
-	    }
-	   
-	  public static void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
-
-			int nbOfArguments=arguments.length;
-	    	if(nbOfArguments!=0) {
-	    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
-	    		if(!unprocessedArguments.isEmpty()) {
-	    			serverurl=arguments[1];
-	    			topicNameRq=arguments[2];
-	    			System.out.println("The kafka topic for Request is "+topicNameRq);
-	    			topicNameRp=arguments[3];
-	    			System.out.println("The kafka topic for replies is "+topicNameRp);
-	    			consumergroup=arguments[4];
-	    			System.out.println("The kafka consumer Group is "+consumergroup);
-	    			
-	    		}
-	    		
-	    	}
 
 		}
-	  public static String BuildMessage(String message) throws JsonProcessingException {
-		  Loan myLoan=loanJson(message);
-		  Message myMess=new Message();
-		  myMess.setPayload(myLoan);
-		  myMess.setKey("test123");
-		  ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);;
-		  String finalMess = mapper.writeValueAsString(myMess);
-		  return finalMess;
-	  }
-	 public static void main(String...args) {
-		
-		 BusinessApplication mybizApp=new BusinessApplication();
-		 System.out.println("The Business Application is running");		 
-		 try {
-	    	 CommandLineParser parser=new DefaultParser();
-	    	 CommandLine commandLine = parser.parse(OPTIONS, args);
-	    	 IlrPath rulesetPath = mybizApp.getRulesetPath(commandLine, args);
-	    	 setUpkafkaParam(commandLine, args);
-	    	 BusinessApplication.setUpBussinessApp2(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
-	    	 
-			 
-		 } catch(IllegalArgumentException | ParseException | IlrFormatException | IlrSessionException | IOException exception) {
-			 System.err.println(exception.getMessage());
-		 }
+		return null;
+	}
 
-    	 
-		 
-	 }
+	/**
+	 * 
+	 * @param commandLine
+	 * @param arguments
+	 * @return
+	 * @throws IllegalArgumentException
+	 * 
+	 */
+	private IlrPath getRulesetPath(CommandLine commandLine, String[] arguments) throws IllegalArgumentException {
+		String rulesetPathArgumentAsString = getMandatoryRulesetPathArgument(commandLine, arguments);
+		if (rulesetPathArgumentAsString == null) {
+			String errorMessage = getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH,
+					getMessage(SAMPLE_ERROR_MISSING_RULESET_PATH));
+			throw new IllegalArgumentException(errorMessage);
+		}
+		try {
+			return IlrPath.parsePath(rulesetPathArgumentAsString);
+
+		} catch (IlrFormatException exception) {
+			System.out.println(rulesetPathArgumentAsString);
+			String errorMessage = getMessage(SAMPLE_ERROR_INVALID_RULESET_PATH, rulesetPathArgumentAsString);
+			System.out.println(errorMessage);
+			throw new IllegalArgumentException(errorMessage);
+		}
+	}
+
+	/**
+	 * 
+	 * @param key
+	 * @param arguments
+	 * @return
+	 * 
+	 */
+	private String getMessage(String key, Object... arguments) {
+
+		return formatter.getMessage(key, arguments);
+	}
+
+	/**
+	 * 
+	 * @param commandLine
+	 * @param arguments
+	 * 
+	 */
+	public static void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
+
+		int nbOfArguments = arguments.length;
+		if (nbOfArguments != 0) {
+			List<String> unprocessedArguments = Arrays.asList(commandLine.getArgs());
+			if (!unprocessedArguments.isEmpty()) {
+				serverurl = arguments[1];
+				topicNameRq = arguments[2];
+				System.out.println("The kafka topic for Request is " + topicNameRq);
+				topicNameRp = arguments[3];
+				System.out.println("The kafka topic for replies is " + topicNameRp);
+				consumergroup = arguments[4];
+				System.out.println("The kafka consumer Group is " + consumergroup);
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * 
+	 * @param message
+	 * @return
+	 * @throws JsonProcessingException
+	 * 
+	 */
+	public static String BuildMessage(String message) throws JsonProcessingException {
+		Loan myLoan = loanJson(message);
+		Message myMess = new Message();
+		myMess.setPayload(myLoan);
+		myMess.setKey("test123");
+		ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		;
+		String finalMess = mapper.writeValueAsString(myMess);
+		return finalMess;
+	}
+
+	public static void main(String... args) {
+
+		BusinessApplication mybizApp = new BusinessApplication();
+		System.out.println("The Business Application is running");
+		try {
+			CommandLineParser parser = new DefaultParser();
+			CommandLine commandLine = parser.parse(OPTIONS, args);
+			IlrPath rulesetPath = mybizApp.getRulesetPath(commandLine, args);
+			setUpkafkaParam(commandLine, args);
+			BusinessApplication.setUpBussinessApp2(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+
+		} catch (IllegalArgumentException | ParseException | IlrFormatException | IlrSessionException
+				| IOException exception) {
+			System.err.println(exception.getMessage());
+		}
+
+	}
 }

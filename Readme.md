@@ -40,7 +40,7 @@ the client Application is a J2SE Applications which sends a payload with informa
 The business Application is a J2SE ODM execution server in Memory application, which execute the payload against ODM loan validation sample ruleset and then return a result which should be approved or reject to J2SE Client Application
 NB : The three sub-scenarios are related.
 
-### Sub-scenario 1 : N Client Applications Sending payload to one Business Application and waiting for the result
+### Sub-scenario 1 : 2 Client Applications Sending payload to one Business Application and waiting for the result
 The goal of this sub-scenario is to show that each client Application got the right answer for his payload it sent to the Business Application.
 
 ![use case 1](docs/images/usecase1.png)
