@@ -17,13 +17,14 @@ In this sample we have Client Application which send the loan request and Busine
 In the Sample architecture we have 1 kafka broker, two topics, the first topic is where client applications put their Loan request and the second topic is for reply where the Business Application put the result after
 execution against ODM ruleset. All the Business Application have the same kafka Consumer Group, and Client Application have different Consumer Group.  
 
-1. We have n client application which reacte as kafka Producer and send their payload to the kafka topic named Requests
+1. N client application which react as kafka Producer and send their payload to the kafka topic named Requests
 
-2. We have n Business Application implementing ODM which reate as Consumer and execute the payload.
+2. M Business Application implementing ODM which react as Consumer and execute the payload.
 
-3. After executed the payload against the ruleset the Bussiness Application reactes as a Kafka producer and put the json result in the topic Replies.
+3. After executed the payload against the ruleset the Bussiness Applications react as a Kafka producer and put the json result in the topic Replies.
 
-4. Each consumer got the message corresponding to the result of his request.
+4. The client Application react as Kafka Consumer and got the message corresponding to the result of his request.
+
 ## Requirments
 
 * Kafka
@@ -37,10 +38,14 @@ execution against ODM ruleset. All the Business Application have the same kafka 
 ## Before starting
 * Make sure you have kafka installed, start kafka by launching zookeeper and kafka-server.
 * Clone the project repository from github.
-`$ git clone --branch=master git@github.ibm.com:MYattara/ODM-DecisionServer-J2SE-Kafka.git`
+`$ git clone --branch=master git@github.ibm.com:MYattara/ODM-DecisionServer-JSE-Kafka.git`
 * In the pom file set the property <ibm.odm.install.dir></ibm.odm.install.dir> with your odm installation directory, example <ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>
 
-## Scenario
+## Building
+Use the following maven command to build the source code.
+`$mvn clean install`
+
+## Scenario Running
 
 According to the sub-scenario we'll use several Client Application sending one or many payload to several business Application.
 the client Application is a JSE Applications which sends a payload with information about the Borrower and a Loan Request, and wait for the approval or a reject of his loan request.
@@ -51,24 +56,24 @@ The goal of this sub-scenario is to show that each client Application got the ri
 
 ![use case 1](docs/images/usecase1.png)
 
-1. Create the first client Application : Open a command line in the project ODM-DecisionServer-J2SE-Kafka root folder then run the command below, it sends a payload corresponding to the loan request. In this loan request the amount is 10000 and 
+1. Create the first client Application : Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder then run the command below, it sends a payload corresponding to the loan request. In this loan request the amount is 10000 and 
 the yearlyIncome is 200000  : 
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
  \"Smith\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":200000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}' 'localhost:9092' 
  'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"`
 
  2. Create the second Client Application : Open a second command line in the root folder and run the command below. The second client Application send a loan request with a yearlyIncome 5000 and a loan amount 60000
  
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
  \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 
  'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"`
 
  3. Run the Business Application :
  
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" `
 4. Result : 
@@ -138,7 +143,7 @@ The goal of this subscenario is to see that if one business application broke, w
 ## References
 * [IBM Operational Decision Manager Developer Center](https://developer.ibm.com/odm/)
 * [Java EE rule session](https://www.ibm.com/support/knowledgecenter/en/SSQP76_8.9.2/com.ibm.odm.dserver.rules.samples/res_smp_topics/smp_res_javaee.html)
-* [Loan Validation](https://www.ibm.com/support/knowledgecenter/en/SSQP76_8.5.1/com.ibm.odm.dserver.rules.samples/designer_smp_topics/smp_rd_engineintmultproj_det.html)
+* [Loan Validation Sample](https://www.ibm.com/support/knowledgecenter/en/SSQP76_8.5.1/com.ibm.odm.dserver.rules.samples/designer_smp_topics/smp_rd_engineintmultproj_det.html)
 
 ## Issues and contributions
 
