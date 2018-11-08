@@ -12,9 +12,10 @@ This sample show how to use IBM ODM with Kafka
 
 ### Workflow Description
 
-Throught Loan Validation sample we show how to integrate kafka with ODM.
-We have Client Application which send the loan request and Business Application which execute the loanrequest against a ruleset, for more details about the loan Validation sample see..
-We have 1 kafka broker, two topics, the first topic is for request where client applications put their request and the second topic is for reply where the 
+Through Loan Validation sample we show how to integrate kafka with ODM.
+In this sample we have Client Application which send the loan request and Business Application which execute the loan request against a ruleset, for more details about the loan Validation sample see References section.
+In the Sample architecture we have 1 kafka broker, two topics, the first topic is where client applications put their Loan request and the second topic is for reply where the Business Application put the result after
+execution against ODM ruleset. All the Business Application have the same kafka Consumer Group, and Client Application have different Consumer Group.  
 
 1. We have n client application which reacte as kafka Producer and send their payload to the kafka topic named Requests
 
@@ -137,6 +138,7 @@ The goal of this subscenario is to see that if one business application broke, w
 ## References
 * [IBM Operational Decision Manager Developer Center](https://developer.ibm.com/odm/)
 * [Java EE rule session](https://www.ibm.com/support/knowledgecenter/en/SSQP76_8.9.2/com.ibm.odm.dserver.rules.samples/res_smp_topics/smp_res_javaee.html)
+* [Loan Validation](https://www.ibm.com/support/knowledgecenter/en/SSQP76_8.5.1/com.ibm.odm.dserver.rules.samples/designer_smp_topics/smp_rd_engineintmultproj_det.html)
 
 ## Issues and contributions
 
