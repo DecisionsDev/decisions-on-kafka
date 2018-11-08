@@ -84,33 +84,39 @@ public class BusinessApplication {
 	 * @throws IOException
 	 * 
 	 */
-	public static void consumeAndexec(KafkaConsumer<String, String> consumer, String topicName,String serverurl,IlrPath rulesetPath,String
-			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
+	public static void consumeAndexec(KafkaConsumer<String, String> consumer, String topicName, String serverurl,
+			IlrPath rulesetPath, String topicNameRp) throws IlrFormatException, IlrSessionCreationException,
+			JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
 		RESJSEExecution execution = new RESJSEExecution();
-		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
-            public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
-                System.out.printf("%s topic-partitions are revoked from this consumer\n", Arrays.toString(partitions.toArray()));
-            }
-            public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
-                System.out.printf("%s topic-partitions are assigned to this consumer\n", Arrays.toString(partitions.toArray()));
-            }
-        });
-		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
-		
-		while(true){
-		@SuppressWarnings("deprecation")
-		ConsumerRecords<String,String> records=consumer.poll(1000);
-		myLogger.info(mybundle.getString("waiting"));
-		if(!records.isEmpty()) {
-		for(ConsumerRecord<String,String> record:records) {
-
-			myLogger.info(record.value());
-			execution.executeRuleset(rulesetPath, ExtractLoanFromJson(record.value()), ExtractkeyFromJson(record.value()),serverurl, topicNameRp);
+		consumer.subscribe(Arrays.asList(topicName), new ConsumerRebalanceListener() {
+			public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
+				System.out.printf("%s topic-partitions are revoked from this consumer\n",
+						Arrays.toString(partitions.toArray()));
 			}
-		}
-	
+
+			public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
+				System.out.printf("%s topic-partitions are assigned to this consumer\n",
+						Arrays.toString(partitions.toArray()));
+			}
+		});
+		myLogger.info(mybundle.getString("topic_name") + " " + topicName);
+
+		while (true) {
+			@SuppressWarnings("deprecation")
+			ConsumerRecords<String, String> records = consumer.poll(1000);
+			myLogger.info(mybundle.getString("waiting"));
+			if (!records.isEmpty()) {
+				for (ConsumerRecord<String, String> record : records) {
+
+					myLogger.info(record.value());
+					execution.executeRuleset(rulesetPath, ExtractLoanFromJson(record.value()),
+							ExtractkeyFromJson(record.value()), serverurl, topicNameRp);
+				}
+			}
+
 		}
 	}
+
 	/**
 	 * 
 	 * @param payload
@@ -158,9 +164,10 @@ public class BusinessApplication {
 	 * 
 	 * @param payload
 	 * @return
+	 * @throws IOException 
 	 * 
 	 */
-	public static Loan ExtractLoanFromJson(String payload) {
+	public static Loan ExtractLoanFromJson(String payload) throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
 				false);
 		Message mess = new Message();
@@ -175,7 +182,8 @@ public class BusinessApplication {
 			loan.setBorrower(borrower);
 
 		} catch (IOException e) {
-			e.printStackTrace();
+		//	e.printStackTrace();
+			throw e;
 		}
 		return loan;
 

@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import odm.ds.kafka.consumer.SampleConsumer;
 import odm.ds.kafka.producer.SampleProducer;
 
-public class ClientMultiMessage {
+public class ClientMultiMessage extends ClientApplication{
 	
 	
 	private static final Options OPTIONS=new Options();

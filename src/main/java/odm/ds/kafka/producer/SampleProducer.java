@@ -82,8 +82,7 @@ public class SampleProducer {
 	 * @param message
 	 * 
 	 */
-	public void sendmessageString(Producer<String, String> producer,String topicname,String message){
-		String topicName=topicname;
+	public void sendmessageString(Producer<String, String> producer,String topicName,String message){
 		Date date=new Date();
 		System.out.println(date.getTime());
 		Random rand = new Random(); 

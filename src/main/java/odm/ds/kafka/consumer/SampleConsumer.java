@@ -17,6 +17,7 @@
  */
 package odm.ds.kafka.consumer;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
@@ -43,13 +44,13 @@ public class SampleConsumer {
 	@return consumer
 	*
 	*/
-	public KafkaConsumer<String, String> consumerInstance(String serverurl, int numberparam, String consumergroup){
-		
+	public KafkaConsumer<String, String> consumerInstance(String serverurl, int numberparam, String consumergroup) {
+
 		myLogger.info("Current Locale: " + Locale.getDefault());
-		if(numberparam==0){
+		if (numberparam == 0) {
 			myLogger.severe(mybundle.getString("no_topic_name"));
 		}
-		Properties props=new Properties();
+		Properties props = new Properties();
 		props.put("bootstrap.servers", serverurl);
 		props.put("group.id", consumergroup);
 		props.put("enable.auto.commit", "true");
@@ -57,10 +58,10 @@ public class SampleConsumer {
 		props.put("session.timeout.ms", "8000");
 		props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 		props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-		KafkaConsumer<String,String> consumer=new KafkaConsumer<String,String>(props);
-			return consumer;
-		}
-		
+		KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
+		return consumer;
+	}
+
 	/**
 	 * Listen to a topic and Consume coming messages
 	 *  @param consumer
@@ -68,35 +69,39 @@ public class SampleConsumer {
 	 *  
 	 */
 	
-	public String consumeMessage(KafkaConsumer<String, String> consumer, String topicName){
-		String data=null;
-		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
-            public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
-                System.out.printf("%s topic-partitions are revoked from this consumer\n", Arrays.toString(partitions.toArray()));
-            }
-            public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
-                System.out.printf("%s topic-partitions are assigned to this consumer\n", Arrays.toString(partitions.toArray()));
-            }
-        });
-		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
-		myLogger.info(" Waiting messages from topic "+topicName);
-		while(true){
-		@SuppressWarnings("deprecation")
-		ConsumerRecords<String,String> records=consumer.poll(1000);
-		if(!records.isEmpty()) {
-		for(ConsumerRecord<String,String> record:records) {
-			myLogger.info(record.value());
-			myLogger.info("partition numero %i "+record.partition());
-			data=record.value();
+	public String consumeMessage(KafkaConsumer<String, String> consumer, String topicName) {
+		String data = null;
+		consumer.subscribe(Arrays.asList(topicName), new ConsumerRebalanceListener() {
+			public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
+				System.out.printf("%s topic-partitions are revoked from this consumer\n",
+						Arrays.toString(partitions.toArray()));
 			}
-		}
-		break;
-	
+
+			public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
+				System.out.printf("%s topic-partitions are assigned to this consumer\n",
+						Arrays.toString(partitions.toArray()));
+			}
+		});
+		myLogger.info(mybundle.getString("topic_name") + " " + topicName);
+		myLogger.info(" Waiting messages from topic " + topicName);
+		while (true) {
+			@SuppressWarnings("deprecation")
+			ConsumerRecords<String, String> records = consumer.poll(1000);
+			if (!records.isEmpty()) {
+				for (ConsumerRecord<String, String> record : records) {
+					myLogger.info(record.value());
+					myLogger.info("partition numero %i " + record.partition());
+					data = record.value();
+				}
+			}
+			break;
+
 		}
 		consumer.close();
 		return data;
-		
-	}	
+
+	}
+
 	/**
 	 * 
 	 * @param consumer
@@ -104,31 +109,38 @@ public class SampleConsumer {
 	 * @param topicName
 	 * 
 	 */
-	public void consumeMessage3(KafkaConsumer<String, String> consumer, String key, String topicName){
-		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
-            public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
-                System.out.printf("%s topic-partitions are revoked from this consumer\n", Arrays.toString(partitions.toArray()));
-            }
-            public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
-                System.out.printf("%s topic-partitions are assigned to this consumer\n", Arrays.toString(partitions.toArray()));
-            }
-        });
-		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
-		while(true){
-		ConsumerRecords<String,String> records=consumer.poll(1000);
-		myLogger.info(mybundle.getString("waiting"));
-		if(!records.isEmpty()) {
-		for(ConsumerRecord<String,String> record:records) {
-			if(key.equals(Reply.ExtractkeyFromJson(record.value()))) 
-			{
-			myLogger.info(record.value());
-			myLogger.info(mybundle.getString("receive_key")+Reply.ExtractkeyFromJson(record.value()));
+	public void consumeMessage3(KafkaConsumer<String, String> consumer, String key, String topicName) {
+		consumer.subscribe(Arrays.asList(topicName), new ConsumerRebalanceListener() {
+			public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
+				System.out.printf("%s topic-partitions are revoked from this consumer\n",
+						Arrays.toString(partitions.toArray()));
+			}
+
+			public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
+				System.out.printf("%s topic-partitions are assigned to this consumer\n",
+						Arrays.toString(partitions.toArray()));
+			}
+		});
+		myLogger.info(mybundle.getString("topic_name") + " " + topicName);
+		while (true) {
+			ConsumerRecords<String, String> records = consumer.poll(1000);
+			myLogger.info(mybundle.getString("waiting"));
+			if (!records.isEmpty()) {
+				for (ConsumerRecord<String, String> record : records) {
+					try {
+						if (key.equals(Reply.ExtractKeyFromJson(record.value()))) {
+							myLogger.info(record.value());
+							myLogger.info(mybundle.getString("receive_key") + Reply.ExtractKeyFromJson(record.value()));
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						myLogger.severe(mybundle.getString("issue_message")+e.getMessage());
+					}
 				}
 			}
+
 		}
-	
-		}
-		
+
 	}
 
 	

@@ -131,7 +131,6 @@ public class ClientApplication {
 		  */
 		 public static String generateKey() {
 			Date date=new Date();
-			System.out.println(date.getTime());
 			Random rand = new Random(); 
 			int value = rand.nextInt(1000); 
 			String key=""+date.getTime()+""+value;
