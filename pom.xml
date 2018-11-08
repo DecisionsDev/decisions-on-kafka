@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>odm.ds.kafka</groupId>
-	<artifactId>ODM-DecisionServer-J2SE-Kafka</artifactId>
+	<artifactId>ODM-DecisionServer-JSE-Kafka</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>ODM-J2SEclient</name>
+	<name>ODM-DecisionServer-JSE-Kafka</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>

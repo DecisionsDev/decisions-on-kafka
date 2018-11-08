@@ -58,7 +58,7 @@ public class ClientMultiMessage extends ClientApplication{
 	 * @return
 	 * 
 	 */
-	public static String getPayload(CommandLine commandLine, String[] arguments) {
+	public String getPayload(CommandLine commandLine, String[] arguments) {
 		int nbOfArguments = arguments.length;
 		if (nbOfArguments != 0) {
 			List<String> unprocessedArguments = Arrays.asList(commandLine.getArgs());
@@ -79,7 +79,7 @@ public class ClientMultiMessage extends ClientApplication{
 	 * @param arguments
 	 * 
 	 */
-	public static void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
+	public void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
 
 		int nbOfArguments = arguments.length;
 		if (nbOfArguments != 0) {
@@ -106,7 +106,7 @@ public class ClientMultiMessage extends ClientApplication{
 	 * @return
 	 * 
 	 */
-	public static Loan loanJson(String payload) {
+	public Loan loanJson(String payload) {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		Loan loan = null;
@@ -130,7 +130,7 @@ public class ClientMultiMessage extends ClientApplication{
 	 * @return
 	 * 
 	 */
-	public static String generateKey() {
+	public String generateKey() {
 		Date date = new Date();
 		System.out.println(date.getTime());
 		Random rand = new Random();
@@ -147,7 +147,7 @@ public class ClientMultiMessage extends ClientApplication{
 	 * @throws JsonProcessingException
 	 * 
 	 */
-	public static String BuildMessage(String message, String key) throws JsonProcessingException {
+	public String BuildMessage(String message, String key) throws JsonProcessingException {
 		Loan myLoan = loanJson(message);
 		Message myMess = new Message();
 		myMess.setPayload(myLoan);
@@ -160,15 +160,16 @@ public class ClientMultiMessage extends ClientApplication{
 	public static void main(String... args) {
 
 		myLogger.info(mybundle.getString("notif_client_App"));
+		ClientMultiMessage myClientMulti=new ClientMultiMessage();
 		try {
 
 			CommandLineParser parser = new DefaultParser();
 			CommandLine commandLine = parser.parse(OPTIONS, args);
-			setUpkafkaParam(commandLine, args);
+			myClientMulti.setUpkafkaParam(commandLine, args);
 			for (int i = 0; i < 10; i++) {
-				String mykey = generateKey();
+				String mykey = myClientMulti.generateKey();
 				ClientMultiMessage.setUpClientAppforMulti(serverurl, 2, topicNameRq,
-						BuildMessage(getPayload(commandLine, args), mykey), mykey, consumergroup, topicNameRp);
+						myClientMulti.BuildMessage(myClientMulti.getPayload(commandLine, args), mykey), mykey, consumergroup, topicNameRp);
 			}
 		} catch (ParseException | JsonProcessingException e) {
 			e.printStackTrace();
