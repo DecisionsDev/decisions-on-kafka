@@ -62,11 +62,6 @@ The goal of this sub-scenario is to show that each client Application got the ri
 -Dexec.args="rulesetPath 'kafka server url' 'topic for requests' 'topic for replies' 'Consumer Group'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" `
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication" 
--Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
- -Dibm.odm.install.dir="C:\ODM8920" `
-
- 
 1. Create the first client Application : Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder then run the command below, it sends a payload corresponding to the loan request. In this loan request the amount is 10000 and 
 the yearlyIncome is 200000  : 
 
@@ -149,14 +144,14 @@ The goal of this subscenario is to see that if one business application broke, w
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 
  'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"`
 
-## Contributing
+## Issues and contributions
+
+To contribute or for any issue please use GitHub Issues tracker.
 
 ## References
 * [IBM Operational Decision Manager Developer Center](https://developer.ibm.com/odm/)
 * [Java EE rule session](https://www.ibm.com/support/knowledgecenter/en/SSQP76_8.9.2/com.ibm.odm.dserver.rules.samples/res_smp_topics/smp_res_javaee.html)
 * [Loan Validation Sample](https://www.ibm.com/support/knowledgecenter/en/SSQP76_8.5.1/com.ibm.odm.dserver.rules.samples/designer_smp_topics/smp_rd_engineintmultproj_det.html)
-
-## Issues and contributions
 
 ## License
 [Apache 2.0](LICENSE)
