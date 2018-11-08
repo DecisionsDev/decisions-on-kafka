@@ -39,7 +39,7 @@ According to the sub-scenario we'll use several Client Application sending one o
 the client Application is a JSE Applications which sends a payload with information about the Borrower and a Loan Request, and wait for the approval or a reject of his loan request.
 The business Application is a JSE ODM execution server in Memory application, which execute the payload against ODM loan validation sample ruleset and then returns a result which should be approved or reject to JSE Client Application.
 
-### Sub-scenario 1 : 2 Client Applications Sending payload to one Business Application and waiting for the result.
+### Sub-scenario 1 : 2 Client Applications Sending payload to 1 Business Application and waiting for the result.
 The goal of this sub-scenario is to show that each client Application got the right answer for his payload it sent to the Business Application.
 
 ![use case 1](docs/images/usecase1.png)
