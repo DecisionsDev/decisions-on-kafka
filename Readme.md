@@ -31,10 +31,6 @@ execution against ODM ruleset. All the Business Application have the same kafka 
 * IBM ODM
 * Maven
 
-
-## Dependencies
-- Compile time
-- Test
 ## Before starting
 * Make sure you have kafka installed, start kafka by launching zookeeper and kafka-server.
 * Clone the project repository from github.
@@ -57,7 +53,7 @@ The goal of this sub-scenario is to show that each client Application got the ri
 ![use case 1](docs/images/usecase1.png)
 
 
-* Client Application command structure : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.ClientApplication" -Dexec.args="'JsonPayload' 'kafka server url' 'topic for requests' 'topic for reples'" -Dexec.classpathScope="test"`
+* Client Application command structure : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'JsonPayload' 'kafka server url' 'topic for requests' 'topic for reples'" -Dexec.classpathScope="test"`
 * Business Application command structure : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication" 
 -Dexec.args="rulesetPath 'kafka server url' 'topic for requests' 'topic for replies' 'Consumer Group'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" `
@@ -65,23 +61,25 @@ The goal of this sub-scenario is to show that each client Application got the ri
 1. Create the first client Application : Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder then run the command below, it sends a payload corresponding to the loan request. In this loan request the amount is 10000 and 
 the yearlyIncome is 200000  : 
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
  \"Smith\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":200000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}' 'localhost:9092' 
  'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"`
 
  2. Create the second Client Application : Open a second command line in the root folder and run the command below. The second client Application send a loan request with a yearlyIncome 5000 and a loan amount 60000
  
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
  \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 
  'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"`
 
  3. Run the Business Application :
  
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication" 
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" `
+ 
+ 
 4. Result : 
 In the fist client Application the loan request should be accepted and in the second client Application the loan request should be rejected.
 
@@ -94,7 +92,7 @@ The goal of this sub-scenario is to show the load balancing between Business App
 
 1. Run your first business Application which put it's result in out1.txt.
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" > out1.txt `
 
@@ -120,7 +118,7 @@ The goal of this subscenario is to see that if one business application broke, w
 
 1. Run your first business Application which put it's result in out1.txt.
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" > out1.txt `
 
