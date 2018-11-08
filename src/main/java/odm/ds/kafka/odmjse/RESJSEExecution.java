@@ -1,4 +1,4 @@
-package odm.ds.kafka.odmj2seclient;
+package odm.ds.kafka.odmjse;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,14 +37,14 @@ import ilog.rules.res.session.IlrStatelessSession;
 import ilog.rules.res.session.config.IlrSessionFactoryConfig;
 import ilog.rules.res.session.config.IlrXUConfig;
 
-import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_FILE_NOT_FOUND;
-import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_CLASSLOADER_RESOURCE_NOT_FOUND;
-import static odm.ds.kafka.odmj2seclient.MessageCode.EMPTY_RULEAPP;
-import static odm.ds.kafka.odmj2seclient.MessageCode.RULESET_ADDED;
-import static odm.ds.kafka.odmj2seclient.MessageCode.RULESETS_ADDED;
-import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_PROCESSED;
-import static odm.ds.kafka.odmj2seclient.MessageCode.RULEAPP_NOT_PROCESSED;
 import static java.util.logging.Level.WARNING;
+import static odm.ds.kafka.odmjse.MessageCode.EMPTY_RULEAPP;
+import static odm.ds.kafka.odmjse.MessageCode.RULEAPP_CLASSLOADER_RESOURCE_NOT_FOUND;
+import static odm.ds.kafka.odmjse.MessageCode.RULEAPP_FILE_NOT_FOUND;
+import static odm.ds.kafka.odmjse.MessageCode.RULEAPP_NOT_PROCESSED;
+import static odm.ds.kafka.odmjse.MessageCode.RULEAPP_PROCESSED;
+import static odm.ds.kafka.odmjse.MessageCode.RULESETS_ADDED;
+import static odm.ds.kafka.odmjse.MessageCode.RULESET_ADDED;
 import static ilog.rules.res.session.config.IlrPersistenceType.MEMORY;
 import loan.Report;
 import odm.ds.kafka.consumer.SampleConsumer;

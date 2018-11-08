@@ -1,12 +1,12 @@
-package odm.ds.kafka.odmj2seclient;
+package odm.ds.kafka.odmjse;
 
-import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_RULEAPP;
-import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
-import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
-import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_RULEAPP_DESCRIPTION;
-import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_FOOTER_TAB;
-import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_FOOTER;
-import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_RULESET_PATH;
+import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
+import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
+import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_FOOTER;
+import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_FOOTER_TAB;
+import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_RULEAPP;
+import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_RULEAPP_DESCRIPTION;
+import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_RULESET_PATH;
 
 import java.io.IOException;
 import java.util.Arrays;

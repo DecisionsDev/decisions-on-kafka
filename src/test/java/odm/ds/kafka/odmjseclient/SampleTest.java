@@ -16,7 +16,7 @@
  *
  */
 
-package odm.ds.kafka.odmj2seclient;
+package odm.ds.kafka.odmjseclient;
 
 import static org.junit.Assert.assertTrue;
 
@@ -24,6 +24,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.contrib.java.lang.system.SystemErrRule;
+
+import odm.ds.kafka.odmjse.Main;
 
 
 /**

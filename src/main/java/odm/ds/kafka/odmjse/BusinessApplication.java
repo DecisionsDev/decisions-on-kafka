@@ -1,7 +1,7 @@
-package odm.ds.kafka.odmj2seclient;
+package odm.ds.kafka.odmjse;
 
-import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
-import static odm.ds.kafka.odmj2seclient.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
+import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
+import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -109,6 +109,7 @@ public class BusinessApplication {
 				for (ConsumerRecord<String, String> record : records) {
 
 					myLogger.info(record.value());
+					
 					execution.executeRuleset(rulesetPath, ExtractLoanFromJson(record.value()),
 							ExtractkeyFromJson(record.value()), serverurl, topicNameRp);
 				}
@@ -144,9 +145,10 @@ public class BusinessApplication {
 	 * 
 	 * @param payload
 	 * @return
+	 * @throws IOException 
 	 * 
 	 */
-	public static String ExtractkeyFromJson(String payload) {
+	public static String ExtractkeyFromJson(String payload) throws IOException {
 
 		ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
 				false);
@@ -154,7 +156,7 @@ public class BusinessApplication {
 		try {
 			mess = objectMapper.readValue(payload, Message.class);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw e;
 		}
 		return mess.getKey();
 

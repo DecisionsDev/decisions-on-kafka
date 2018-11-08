@@ -15,7 +15,7 @@
  *   limitations under the License.
  *
  */
-package odm.ds.kafka.odmj2seclient;
+package odm.ds.kafka.odmjse;
 
 public class Message {
 	
