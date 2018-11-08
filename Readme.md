@@ -72,7 +72,7 @@ In the fist client Application the loan request should be accepted and in the se
 
 The goal of this sub-scenario is to show the load balancing between Business Application.
 
-![use case 1](docs/images/usecase2.png)
+![use case 2](docs/images/usecase2.png)
 
 1. Run your first business Application which put it's result in out1.txt.
 
@@ -97,6 +97,8 @@ The goal of this sub-scenario is to show the load balancing between Business App
 
 ### Sub-scenario 3 : Availability after one Business Application has been down
 The goal of this subscenario is to see that if one business application broke, we'll still have the others working
+
+![use case 3](docs/images/usecase3.png)
 
 1. Run your first business Application which put it's result in out1.txt.
 
