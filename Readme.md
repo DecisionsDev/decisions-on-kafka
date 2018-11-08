@@ -55,25 +55,27 @@ The goal of this sub-scenario is to show that each client Application got the ri
 
 * Client Application command structure : 
 ```
-$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'JsonPayload' 
-'kafka server url' 'topic for requests' 'topic for reples'" -Dexec.classpathScope="test"
+$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="
+'JsonPayload' 'kafka server url' 'topic for requests' 'topic for reples'" -Dexec.classpathScope="test"
 
 ```
 * Business Application command structure : 
 ```
-$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication" 
--Dexec.args="rulesetPath 'kafka server url' 'topic for requests' 'topic for replies' 'Consumer Group'" -Dexec.classpathScope="test"
- -Dibm.odm.install.dir="C:\ODM8920" 
+$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication" -Dexec.args="
+rulesetPath 'kafka server url' 'topic for requests' 'topic for replies' 'Consumer Group'" 
+-Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
+ 
  ```
 
 1. Create the first client Application : Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder then run the command below, it sends a payload corresponding to the loan request. In this loan request the amount is 10000 and 
 the yearlyIncome is 200000  : 
 
 ```
-$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
- \"Smith\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
- \"yearlyIncome\":200000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}' 'localhost:9092' 
- 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
+$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="
+'{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"John\", \"birthDate\":191977200000,
+\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":200000},
+\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,
+\"loanToValue\":1.20}}' 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
  ```
 
  2. Create the second Client Application : Open a second command line in the root folder and run the command below. The second client Application send a loan request with a yearlyIncome 5000 and a loan amount 60000
