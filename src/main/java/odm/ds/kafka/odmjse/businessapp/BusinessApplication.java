@@ -152,7 +152,7 @@ public class BusinessApplication {
 	 * @throws IOException 
 	 * 
 	 */
-	public static String ExtractkeyFromJson(String payload) throws IOException {
+	public String ExtractkeyFromJson(String payload) throws IOException {
 
 		ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
 				false);
@@ -173,7 +173,7 @@ public class BusinessApplication {
 	 * @throws IOException 
 	 * 
 	 */
-	public static Loan ExtractLoanFromJson(String payload) throws IOException {
+	public Loan ExtractLoanFromJson(String payload) throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
 				false);
 		Message mess = new Message();
