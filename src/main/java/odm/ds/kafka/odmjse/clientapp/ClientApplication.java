@@ -48,7 +48,7 @@ public class ClientApplication {
 	 * 
 	 */
 	
-	public static void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
+	public void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
 		SampleConsumer myConsumer=new SampleConsumer();
@@ -63,7 +63,7 @@ public class ClientApplication {
 	  * @return
 	  * 
 	  */
-		public static String getPayload(CommandLine commandLine, String[] arguments) {
+		public String getPayload(CommandLine commandLine, String[] arguments) {
 			int nbOfArguments=arguments.length;
 	    	if(nbOfArguments!=0) {
 	    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
@@ -84,7 +84,7 @@ public class ClientApplication {
 		 * @param arguments
 		 * 
 		 */
-		 public static void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
+		 public void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
 
 				int nbOfArguments=arguments.length;
 		    	if(nbOfArguments!=0) {
@@ -110,7 +110,7 @@ public class ClientApplication {
 		  * @return
 		  * 
 		  */
-		 public static Loan loanJson( String payload) {
+		 public Loan loanJson( String payload) {
 			 
 			 ObjectMapper objectMapper=new ObjectMapper();
 			 Loan loan=null;				 
@@ -132,7 +132,7 @@ public class ClientApplication {
 		  * @return
 		  * 
 		  */
-		 public static String generateKey() {
+		 public String generateKey() {
 			Date date=new Date();
 			Random rand = new Random(); 
 			int value = rand.nextInt(1000); 
@@ -147,8 +147,8 @@ public class ClientApplication {
 		  * @throws JsonProcessingException
 		  * 
 		  */
-		  public static String BuildMessage(String message, String key) throws JsonProcessingException {
-			  Loan myLoan=loanJson(message);
+		  public String BuildMessage(String message, String key) throws JsonProcessingException {
+			  Loan myLoan=this.loanJson(message);
 			  Message myMess=new Message();
 			  myMess.setPayload(myLoan);
 			  myMess.setKey(key);
@@ -160,14 +160,15 @@ public class ClientApplication {
 
 		  public static void main(String...args) {
 		
+			  ClientApplication myClientApp=new ClientApplication();
 			  myLogger.info(mybundle.getString("notif_client_App"));
 			  try {
 
 	    		CommandLineParser parser=new DefaultParser();
 				CommandLine commandLine = parser.parse(OPTIONS, args);
-				setUpkafkaParam(commandLine, args);
-				String mykey=generateKey();
-				ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,  BuildMessage(getPayload(commandLine, args), mykey), mykey, consumergroup, topicNameRp);
+				myClientApp.setUpkafkaParam(commandLine, args);
+				String mykey=myClientApp.generateKey();
+				myClientApp.setUpClientApp(serverurl, 2, topicNameRq,  myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey, consumergroup, topicNameRp);
 					} catch (ParseException | JsonProcessingException e) {
 						e.printStackTrace();
 					}
