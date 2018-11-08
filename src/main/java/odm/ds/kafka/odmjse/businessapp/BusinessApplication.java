@@ -66,7 +66,7 @@ public class BusinessApplication {
 	 * @throws IOException
 	 * 
 	 */
-	public static void setUpBussinessApp(String serverurl, int numberparam, String consumergroup, String topicNameRq, IlrPath rulesetPath, String
+	public void setUpBussinessApp(String serverurl, int numberparam, String consumergroup, String topicNameRq, IlrPath rulesetPath, String
 			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
 		SampleConsumer myConsumer=new SampleConsumer();
 		consumeAndexec(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq, serverurl, rulesetPath, topicNameRp);
@@ -88,7 +88,7 @@ public class BusinessApplication {
 	 * @throws IOException
 	 * 
 	 */
-	public static void consumeAndexec(KafkaConsumer<String, String> consumer, String topicName, String serverurl,
+	public void consumeAndexec(KafkaConsumer<String, String> consumer, String topicName, String serverurl,
 			IlrPath rulesetPath, String topicNameRp) throws IlrFormatException, IlrSessionCreationException,
 			JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
 		RESJSEExecution execution = new RESJSEExecution();
@@ -260,7 +260,7 @@ public class BusinessApplication {
 	 * @param arguments
 	 * 
 	 */
-	public static void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
+	public void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
 
 		int nbOfArguments = arguments.length;
 		if (nbOfArguments != 0) {
@@ -289,8 +289,8 @@ public class BusinessApplication {
 			CommandLineParser parser = new DefaultParser();
 			CommandLine commandLine = parser.parse(OPTIONS, args);
 			IlrPath rulesetPath = mybizApp.getRulesetPath(commandLine, args);
-			setUpkafkaParam(commandLine, args);
-			BusinessApplication.setUpBussinessApp(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+			mybizApp.setUpkafkaParam(commandLine, args);
+			mybizApp.setUpBussinessApp(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
 
 		} catch (IllegalArgumentException | ParseException | IlrFormatException | IlrSessionException
 				| IOException exception) {
