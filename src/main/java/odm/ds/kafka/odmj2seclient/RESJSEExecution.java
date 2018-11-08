@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.jar.JarInputStream;
@@ -54,6 +55,7 @@ public class RESJSEExecution {
 	private final MessageFormatter formatter=new MessageFormatter();
 	private final IlrJ2SESessionFactory factory;
 	private static final Logger LOGGER=Logger.getLogger(RESJSEExecution.class.getName());
+	ResourceBundle mybundle=ResourceBundle.getBundle("MessagesBundle");
 	
 	/**
 	 * 
@@ -116,8 +118,8 @@ public class RESJSEExecution {
 		 IlrSessionResponse sessionResponse=session.execute(sessionRequest);
 		 // Au momment du report on creer le json de retour qu'on met dans l'autre topic
 		 Report report=(Report)(sessionResponse.getOutputParameters().get("report"));
-		 System.out.println("The key "+key);
-		 System.out.println("The execution result in json is "+report.toString());
+		 LOGGER.info(mybundle.getString("key"));
+		 LOGGER.info(mybundle.getString("notif_result_exec")+report.toString());
 		 //BusinessApplication.BuildMessage(report.toString());
 		 SampleProducer myProducer1=new SampleProducer();
 //		 myProducer1.sendmessageString(myProducer1.producerInstance(serverurl, 3), topicNameR, report.toString());

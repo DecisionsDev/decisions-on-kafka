@@ -96,44 +96,7 @@ public class SampleConsumer {
 		consumer.close();
 		return data;
 		
-	}
-	
-	/**
-	 * 
-	 * @param consumer
-	 * @param topicName
-	 * @return
-	 * 
-	 */
-	public String[] consumeMessage2(KafkaConsumer<String, String> consumer, String topicName){
-		String[] data = new String[10];
-		consumer.subscribe(Arrays.asList(topicName),new ConsumerRebalanceListener() {
-            public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
-                System.out.printf("%s topic-partitions are revoked from this consumer\n", Arrays.toString(partitions.toArray()));
-            }
-            public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
-                System.out.printf("%s topic-partitions are assigned to this consumer\n", Arrays.toString(partitions.toArray()));
-            }
-        });
-		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
-		int i=0;
-		while(true){
-		ConsumerRecords<String,String> records=consumer.poll(1000);
-		if(!records.isEmpty()) {
-		for(ConsumerRecord<String,String> record:records) {
-			myLogger.info(record.value());
-			data[i]=record.value();
-			i++;
-			}
-		}
-		break;
-	
-		}
-		consumer.close();
-		return data;
-		
-	}
-	
+	}	
 	/**
 	 * 
 	 * @param consumer
@@ -153,13 +116,13 @@ public class SampleConsumer {
 		myLogger.info(mybundle.getString("topic_name")+" "+topicName);
 		while(true){
 		ConsumerRecords<String,String> records=consumer.poll(1000);
-		System.out.println("Waiting for payload ");
+		myLogger.info(mybundle.getString("waiting"));
 		if(!records.isEmpty()) {
 		for(ConsumerRecord<String,String> record:records) {
 			if(key.equals(Reply.ExtractkeyFromJson(record.value()))) 
 			{
 			myLogger.info(record.value());
-			System.out.println("The receive key is "+Reply.ExtractkeyFromJson(record.value()));
+			myLogger.info(mybundle.getString("receive_key")+Reply.ExtractkeyFromJson(record.value()));
 				}
 			}
 		}

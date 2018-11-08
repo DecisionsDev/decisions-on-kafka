@@ -84,13 +84,13 @@ public class ClientMultiMessage {
 			List<String> unprocessedArguments = Arrays.asList(commandLine.getArgs());
 			if (!unprocessedArguments.isEmpty()) {
 				serverurl = arguments[1];
-				System.out.println("The server url is " + serverurl);
+				myLogger.info(mybundle.getString("serverurl")+ serverurl);
 				topicNameRq = arguments[2];
-				System.out.println("The topic name for Request is " + topicNameRq);
+				myLogger.info(mybundle.getString("topicNameRq")+ topicNameRq);
 				topicNameRp = arguments[3];
-				System.out.println("The topic name for Replies is" + topicNameRp);
+				myLogger.info(mybundle.getString("topicNameRp")+ topicNameRp);
 				consumergroup = arguments[4];
-				System.out.println("The Consumer group is " + consumergroup);
+				myLogger.info(mybundle.getString("consumergroup")+ consumergroup);
 
 			}
 
@@ -111,8 +111,8 @@ public class ClientMultiMessage {
 
 		try {
 			loan = objectMapper.readValue(payload, Loan.class);
-			System.out.println("Loan Borrower " + loan.getBorrower());
-			System.out.println("Loan Request " + loan.getLoanrequest());
+			myLogger.info(mybundle.getString("Loan_Borrower")+ loan.getBorrower());
+			myLogger.info(mybundle.getString("Loan_Request")+ loan.getLoanrequest());
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -157,7 +157,7 @@ public class ClientMultiMessage {
 
 	public static void main(String... args) {
 
-		System.out.println("The Client Application is Running");
+		myLogger.info(mybundle.getString("notif_client_App"));
 		try {
 
 			CommandLineParser parser = new DefaultParser();

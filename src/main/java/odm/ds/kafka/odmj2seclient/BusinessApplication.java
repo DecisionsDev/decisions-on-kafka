@@ -100,7 +100,7 @@ public class BusinessApplication {
 		while(true){
 		@SuppressWarnings("deprecation")
 		ConsumerRecords<String,String> records=consumer.poll(1000);
-		System.out.println("Waiting for payload ");
+		myLogger.info(mybundle.getString("waiting"));
 		if(!records.isEmpty()) {
 		for(ConsumerRecord<String,String> record:records) {
 
@@ -124,9 +124,9 @@ public class BusinessApplication {
 
 		try {
 			loan = objectMapper.readValue(payload, Loan.class);
-			System.out.println("Loan Borrower " + loan.getBorrower());
-			System.out.println("Loan Request " + loan.getLoanrequest());
-
+			myLogger.info(mybundle.getString("Loan_Borrower")+ loan.getBorrower());
+			myLogger.info(mybundle.getString("Loan_Request")+ loan.getLoanrequest());
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -194,8 +194,7 @@ public class BusinessApplication {
 			List<String> unprocessedArguments = Arrays.asList(commandLine.getArgs());
 			if (!unprocessedArguments.isEmpty()) {
 				String rulesetPathArgumentAsString = arguments[0];
-				System.out.println("The rulesetPath is " + arguments[0]);
-				System.out.println("The server url is " + arguments[1]);
+				myLogger.info(mybundle.getString("rulesetPath")+ arguments[0]);
 				if (unprocessedArguments.contains(rulesetPathArgumentAsString)) {
 					return rulesetPathArgumentAsString;
 				}
@@ -224,9 +223,7 @@ public class BusinessApplication {
 			return IlrPath.parsePath(rulesetPathArgumentAsString);
 
 		} catch (IlrFormatException exception) {
-			System.out.println(rulesetPathArgumentAsString);
 			String errorMessage = getMessage(SAMPLE_ERROR_INVALID_RULESET_PATH, rulesetPathArgumentAsString);
-			System.out.println(errorMessage);
 			throw new IllegalArgumentException(errorMessage);
 		}
 	}
@@ -256,12 +253,13 @@ public class BusinessApplication {
 			List<String> unprocessedArguments = Arrays.asList(commandLine.getArgs());
 			if (!unprocessedArguments.isEmpty()) {
 				serverurl = arguments[1];
+				myLogger.info(mybundle.getString("serverurl")+ serverurl);
 				topicNameRq = arguments[2];
-				System.out.println("The kafka topic for Request is " + topicNameRq);
+				myLogger.info(mybundle.getString("topicNameRq")+ topicNameRq);
 				topicNameRp = arguments[3];
-				System.out.println("The kafka topic for replies is " + topicNameRp);
+    			myLogger.info(mybundle.getString("topicNameRp")+ topicNameRp);
 				consumergroup = arguments[4];
-				System.out.println("The kafka consumer Group is " + consumergroup);
+    			myLogger.info(mybundle.getString("consumergroup")+ consumergroup);
 
 			}
 
@@ -272,7 +270,7 @@ public class BusinessApplication {
 	public static void main(String... args) {
 
 		BusinessApplication mybizApp = new BusinessApplication();
-		System.out.println("The Business Application is running");
+		myLogger.info(mybundle.getString("notif_Biz_App"));
 		try {
 			CommandLineParser parser = new DefaultParser();
 			CommandLine commandLine = parser.parse(OPTIONS, args);
