@@ -53,31 +53,31 @@ The goal of this sub-scenario is to show that each client Application got the ri
 ![use case 1](docs/images/usecase1.png)
 
 
-* Client Application command structure : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'JsonPayload' 'kafka server url' 'topic for requests' 'topic for reples'" -Dexec.classpathScope="test"`
-* Business Application command structure : `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication" 
+* Client Application command structure : ```$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'JsonPayload' 'kafka server url' 'topic for requests' 'topic for reples'" -Dexec.classpathScope="test"```
+* Business Application command structure : ```$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication" 
 -Dexec.args="rulesetPath 'kafka server url' 'topic for requests' 'topic for replies' 'Consumer Group'" -Dexec.classpathScope="test"
- -Dibm.odm.install.dir="C:\ODM8920" `
+ -Dibm.odm.install.dir="C:\ODM8920" ```
 
 1. Create the first client Application : Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder then run the command below, it sends a payload corresponding to the loan request. In this loan request the amount is 10000 and 
 the yearlyIncome is 200000  : 
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
+```$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
  \"Smith\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":200000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}' 'localhost:9092' 
- 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"`
+ 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"```
 
  2. Create the second Client Application : Open a second command line in the root folder and run the command below. The second client Application send a loan request with a yearlyIncome 5000 and a loan amount 60000
  
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
+```$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : 
  \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 
- 'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"`
+ 'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"```
 
  3. Run the Business Application :
  
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" 
+```$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
- -Dibm.odm.install.dir="C:\ODM8920" `
+ -Dibm.odm.install.dir="C:\ODM8920" ```
  
  
 4. Result : 
@@ -92,22 +92,22 @@ The goal of this sub-scenario is to show the load balancing between Business App
 
 1. Run your first business Application which put it's result in out1.txt.
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" 
+```$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
- -Dibm.odm.install.dir="C:\ODM8920" > out1.txt `
+ -Dibm.odm.install.dir="C:\ODM8920" > out1.txt ```
 
 2. Run your second Business Application which is going to put it's result in out2.txt
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
+```$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
- -Dibm.odm.install.dir="C:\ODM8920" > out2.txt` 
+ -Dibm.odm.install.dir="C:\ODM8920" > out2.txt```
  
 3. Run a client Application which is going to send n messages.
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientMultiMessage" -Dexec.args="'{\"borrower\":{\"lastName\" : 
+```$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientMultiMessage" -Dexec.args="'{\"borrower\":{\"lastName\" : 
  \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 
- 'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"`
+ 'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"```
 
 4. Stop your two business Application and look at the files out1.txt and out2.txt you will see that the ten payloads have been split between for execution between the two Business Applications.
 
@@ -118,29 +118,29 @@ The goal of this subscenario is to see that if one business application broke, w
 
 1. Run your first business Application which put it's result in out1.txt.
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" 
+```$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
- -Dibm.odm.install.dir="C:\ODM8920" > out1.txt `
+ -Dibm.odm.install.dir="C:\ODM8920" > out1.txt ```
 
 2. Run your second Business Application which is going to put it's result in out2.txt
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
+```$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'multipart' 'repliestest' 'test2'" -Dexec.classpathScope="test"
- -Dibm.odm.install.dir="C:\ODM8920" > out2.txt` 
+ -Dibm.odm.install.dir="C:\ODM8920" > out2.txt```
  
 3. Run a client Application which is going to send n messages.
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientMutliMessage" -Dexec.args="'{\"borrower\":{\"lastName\" : 
+```$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientMutliMessage" -Dexec.args="'{\"borrower\":{\"lastName\" : 
  \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 
- 'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"`
+ 'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"```
 4. Stop one of your Business Appplication
 
 5. Create a new client Application which will send 10 message. We'll see that the remaining Business Application will handle the request :
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientMutliMessage" -Dexec.args="'{\"borrower\":{\"lastName\" : 
+```$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmj2seclient.ClientMutliMessage" -Dexec.args="'{\"borrower\":{\"lastName\" : 
  \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 
- 'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"`
+ 'multipart' 'repliestest' 'test3'" -Dexec.classpathScope="test"```
 
 ## Issues and contributions
 
