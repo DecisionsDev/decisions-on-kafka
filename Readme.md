@@ -12,11 +12,17 @@ This sample show how to use IBM ODM with Kafka
 
 ### Workflow Description
 
+Throught Loan Validation sample we show how to integrate kafka with ODM.
+We have Client Application which send the loan request and Business Application which execute the loanrequest against a ruleset, for more details about the loan Validation sample see..
+We have 1 kafka broker, two topics, the first topic is for request where client applications put their request and the second topic is for reply where the 
+
 1. We have n client application which reacte as kafka Producer and send their payload to the kafka topic named Requests
 
 2. We have n Business Application implementing ODM which reate as Consumer and execute the payload.
 
-3. 
+3. After executed the payload against the ruleset the Bussiness Application reactes as a Kafka producer and put the json result in the topic Replies.
+
+4. Each consumer got the message corresponding to the result of his request.
 ## Requirments
 
 * Kafka
