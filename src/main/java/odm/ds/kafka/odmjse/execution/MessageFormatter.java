@@ -15,7 +15,7 @@
  *   limitations under the License.
  *
  */
-package odm.ds.kafka.odmjse;
+package odm.ds.kafka.odmjse.execution;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
@@ -31,7 +31,7 @@ public class MessageFormatter {
 	 * @return message : the message formated
 	 * 
 	 */
-	String getMessage(String key, Object...arguments) {
+	public String getMessage(String key, Object...arguments) {
 		return MessageFormat.format(getBundle().getString(key), arguments);
 	}
 	/**

@@ -15,7 +15,7 @@
  *   limitations under the License.
  *
  */
-package odm.ds.kafka.odmjse;
+package odm.ds.loanvalidation;
 
 import java.io.IOException;
 

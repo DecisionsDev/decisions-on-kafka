@@ -1,4 +1,4 @@
-package odm.ds.kafka.odmjse;
+package odm.ds.kafka.odmjse.clientapp;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -18,6 +18,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import odm.ds.kafka.consumer.SampleConsumer;
 import odm.ds.kafka.producer.SampleProducer;
+import odm.ds.loanvalidation.Loan;
+import odm.ds.loanvalidation.Message;
 
 public class ClientMultiMessage extends ClientApplication{
 	

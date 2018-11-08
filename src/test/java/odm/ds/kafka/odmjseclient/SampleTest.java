@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.contrib.java.lang.system.SystemErrRule;
 
-import odm.ds.kafka.odmjse.Main;
+import odm.ds.kafka.odmjse.execution.Main;
 
 
 /**

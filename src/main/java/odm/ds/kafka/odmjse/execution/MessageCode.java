@@ -16,9 +16,9 @@
  *
  */
 
-package odm.ds.kafka.odmjse;
+package odm.ds.kafka.odmjse.execution;
 
-class MessageCode {
+public class MessageCode {
 	
 	  static final String RULEAPP_FILE_NOT_FOUND = "RULEAPP_FILE_NOT_FOUND"; // No_i18n
 
@@ -34,11 +34,11 @@ class MessageCode {
 
 	    static final String RULESET_ADDED = "RULESET_ADDED"; // No_i18n
 
-	    static final String SAMPLE_ERROR_INVALID_RULESET_PATH = "SAMPLE_ERROR_INVALID_RULESET_PATH"; // No_i18n
+	    public static final String SAMPLE_ERROR_INVALID_RULESET_PATH = "SAMPLE_ERROR_INVALID_RULESET_PATH"; // No_i18n
 
 	    static final String SAMPLE_RULESET_PATH = "SAMPLE_RULESET_PATH"; // No_i18n
 
-	    static final String SAMPLE_ERROR_MISSING_RULESET_PATH = "SAMPLE_ERROR_MISSING_RULESET_PATH"; // No_i18n
+	    public static final String SAMPLE_ERROR_MISSING_RULESET_PATH = "SAMPLE_ERROR_MISSING_RULESET_PATH"; // No_i18n
 
 	    static final String SAMPLE_RULEAPP = "SAMPLE_RULEAPP"; // No_i18n
 

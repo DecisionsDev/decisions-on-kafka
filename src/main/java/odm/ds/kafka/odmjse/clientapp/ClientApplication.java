@@ -1,4 +1,4 @@
-package odm.ds.kafka.odmjse;
+package odm.ds.kafka.odmjse.clientapp;
 
 
 import java.io.IOException;
@@ -19,6 +19,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import odm.ds.kafka.consumer.SampleConsumer;
 import odm.ds.kafka.producer.SampleProducer;
+import odm.ds.loanvalidation.Loan;
+import odm.ds.loanvalidation.Message;
+
 import java.util.Random;
 
 

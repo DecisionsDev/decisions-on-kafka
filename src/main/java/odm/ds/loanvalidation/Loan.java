@@ -15,24 +15,24 @@
  *   limitations under the License.
  *
  */
-package odm.ds.kafka.odmjse;
+package odm.ds.loanvalidation;
 
-public class Message {
+public class Loan {
 	
-	private String key;
-	private Loan payload;
-	public String getKey() {
-		return key;
+	private loan.Borrower borrower;
+	private loan.LoanRequest loanrequest;
+	public loan.Borrower getBorrower() {
+		return borrower;
 	}
-	public void setKey(String key) {
-		this.key = key;
+	public void setBorrower(loan.Borrower borrower) {
+		this.borrower = borrower;
 	}
-	public Loan getPayload() {
-		return payload;
+	public loan.LoanRequest getLoanrequest() {
+		return loanrequest;
 	}
-	public void setPayload(Loan payload) {
-		this.payload = payload;
+	public void setLoanrequest(loan.LoanRequest loanrequest) {
+		this.loanrequest = loanrequest;
 	}
-
+	
 
 }

@@ -1,7 +1,7 @@
-package odm.ds.kafka.odmjse;
+package odm.ds.kafka.odmjse.businessapp;
 
-import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
-import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
+import static odm.ds.kafka.odmjse.execution.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
+import static odm.ds.kafka.odmjse.execution.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -33,6 +33,10 @@ import ilog.rules.res.session.IlrSessionException;
 import loan.Borrower;
 import loan.LoanRequest;
 import odm.ds.kafka.consumer.SampleConsumer;
+import odm.ds.kafka.odmjse.execution.MessageFormatter;
+import odm.ds.kafka.odmjse.execution.RESJSEExecution;
+import odm.ds.loanvalidation.Loan;
+import odm.ds.loanvalidation.Message;
 
 public class BusinessApplication {
 

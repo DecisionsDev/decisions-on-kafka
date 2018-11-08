@@ -1,12 +1,12 @@
-package odm.ds.kafka.odmjse;
+package odm.ds.kafka.odmjse.execution;
 
-import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
-import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
-import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_FOOTER;
-import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_FOOTER_TAB;
-import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_RULEAPP;
-import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_RULEAPP_DESCRIPTION;
-import static odm.ds.kafka.odmjse.MessageCode.SAMPLE_RULESET_PATH;
+import static odm.ds.kafka.odmjse.execution.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
+import static odm.ds.kafka.odmjse.execution.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
+import static odm.ds.kafka.odmjse.execution.MessageCode.SAMPLE_FOOTER;
+import static odm.ds.kafka.odmjse.execution.MessageCode.SAMPLE_FOOTER_TAB;
+import static odm.ds.kafka.odmjse.execution.MessageCode.SAMPLE_RULEAPP;
+import static odm.ds.kafka.odmjse.execution.MessageCode.SAMPLE_RULEAPP_DESCRIPTION;
+import static odm.ds.kafka.odmjse.execution.MessageCode.SAMPLE_RULESET_PATH;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -26,6 +26,8 @@ import ilog.rules.res.model.IlrFormatException;
 import ilog.rules.res.model.IlrPath;
 import loan.LoanRequest;
 import odm.ds.kafka.consumer.SampleConsumer;
+import odm.ds.kafka.odmjse.businessapp.BusinessApplication;
+import odm.ds.kafka.odmjse.clientapp.ClientApplication;
 import odm.ds.kafka.producer.SampleProducer;
 
 public class Main 
