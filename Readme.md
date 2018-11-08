@@ -57,6 +57,7 @@ The goal of this sub-scenario is to show that each client Application got the ri
 ```
 $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'JsonPayload' 
 'kafka server url' 'topic for requests' 'topic for reples'" -Dexec.classpathScope="test"
+
 ```
 * Business Application command structure : 
 ```
