@@ -158,22 +158,24 @@ public class ClientApplication {
 		  }
 		  
 
-		  public static void main(String...args) {
-		
-			  ClientApplication myClientApp=new ClientApplication();
-			  myLogger.info(mybundle.getString("notif_client_App"));
-			  try {
+	public static void main(String... args) {
 
-	    		CommandLineParser parser=new DefaultParser();
-				CommandLine commandLine = parser.parse(OPTIONS, args);
-				myClientApp.setUpkafkaParam(commandLine, args);
-				String mykey=myClientApp.generateKey();
-				myClientApp.setUpClientApp(serverurl, 2, topicNameRq,  myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey, consumergroup, topicNameRp);
-					} catch (ParseException | JsonProcessingException e) {
-						e.printStackTrace();
-					}
-		
-	}
-	
+		myLogger.info(mybundle.getString("notif_client_App"));
+		try {
+
+			CommandLineParser parser = new DefaultParser();
+			CommandLine commandLine = parser.parse(OPTIONS, args);
+			ClientApplication myClientApp = new ClientApplication();
+			myClientApp.setUpkafkaParam(commandLine, args);
+			for (int i = 0; i < 2; i++) {
+				String mykey = myClientApp.generateKey();
+				myClientApp.setUpClientApp(serverurl, 2, topicNameRq,myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey,
+						consumergroup, topicNameRp);
+			}
+		} catch (ParseException | JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+	}	
 
 }

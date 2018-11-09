@@ -120,15 +120,19 @@ public class SampleConsumer {
 			}
 		});
 		myLogger.info(mybundle.getString("topic_name") + " " + topicName);
+		boolean gotmessage=false;
 		while (true) {
 			ConsumerRecords<String, String> records = consumer.poll(1000);
 			myLogger.info(mybundle.getString("waiting"));
 			if (!records.isEmpty()) {
 				for (ConsumerRecord<String, String> record : records) {
 					try {
-						if (key.equals(Reply.ExtractKeyFromJson(record.value()))) {
+						Reply reply=new Reply();
+						if (key.equals(reply.ExtractKeyFromJson(record.value()))) {
 							myLogger.info(record.value());
-							myLogger.info(mybundle.getString("receive_key") + Reply.ExtractKeyFromJson(record.value()));
+							myLogger.info(mybundle.getString("receive_key") + reply.ExtractKeyFromJson(record.value()));
+							gotmessage=true;
+							break;
 						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -136,6 +140,7 @@ public class SampleConsumer {
 					}
 				}
 			}
+			if (gotmessage==true) break;
 
 		}
 
