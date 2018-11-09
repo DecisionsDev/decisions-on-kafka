@@ -40,6 +40,8 @@ execution against ODM ruleset. All the Business Application have the same kafka 
 If you have a shell command line
 * Create the kafka topic for request : `$ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests`
 * Create the kafka topic for replies : `$ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies`
+
+
 If you have windows command line
 
 * Create the kafka topic for request : `$ bin/kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests`
