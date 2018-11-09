@@ -89,6 +89,7 @@ public class SampleConsumer {
 			ConsumerRecords<String, String> records = consumer.poll(1000);
 			if (!records.isEmpty()) {
 				for (ConsumerRecord<String, String> record : records) {
+					
 					myLogger.info(record.value());
 					myLogger.info("partition numero %i " + record.partition());
 				}
@@ -128,9 +129,9 @@ public class SampleConsumer {
 				for (ConsumerRecord<String, String> record : records) {
 					try {
 						Reply reply=new Reply();
-						if (key.equals(reply.ExtractKeyFromJson(record.value()))) {
+						if (key.equals(Reply.ExtractKeyFromJson(record.value()))) {
 							myLogger.info(record.value());
-							myLogger.info(mybundle.getString("receive_key") + reply.ExtractKeyFromJson(record.value()));
+							myLogger.info(mybundle.getString("receive_key") + Reply.ExtractKeyFromJson(record.value()));
 							gotmessage=true;
 							break;
 						}
@@ -139,10 +140,12 @@ public class SampleConsumer {
 						myLogger.severe(mybundle.getString("issue_message")+e.getMessage());
 					}
 				}
+				if (gotmessage==true) break;
 			}
-			if (gotmessage==true) break;
-
+			
+			
 		}
+		consumer.close();
 
 	}
 

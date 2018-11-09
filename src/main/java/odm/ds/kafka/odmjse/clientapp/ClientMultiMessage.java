@@ -43,7 +43,7 @@ public class ClientMultiMessage extends ClientApplication{
 	 * 
 	 */
 	
-	public static void setUpClientAppforMulti(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
+	public void setUpClientAppforMulti(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
 		SampleConsumer myConsumer=new SampleConsumer();
@@ -168,7 +168,7 @@ public class ClientMultiMessage extends ClientApplication{
 			myClientMulti.setUpkafkaParam(commandLine, args);
 			for (int i = 0; i < 10; i++) {
 				String mykey = myClientMulti.generateKey();
-				ClientMultiMessage.setUpClientAppforMulti(serverurl, 2, topicNameRq,
+				myClientMulti.setUpClientAppforMulti(serverurl, 2, topicNameRq,
 						myClientMulti.BuildMessage(myClientMulti.getPayload(commandLine, args), mykey), mykey, consumergroup, topicNameRp);
 			}
 		} catch (ParseException | JsonProcessingException e) {

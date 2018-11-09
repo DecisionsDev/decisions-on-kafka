@@ -36,6 +36,7 @@ public class ClientApplication {
 	private static String topicNameRq;
 	private static String topicNameRp;
 	private static String consumergroup;
+	private static Integer nbmessage;
 	
 	/**
 	 * Create a Producer on topic Rq, Create a Consumer on topic Rp 
@@ -48,7 +49,7 @@ public class ClientApplication {
 	 * 
 	 */
 	
-	public void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
+	public static void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
 		SampleConsumer myConsumer=new SampleConsumer();
@@ -84,7 +85,7 @@ public class ClientApplication {
 		 * @param arguments
 		 * 
 		 */
-		 public void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
+		 public static void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
 
 				int nbOfArguments=arguments.length;
 		    	if(nbOfArguments!=0) {
@@ -98,6 +99,7 @@ public class ClientApplication {
 		    			myLogger.info(mybundle.getString("topicNameRp")+ topicNameRp);
 		    			consumergroup=arguments[4];
 		    			myLogger.info(mybundle.getString("consumergroup")+ consumergroup);
+		    			nbmessage=new Integer(arguments[5]);
 		    			
 		    		}
 		    		
@@ -165,11 +167,12 @@ public class ClientApplication {
 
 			CommandLineParser parser = new DefaultParser();
 			CommandLine commandLine = parser.parse(OPTIONS, args);
-			ClientApplication myClientApp = new ClientApplication();
-			myClientApp.setUpkafkaParam(commandLine, args);
-			for (int i = 0; i < 2; i++) {
+			ClientApplication.setUpkafkaParam(commandLine, args);
+			for (int i = 0; i <nbmessage ; i++) {
+				ClientApplication myClientApp = new ClientApplication();
+				
 				String mykey = myClientApp.generateKey();
-				myClientApp.setUpClientApp(serverurl, 2, topicNameRq,myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey,
+				ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey,
 						consumergroup, topicNameRp);
 			}
 		} catch (ParseException | JsonProcessingException e) {
