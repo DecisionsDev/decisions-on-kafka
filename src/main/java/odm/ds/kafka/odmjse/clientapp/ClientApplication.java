@@ -85,7 +85,7 @@ public class ClientApplication {
 		 * @param arguments
 		 * 
 		 */
-		 public static void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
+		 public void setUpkafkaParam(CommandLine commandLine, String[] arguments) {
 
 				int nbOfArguments=arguments.length;
 		    	if(nbOfArguments!=0) {
@@ -167,10 +167,9 @@ public class ClientApplication {
 
 			CommandLineParser parser = new DefaultParser();
 			CommandLine commandLine = parser.parse(OPTIONS, args);
-			ClientApplication.setUpkafkaParam(commandLine, args);
-			for (int i = 0; i <nbmessage ; i++) {
-				ClientApplication myClientApp = new ClientApplication();
-				
+			ClientApplication myClientApp = new ClientApplication();
+			myClientApp.setUpkafkaParam(commandLine, args);
+			for (int i = 0; i <nbmessage ; i++) {				
 				String mykey = myClientApp.generateKey();
 				ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey,
 						consumergroup, topicNameRp);
