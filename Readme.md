@@ -127,8 +127,9 @@ The goal of this subscenario is to see that if one business application broke, w
  
 3. Run a client Application which is going to send 10 messages.
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientMutliMessage" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'multi2' 'repliestest' 'test3' 10" -Dexec.classpathScope="test"`
+ 
 4. Stop one of your Business Appplication
 
 5. Create a new client Application which will send 5 message. We'll see that the remaining Business Application will handle the request :
