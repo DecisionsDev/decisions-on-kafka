@@ -36,6 +36,9 @@ execution against ODM ruleset. All the Business Application have the same kafka 
 * Clone the project repository from github.
 `$ git clone --branch=odm-integration git@github.ibm.com:MYattara/ODM-DecisionServer-JSE-Kafka.git`
 * In the pom file set the property <ibm.odm.install.dir></ibm.odm.install.dir> with your odm installation directory, example <ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>
+*bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests
+*bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies
+
 
 ## Building
 Use the following maven command to build the source code.
