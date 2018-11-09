@@ -39,7 +39,7 @@ execution against ODM ruleset. All the Business Application have the same kafka 
 
 ## Building
 Use the following maven command to build the source code.
-`$mvn clean install`
+`$ mvn clean install`
 
 ## Scenario Running
 
