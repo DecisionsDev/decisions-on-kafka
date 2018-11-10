@@ -13,17 +13,17 @@ This sample show how to use IBM ODM with Kafka
 ### Workflow Description
 
 Through Loan Validation sample we show how to integrate kafka with ODM.
-In this sample we have Client Application which send the loan request and Business Application which execute the loan request against a ruleset, for more details about the loan Validation sample see References section.
-In the Sample architecture we have 1 kafka broker, two topics, the first topic is where client applications put their Loan request and the second topic is for reply where the Business Application put the result after
-execution against ODM ruleset. All the Business Application have the same kafka Consumer Group, and Client Application have different Consumer Group.  
+In this sample we have Client Applications which send the loan request and Business Applications which execute the loan request against a ruleset, for more details about the loan Validation sample see References section.
+In the Sample architecture we have 1 kafka broker, two topics, the first topic is where Client applications put their Loan request and the second topic is for reply where the Business Applications put the result after
+execution against ODM ruleset. All the Business Applications have the same kafka Consumer Group, and Client Applications have different Consumer Group.  
 
-1. N client application which react as kafka Producer and send their payload to the kafka topic named Requests
+1. N Client applications which react as kafka Producer and send their payload to the kafka topic named Requests
 
-2. M Business Application implementing ODM which react as Consumer and execute the payload.
+2. M Business Applications implementing ODM which react as Consumer and execute the payload.
 
 3. After executed the payload against the ruleset the Bussiness Applications react as a Kafka producer and put the json result in the topic Replies.
 
-4. The client Application react as Kafka Consumer and got the message corresponding to the result of his request.
+4. The Client Applications react as Kafka Consumer and got the message corresponding to the result of his request.
 
 ## Requirments
 
