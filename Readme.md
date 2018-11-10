@@ -126,7 +126,7 @@ The goal of this sub-scenario is to show the load balancing between Business App
 4. Stop your two Business Application and look at the files out1.txt and out2.txt you will see that the seven payloads have been split between for execution between the two Business Applications.
 
 ### Sub-scenario 3 : Availability after one Business Application has been down
-The goal of this subscenario is to see that if one business application broke, we'll still have the others working
+The goal of this subscenario is to see that if one Business Application broke, we'll still have the others working
 
 ![use case 3](docs/images/usecase3.png)
 
