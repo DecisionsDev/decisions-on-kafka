@@ -77,9 +77,10 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
 
 `<topic for requests>` The kafka topic where Client Application put loan requests reacting as kafka Producer and Business Application listen to it reacting as a kafka consumer.
 
-`<topic for replies>` The kafka topic where Business Application put the result of the loan request execution against the Decision service, reacting as kafka producer. And the  
+`<topic for replies>` The kafka topic where Business Application put the result of the loan request execution against the Decision service, The Business Application reacts as kafka producer and Client Application reacts as consumer
+getting the message from the topic. 
 
-`<number of message>`
+`<number of message>` The number of time we want to send the loan request payload for execution.
 
 * Business Application command structure : 
 ```
