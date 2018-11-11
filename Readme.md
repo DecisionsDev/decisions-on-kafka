@@ -71,9 +71,9 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
  -Dexec.classpathScope="test"
 
 ```
-JsonPayload  The payload where
+- JsonPayload  The payload where
 
-kafka server url
+- kafka server url
 
 <topic for requests> 
 
