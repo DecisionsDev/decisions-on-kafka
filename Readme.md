@@ -17,7 +17,7 @@ In this sample we have Client Applications which send the loan request and Busin
 In the Sample architecture we have 1 kafka broker, two topics, the first topic is where Client applications put their Loan request and the second topic is for replies where the Business Applications put the result after
 execution against ODM ruleset. All the Business Applications have the same kafka Consumer Group, and Client Applications have different Consumer Group.  
 
-1. N Client applications which react as kafka Producer and send their payload to the kafka topic named Requests
+1. N Client applications which react as kafka Producer and send their payload to the kafka topic named Requests.
 
 2. M Business Applications implementing ODM which react as Consumer and execute the payload.
 
@@ -35,14 +35,14 @@ execution against ODM ruleset. All the Business Applications have the same kafka
 * Make sure you have kafka installed, start kafka by launching zookeeper and kafka-server.
 * Clone the project repository from github.
 `$ git clone --branch=odm-integration git@github.ibm.com:MYattara/ODM-DecisionServer-JSE-Kafka.git`
-* In the pom file set the property <ibm.odm.install.dir></ibm.odm.install.dir> with your odm installation directory, example <ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>
+* In the pom file set the property `<ibm.odm.install.dir></ibm.odm.install.dir>` with your odm installation directory, `example : <ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>`
 
 If you have a shell command line
 * Create the kafka topic for request : `$ kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests`
 * Create the kafka topic for replies : `$ kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies`
 
 
-If you have windows command line
+If you have a Windows command line
 
 * Create the kafka topic for request : `$ kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests`
 * Create the kafka topic for replies : `$ kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies`
@@ -55,11 +55,11 @@ Use the following maven command to build the source code.
 ## Scenario Running
 
 According to the sub-scenario we'll use several Client Applications sending one or many payload to several Business Applications.
-the Client Application is a JSE Applications whi00ch sends a payload with information about the Borrower and a Loan Request, and wait for the approval or a reject of his loan request.
-The Business Application is a JSE ODM execution server in Memory application, which execute the payload against ODM loan validation sample ruleset and then returns a result which should be approved or reject to JSE Client Application.
+the Client Application is a JSE Applications which sends a payload with information about the Borrower and the Loan Request, and wait for the approval or a reject of his loan request.
+The Business Application is a JSE ODM execution server in Memory application, which executes the payload against ODM loan validation sample ruleset and then returns a result to the JSE Client Application which should be approved or reject .
 
 ### Sub-scenario 1 : 2 Client Applications Sending payload to 1 Business Application and waiting for the result.
-The goal of this sub-scenario is to show that each client Application got the right answer for his payload it sent to the Business Application.
+The goal of this sub-scenario is to show that each Client Application got the right answer for his payload it sent to the Business Application.
 
 ![use case 1](docs/images/usecase1.png)
 
@@ -71,6 +71,15 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
  -Dexec.classpathScope="test"
 
 ```
+** <JsonPayload> 
+
+<kafka server url> 
+
+<topic for requests> 
+
+<topic for replies> 
+
+<number of message>
 * Business Application command structure : 
 ```
 $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication" -Dexec.args="
@@ -128,7 +137,7 @@ The goal of this sub-scenario is to show the load balancing between Business App
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 'test3' 7 " -Dexec.classpathScope="test"`
 
-4. Once the Client Application terminate and the Business Applications are displaying the message "waiting for payload" stop your two Business Applications and look at the files out1.txt and out2.txt you will see that the seven payloads have been split between for execution between the two Business Applications.
+4. Once the Client Application terminates and the Business Applications are displaying the message "waiting for payload" stop your two Business Applications and look at the files out1.txt and out2.txt you will see that the seven payloads have been split between for execution between the two Business Applications.
 
 ### Sub-scenario 3 : Availability after one Business Application has been down
 The goal of this subscenario is to see that if one Business Application broke, we'll still have the others working
