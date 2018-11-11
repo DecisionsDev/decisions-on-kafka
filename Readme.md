@@ -55,7 +55,7 @@ Use the following maven command to build the source code.
 ## Scenario Running
 
 According to the sub-scenario we'll use several Client Applications sending one or many payload to several Business Applications.
-the Client Application is a JSE Applications which sends a payload with information about the Borrower and a Loan Request, and wait for the approval or a reject of his loan request.
+the Client Application is a JSE Applications whi00ch sends a payload with information about the Borrower and a Loan Request, and wait for the approval or a reject of his loan request.
 The Business Application is a JSE ODM execution server in Memory application, which execute the payload against ODM loan validation sample ruleset and then returns a result which should be approved or reject to JSE Client Application.
 
 ### Sub-scenario 1 : 2 Client Applications Sending payload to 1 Business Application and waiting for the result.
@@ -67,7 +67,7 @@ The goal of this sub-scenario is to show that each client Application got the ri
 * Client Application command structure : 
 ```
 $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="
-<JsonPayload> <kafka server url< <topic for requests> <topic for replies> <number of message>"
+<JsonPayload> <kafka server url> <topic for requests> <topic for replies> <number of message>"
  -Dexec.classpathScope="test"
 
 ```
@@ -81,10 +81,11 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication"
  ```
 
 1. Create the first Client Application : Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder then run the command below, it sends a payload corresponding to the loan request. In this loan request the amount is 10000 and 
-the yearlyIncome is 200000  : 
+the yearlyIncome is 200000,   'localhost:9092' is the broker url, if your broker url is different please change it,'requests' corresponds to the topic where loan request are put,  'requests' the topic where the Business Application put the execution
+result, 'baconsumegroup' the consumer group in which business Application are gathered: 
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"Alice\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":200000},
-\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 'test2' 1" -Dexec.classpathScope="test"`
+\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 'baconsumegroup' 1" -Dexec.classpathScope="test"`
 
  2. Create the second Client Application : Open a second command line in the root folder and run the command below. The second client Application send a loan request with a yearlyIncome 5000 and a loan amount 60000
  
