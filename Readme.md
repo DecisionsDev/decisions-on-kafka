@@ -67,14 +67,14 @@ The goal of this sub-scenario is to show that each client Application got the ri
 * Client Application command structure : 
 ```
 $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="
-'JsonPayload' 'kafka server url' 'topic for requests' 'topic for replies' 'number of message'"
+<JsonPayload> <kafka server url< <topic for requests> <topic for replies> <number of message>"
  -Dexec.classpathScope="test"
 
 ```
 * Business Application command structure : 
 ```
 $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication" -Dexec.args="
-rulesetPath 'kafka server url' 'topic for requests' 'topic for replies' 'Consumer Group' " 
+<rulesetPath> <kafka server url> <topic for requests> <topic for replies> <Consumer Group> " 
 -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
 
 * In the sample we use as serverul localhost:9092 if yours is different please change it, 
