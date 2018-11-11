@@ -73,11 +73,11 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
 ```
 `<JsonPayload>`  The loan request payload we want to evaluate
 
-`<kafka server url>` The kafka broker url, in the sample we use as serverul localhost:9092 if yours is different please change it.
+`<kafka server url>` The kafka broker url, in the sample we use as serverul `localhost:9092` if yours is different please change it.
 
 `<topic for requests>` The kafka topic where Client Application put loan requests reacting as kafka Producer and Business Application listen to it reacting as a kafka consumer.
 
-`<topic for replies>` The kafka topic where B
+`<topic for replies>` The kafka topic where Business Application put the result of the loan request execution against the Decision service, reacting as kafka producer. And the  
 
 `<number of message>`
 
