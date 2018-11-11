@@ -73,7 +73,7 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
 ```
 `<JsonPayload>`  The payload where
 
-`<kafka server url>`
+`<kafka server url>` In the sample we use as serverul localhost:9092 if yours is different please change it
 
 `<topic for requests>`
 
@@ -87,10 +87,11 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication"
 <rulesetPath> <kafka server url> <topic for requests> <topic for replies> <Consumer Group> " 
 -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
 
+```
+
 `<Consumer Group>`
 
-* In the sample we use as serverul localhost:9092 if yours is different please change it, 
- ```
+ 
 
 1. Create the first Client Application : Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder then run the command below, it sends a payload corresponding to the loan request. In this loan request the amount is 10000 and 
 the yearlyIncome is 200000. 
