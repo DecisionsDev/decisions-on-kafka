@@ -71,7 +71,7 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
  -Dexec.classpathScope="test"
 
 ```
-** <JsonPayload> 
+<JsonPayload> 
 
 <kafka server url> 
 
@@ -80,6 +80,7 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
 <topic for replies> 
 
 <number of message>
+
 * Business Application command structure : 
 ```
 $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication" -Dexec.args="
