@@ -73,19 +73,21 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
 ```
 `<JsonPayload>`  The payload where
 
-- kafka server url
+`<kafka server url>`
 
-<topic for requests> 
+`<topic for requests>`
 
-<topic for replies> 
+`<topic for replies>`
 
-<number of message>
+`<number of message>`
 
 * Business Application command structure : 
 ```
 $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication" -Dexec.args="
 <rulesetPath> <kafka server url> <topic for requests> <topic for replies> <Consumer Group> " 
 -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
+
+`<Consumer Group>`
 
 * In the sample we use as serverul localhost:9092 if yours is different please change it, 
  ```
