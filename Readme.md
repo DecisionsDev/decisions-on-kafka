@@ -90,10 +90,9 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication"
 
 ```
 
-`<rulesetPath>`
+`<rulesetPath>` The IBM ODM ruleset Path.
 
-`<Consumer Group>`
-
+`<Consumer Group>` The kafka consumer group in which the Business Application is part.
  
 
 1. Create the first Client Application : Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder then run the command below, it sends a payload corresponding to the loan request. In this loan request the amount is 10000 and 
