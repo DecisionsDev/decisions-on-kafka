@@ -87,7 +87,7 @@ the yearlyIncome is 200000.
 \"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 1" -Dexec.classpathScope="test"`
 
 'localhost:9092' is the broker url, if your broker url is different please change it,'requests' corresponds to the topic where loan requests are put,  'replies' the topic where the Business Application put the execution
-result, 1 is the number of messages we want to send.
+result, 1 is the number of loan request we want the Client Application send to the Business Application.
 
  2. Create the second Client Application : Open a second command line in the root folder and run the command below. The second client Application send a loan request with a yearlyIncome 5000 and a loan amount 60000
  
