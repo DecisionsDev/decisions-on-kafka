@@ -143,10 +143,10 @@ The goal of this sub-scenario is to show the load balancing between Business App
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 7 " -Dexec.classpathScope="test"`
 
-4. Once the Client Application terminates and the Business Applications are displaying the message "waiting for payload" stop your two Business Applications and look at the files out1.txt and out2.txt you will see that the seven payloads have been split between for execution between the two Business Applications.
+4. Once the Client Application terminates and the Business Applications are displaying the message "waiting for payload" stop your two Business Applications and look at the files out1.txt and out2.txt you will see that the seven payloads have been split for execution between the two Business Applications.
 
 ### Sub-scenario 3 : Availability after one Business Application has been down
-The goal of this subscenario is to see that if one Business Application broke, we'll still have the others working.
+The goal of this sub-scenario is to see that if one Business Application broke, we'll still have the others working.
 
 ![use case 3](docs/images/usecase3.png)
 
@@ -168,6 +168,7 @@ The goal of this subscenario is to see that if one Business Application broke, w
 4. Stop one of your Business Appplication.
 
 5. Create a new Client Application which will send 5 messages. You'll see that the remaining Business Application will handle the request :
+
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 'test3' 5" -Dexec.classpathScope="test"`
 
