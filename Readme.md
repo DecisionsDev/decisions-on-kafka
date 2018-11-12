@@ -75,9 +75,9 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
 
 `<kafka server url>` The kafka broker url, in the sample we use as serverul `localhost:9092` if yours is different please change it.
 
-`<topic for requests>` The kafka topic where Client Application puts loan requests reacting as kafka Producer and Business Application listen to it reacting as a kafka consumer.
+`<topic for requests>` The kafka topic where Client Application puts loan requests reacting as a kafka Producer and Business Application listen to it reacting as a kafka consumer.
 
-`<topic for replies>` The kafka topic where Business Application puts the result of the loan request execution against the Decision service, The Business Application reacts as kafka producer and Client Application reacts as consumer
+`<topic for replies>` The kafka topic where Business Application puts the result of the loan request execution against the Decision service, The Business Application reacts as a kafka producer and Client Application reacts as a consumer
 getting the message from the topic. 
 
 `<number of message>` The number of time we want to send the loan request payload for execution.
@@ -92,7 +92,7 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication"
 
 `<rulesetPath>` The IBM ODM ruleset Path.
 
-`<Consumer Group>` The kafka consumer group in which the Business Application is part.
+`<Consumer Group>` The kafka consumer group in which the Business Application is part of.
  
 
 1. Create the first Client Application : Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder then run the command below, it sends a payload corresponding to the loan request. In this loan request the amount is 10000 and 
@@ -107,14 +107,14 @@ result, 1 is the number of loan request we want the Client Application sends to 
  2. Create the second Client Application : Open a second command line in the root folder and run the command below. The second client Application send a loan request with a yearlyIncome 5000 and a loan amount 60000
  
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" :\"Doe\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
- \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 'baconsumegroup'" -Dexec.classpathScope="test"`
-
-  'baconsumegroup' the consumer group in which Business Applications are gathered.
+ \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 1" -Dexec.classpathScope="test"`
   
  3. Run the Business Application :
  
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" `
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'baconsumegroup'" -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" `
  
+   'baconsumegroup' the consumer group in which Business Applications are gathered.
+
  
 4. Result : 
 In the fist Client Application the loan request should be accepted and in the second Client Application the loan request should be rejected.
