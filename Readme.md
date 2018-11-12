@@ -113,7 +113,7 @@ result, 1 is the number of loan request we want the Client Application sends to 
  
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'baconsumegroup'" -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" `
  
-   'baconsumegroup' the consumer group in which Business Applications are gathered.
+   'baconsumegroup' the consumer group in which is the Business Applications.
 
  
 4. Result : 
