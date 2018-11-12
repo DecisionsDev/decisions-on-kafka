@@ -113,7 +113,7 @@ result, 1 is the number of loan request we want the Client Application sends to 
  
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'baconsumegroup'" -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" `
  
-   'baconsumegroup' the consumer group in which is the Business Applications.
+   'baconsumegroup' the consumer group in which is the Business Application.
 
  
 4. Result : 
@@ -124,7 +124,7 @@ In the fist Client Application the loan request should be accepted and in the se
 ### Sub-scenario 2 :  1 Client Application Sending several payload to N Business Applications
 
 
-The goal of this sub-scenario is to show the load balancing between Business Application.
+The goal of this sub-scenario is to show the load balancing between Business Applications.
 
 ![use case 2](docs/images/usecase2.png)
 
