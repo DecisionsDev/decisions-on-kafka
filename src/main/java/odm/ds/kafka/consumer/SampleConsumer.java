@@ -71,7 +71,8 @@ public class SampleConsumer {
 	 * @param topicName
 	 * 
 	 */
-	public void consumeMessage(KafkaConsumer<String, String> consumer, String key, String topicName) {
+	public String consumeMessage(KafkaConsumer<String, String> consumer, String key, String topicName) {
+		String data=null;
 		consumer.subscribe(Arrays.asList(topicName), new ConsumerRebalanceListener() {
 			public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
 				System.out.printf("%s topic-partitions are revoked from this consumer\n",
@@ -96,6 +97,7 @@ public class SampleConsumer {
 							myLogger.info(record.value());
 							myLogger.info(mybundle.getString("receive_key") + Reply.ExtractKeyFromJson(record.value()));
 							gotmessage=true;
+							data=record.value();
 							break;
 						}
 					} catch (IOException e) {
@@ -109,6 +111,7 @@ public class SampleConsumer {
 			
 		}
 		consumer.close();
+		return data;
 
 	}
 

@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import ilog.rules.res.model.IlrFormatException;
@@ -31,9 +32,15 @@ public class ScenarioTest {
 		String consumergroup1="testConsumeGroup1";
 		String key1="12345";
 		Thread t1 = new Thread(() -> {
-			System.out.println("Before");
-			myClientApp1.setUpClientApp(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
-			System.out.println("*******************Test1");
+			System.out.println("************************Test1-ClientApp1");
+		String value1;
+		try {
+			value1 = myClientApp1.setUpClientAppAndConsume(serverurl, 2, topicNameRq,myClientApp1.BuildMessage(payload1, key1) , key1, consumergroup1, topicNameRp);
+			System.out.println("*******************Test1"+value1);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		});
 		t1.start();
 		t1.sleep(2000);
@@ -44,9 +51,15 @@ public class ScenarioTest {
 		String consumergroup2="testConsumeGroup2";
 		String key2="12356";
 		Thread t2 = new Thread(() -> {
-			System.out.println("********************************Test2");
-			myClientApp2.setUpClientApp(serverurl, 3, topicNameRq, payload2, key2, consumergroup2, topicNameRp);
-			
+			System.out.println("********************************Test1-ClientApp2");
+			String value;
+			try {
+				value = myClientApp2.setUpClientAppAndConsume(serverurl, 3, topicNameRq, myClientApp2.BuildMessage(payload1, key2), key2, consumergroup2, topicNameRp);
+				System.out.println("Value"+value);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		});
 		t2.start();
 		t2.sleep(2000);
@@ -58,7 +71,7 @@ public class ScenarioTest {
 		IlrPath rulesetPath=IlrPath.parsePath("/test_deployment/loan_validation_with_score_and_grade");
 		Thread t3 = new Thread(() -> {
 			try {
-				System.out.println("*************************Test 3");
+				System.out.println("*************************Test1-BusinessApp");
 				bizApp.setUpBussinessApp(serverurl, 3, consumergroup, topicNameRq, rulesetPath, topicNameRp);
 			} catch (IlrFormatException e) {
 				// TODO Auto-generated catch block
@@ -81,7 +94,8 @@ public class ScenarioTest {
 			}
 		});
 		t3.start();
-		// Affet to string 1 the message from the Business App
+		t3.sleep(2000);
+		// Affect to string 1 the message from the Business App
 		// Assert that myClientApp1 receive the right payload
 		String str1 = "report\":{\"borrower\":{\"firstName\":\"John\",\"lastNa\r\n" + 
 				"me\":\"Doe\",\"yearlyIncome\":55000,\"zipCode\":\"75012\",\"creditScore\":200,\"spouse\":null\r\n" + 
@@ -150,7 +164,7 @@ public class ScenarioTest {
 		String key1="12345";
 		Thread t4 = new Thread(() -> {
 			System.out.println("*******************ClientApp");
-			myClientApp3.setUpClientApp(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
+			myClientApp3.setUpClientAppAndConsume(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
 		});
 
 		t4.start();
@@ -232,7 +246,7 @@ public class ScenarioTest {
 		String key1="12345";
 		Thread t7 = new Thread(() -> {
 			System.out.println("*******************ClientApp");
-			myClientApp4.setUpClientApp(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
+			myClientApp4.setUpClientAppAndConsume(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
 		});
 
 		t7.start();
@@ -303,7 +317,7 @@ public class ScenarioTest {
 		ClientApplication myClientApp5=new ClientApplication();
 		Thread t10 = new Thread(() -> {
 			System.out.println("*******************ClientApp");
-			myClientApp4.setUpClientApp(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
+			myClientApp4.setUpClientAppAndConsume(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
 		});
 
 		t10.start();
