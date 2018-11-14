@@ -55,7 +55,7 @@ public class ClientApplication {
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
 		SampleConsumer myConsumer=new SampleConsumer();
 //		myConsumer.consumerInstanceCons(serverurl, numberparam);
-		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam,consumergroup), key, topicNameRp);
+		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam,consumergroup), key, topicNameRp);
 	
 	}
 	

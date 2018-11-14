@@ -2,8 +2,17 @@ package odm.ds.kafka.odmjseclient;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+import ilog.rules.res.model.IlrFormatException;
+import ilog.rules.res.model.IlrPath;
+import ilog.rules.res.session.IlrSessionCreationException;
+import ilog.rules.res.session.IlrSessionException;
 import odm.ds.kafka.odmjse.businessapp.BusinessApplication;
 import odm.ds.kafka.odmjse.clientapp.ClientApplication;
 
@@ -21,17 +30,57 @@ public class ScenarioTest {
 		String topicNameRp="replies";
 		String consumergroup1="testConsumeGroup1";
 		String key1="12345";
+		Thread t1 = new Thread(() -> {
+			System.out.println("Before");
+			myClientApp1.setUpClientApp(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
+			System.out.println("*******************Test1");
+		});
+		t1.start();
+		t1.sleep(2000);
 //		myClientApp1.setUpClientApp(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
 		// Create the client App 2
 		ClientApplication myClientApp2=new ClientApplication();
 		String payload2="";
 		String consumergroup2="testConsumeGroup2";
 		String key2="12356";
+		Thread t2 = new Thread(() -> {
+			System.out.println("********************************Test2");
+			myClientApp2.setUpClientApp(serverurl, 3, topicNameRq, payload2, key2, consumergroup2, topicNameRp);
+			
+		});
+		t2.start();
+		t2.sleep(2000);
 //		myClientApp2.setUpClientApp(serverurl, 3, topicNameRq, payload2, key2, consumergroup2, topicNameRp);
 		// Create the Business App
 		// Send the message
-		BusinessApplication bussApp=new BusinessApplication();
-		// Listen to message from Client Application
+		BusinessApplication bizApp=new BusinessApplication();
+		String consumergroup="baConsumerGroup";
+		IlrPath rulesetPath=IlrPath.parsePath("/test_deployment/loan_validation_with_score_and_grade");
+		Thread t3 = new Thread(() -> {
+			try {
+				System.out.println("*************************Test 3");
+				bizApp.setUpBussinessApp(serverurl, 3, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+			} catch (IlrFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IlrSessionCreationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonGenerationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IlrSessionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		t3.start();
 		// Affet to string 1 the message from the Business App
 		// Assert that myClientApp1 receive the right payload
 		String str1 = "report\":{\"borrower\":{\"firstName\":\"John\",\"lastNa\r\n" + 
