@@ -50,10 +50,12 @@ public class ClientApplication {
 	 */
 	
 	public static void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
+	//public static void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String key, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
 		SampleConsumer myConsumer=new SampleConsumer();
-		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), key, topicNameRp);
+//		myConsumer.consumerInstanceCons(serverurl, numberparam);
+		myConsumer.consumeMessage3(myConsumer.consumerInstance(serverurl, numberparam,consumergroup), key, topicNameRp);
 	
 	}
 	
@@ -97,9 +99,9 @@ public class ClientApplication {
 		    			myLogger.info(mybundle.getString("topicNameRq")+ topicNameRq);
 		    			topicNameRp=arguments[3];
 		    			myLogger.info(mybundle.getString("topicNameRp")+ topicNameRp);
-		    			consumergroup=arguments[4];
-		    			myLogger.info(mybundle.getString("consumergroup")+ consumergroup);
-		    			nbmessage=new Integer(arguments[5]);
+//		    			consumergroup=arguments[4];
+//		    			myLogger.info(mybundle.getString("consumergroup")+ consumergroup);
+		    			nbmessage=new Integer(arguments[4]);
 		    			
 		    		}
 		    		
@@ -172,7 +174,8 @@ public class ClientApplication {
 			for (int i = 0; i <nbmessage ; i++) {				
 				String mykey = myClientApp.generateKey();
 				ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey,
-						consumergroup, topicNameRp);
+						mykey, topicNameRp);
+		//		ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey, topicNameRp);
 			}
 		} catch (ParseException | JsonProcessingException e) {
 			e.printStackTrace();

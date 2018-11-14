@@ -10,20 +10,20 @@ import odm.ds.kafka.odmjse.clientapp.ClientApplication;
 public class ScenarioTest {
 	
 	@Test
-	public static void TwoClientOneBusinessApp() {
+	public void TwoClientOneBusinessApp() throws Exception{
 	
 		ClientApplication myClientApp1=new ClientApplication();
 		ClientApplication myClientApp2=new ClientApplication();
 		BusinessApplication bussApp=new BusinessApplication();
 		
 		// Assert that myClientApp1 receive the right payload
-		String str1 = null;
-		String str2 = null;
+		String str1 = "";
+		String str2 = "";
 		assertEquals(str1,str2);
 		// Assert that myClientApp2 receive the right payload
-		String str3 = null;
-		String str4 = null;
-		assertEquals(str3,str4);
+		String str3 = "";
+		String str4 = "";
+//		assertEquals(str3,str4);
 	}
 	
 

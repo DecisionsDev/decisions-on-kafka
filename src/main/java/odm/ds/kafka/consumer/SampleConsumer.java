@@ -63,6 +63,7 @@ public class SampleConsumer {
 		return consumer;
 	}
 
+
 	/**
 	 * Listen to a topic and Consume coming messages
 	 *  @param consumer
