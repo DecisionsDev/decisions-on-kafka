@@ -138,12 +138,82 @@ public class ScenarioTest {
 	}
 	
 	@Test
-	public void oneClientTwoBusinessApp() {
+	public void oneClientTwoBusinessApp() throws InterruptedException {
 		// Create the client App
-		
+		System.out.println("***************Start the test 2");
+		ClientApplication myClientApp3=new ClientApplication();
+		String payload1="{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"Alice\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":200000}, \"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}";
+		String serverurl="localhost:9092";
+		String topicNameRq="requests";
+		String topicNameRp="replies";
+		String consumergroup1="testConsumeGroup1";
+		String key1="12345";
+		Thread t4 = new Thread(() -> {
+			System.out.println("*******************ClientApp");
+			myClientApp3.setUpClientApp(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
+		});
+
+		t4.start();
 		// Create the Business App 1
-		
+		BusinessApplication bizApp2=new BusinessApplication();
+		String consumergroup="baConsumerGroup";
+		Thread t5 = new Thread(() -> {
+			try {
+				IlrPath rulesetPath=IlrPath.parsePath("/test_deployment/loan_validation_with_score_and_grade");
+				System.out.println("*************************Test 3");
+				bizApp2.setUpBussinessApp(serverurl, 3, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+			} catch (IlrFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IlrSessionCreationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonGenerationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IlrSessionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		t5.start();
+		t5.sleep(2000);
 		// Create the Business App 2
+		BusinessApplication bizApp3=new BusinessApplication();
+		Thread t6 = new Thread(() -> {
+			try {
+				IlrPath rulesetPath=IlrPath.parsePath("/test_deployment/loan_validation_with_score_and_grade");
+				System.out.println("*************************Test 3");
+				bizApp3.setUpBussinessApp(serverurl, 3, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+			} catch (IlrFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IlrSessionCreationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonGenerationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IlrSessionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		t6.start();
+		t6.sleep(2000);
+
 		
 		// Assert that the number of messages received by BA 1 is superior to zero
 		// Assert taht the number of messages received by BA 2 is superior to zero
@@ -152,11 +222,15 @@ public class ScenarioTest {
 	
 	public void brokeTest() {
 		// Create the Client App
+		ClientApplication myClientApp4=new ClientApplication();
 		// Create the BA APP 1
+		BusinessApplication bizApp4=new BusinessApplication();
 		// Create the BA APP 2
+		BusinessApplication bizApp5=new BusinessApplication();
 		// Count that we have received the right number of message
 		// Stop the BA1
 		// Create the Client App
+		ClientApplication myClientApp5=new ClientApplication();
 		// Verify that we have the right amount of message.
 	}
 
