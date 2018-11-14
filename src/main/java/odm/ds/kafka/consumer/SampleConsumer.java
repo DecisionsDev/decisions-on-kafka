@@ -65,44 +65,6 @@ public class SampleConsumer {
 
 
 	/**
-	 * Listen to a topic and Consume coming messages
-	 *  @param consumer
-	 *  @param topicName
-	 *  
-	 */
-	
-	public void consumeMessage(KafkaConsumer<String, String> consumer, String topicName) {
-		consumer.subscribe(Arrays.asList(topicName), new ConsumerRebalanceListener() {
-			public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
-				System.out.printf("%s topic-partitions are revoked from this consumer\n",
-						Arrays.toString(partitions.toArray()));
-			}
-
-			public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
-				System.out.printf("%s topic-partitions are assigned to this consumer\n",
-						Arrays.toString(partitions.toArray()));
-			}
-		});
-		myLogger.info(mybundle.getString("topic_name") + " " + topicName);
-		myLogger.info(" Waiting messages from topic " + topicName);
-		while (true) {
-			@SuppressWarnings("deprecation")
-			ConsumerRecords<String, String> records = consumer.poll(1000);
-			if (!records.isEmpty()) {
-				for (ConsumerRecord<String, String> record : records) {
-					
-					myLogger.info(record.value());
-					myLogger.info("partition numero %i " + record.partition());
-				}
-			}
-			break;
-
-		}
-		consumer.close();
-
-	}
-
-	/**
 	 * 
 	 * @param consumer
 	 * @param key

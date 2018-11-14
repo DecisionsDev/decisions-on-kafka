@@ -14,9 +14,20 @@ public class ScenarioTest {
 	
 		// Create the client App 1
 		ClientApplication myClientApp1=new ClientApplication();
-		// Send the message 
+		// Send the message
+		String payload1="{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"Alice\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":200000}, \"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}";
+		String serverurl="localhost:9092";
+		String topicNameRq="requests";
+		String topicNameRp="replies";
+		String consumergroup1="testConsumeGroup1";
+		String key1="12345";
+//		myClientApp1.setUpClientApp(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
 		// Create the client App 2
 		ClientApplication myClientApp2=new ClientApplication();
+		String payload2="";
+		String consumergroup2="testConsumeGroup2";
+		String key2="12356";
+//		myClientApp2.setUpClientApp(serverurl, 3, topicNameRq, payload2, key2, consumergroup2, topicNameRp);
 		// Create the Business App
 		// Send the message
 		BusinessApplication bussApp=new BusinessApplication();

@@ -49,7 +49,7 @@ public class ClientApplication {
 	 * 
 	 */
 	
-	public static void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
+	public void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
 	//public static void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String key, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
@@ -173,7 +173,7 @@ public class ClientApplication {
 			myClientApp.setUpkafkaParam(commandLine, args);
 			for (int i = 0; i <nbmessage ; i++) {				
 				String mykey = myClientApp.generateKey();
-				ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey,
+				myClientApp.setUpClientApp(serverurl, 2, topicNameRq,myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey,
 						mykey, topicNameRp);
 		//		ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey, topicNameRp);
 			}
