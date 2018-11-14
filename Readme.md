@@ -6,13 +6,13 @@
 ## Features
 
 
-This sample show how to use IBM ODM with Kafka
+This sample shows how to use IBM ODM with Kafka
 
 ![Sample Architecture](docs/images/architecture.png)
 
 ### Workflow Description
 
-Through Loan Validation sample we show how to integrate kafka with ODM.
+Through Loan Validation sample we show how to integrate kafka with Operational Decision Manager(ODM).
 In this sample we have Client Applications which send the loan request and Business Applications which execute the loan request against a ruleset, for more details about the loan Validation sample see References section.
 In the Sample architecture we have 1 kafka broker, two topics, the first topic is where Client applications put their Loan request and the second topic is for replies where the Business Applications put the result after
 execution against ODM ruleset. All the Business Applications have the same kafka Consumer Group, and Client Applications have different Consumer Group.  
