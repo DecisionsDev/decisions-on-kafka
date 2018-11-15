@@ -102,10 +102,10 @@ the yearlyIncome is 200000.
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"Alice\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":200000},
 \"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 1" -Dexec.classpathScope="test"`
 
-'localhost:9092' is the broker url, if your broker url is different please change it,'requests' corresponds to the topic where loan requests are put,  'replies' the topic where the Business Application puts the execution
-result, 1 is the number of loan request we want the Client Application sends to the Business Application.
+'localhost:9092' is the broker url, if your broker url is different please change it accordingly,'requests' corresponds to the topic where loan requests are put, and 'replies' corresponds to the topic where the Business Application puts the execution
+result. 1 is the number of loan request we want the Client Application sends to the Business Application.
 
- 2. Create the second Client Application : Open a second command line in the root folder and run the command below. The second client Application send a loan request with a yearlyIncome 5000 and a loan amount 60000
+ 2. Create the second Client Application : Open a second command line in the root folder, and then run the following command. The second client Application sends a loan request with the yearlyIncome 55000 and the amount of loan 110000.
  
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" :\"Doe\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 1" -Dexec.classpathScope="test"`
@@ -118,57 +118,57 @@ result, 1 is the number of loan request we want the Client Application sends to 
 
  
 4. Result : 
-In the fist Client Application the loan request should be accepted and in the second Client Application the loan request should be rejected.
+The loan request should be accepted in the first Client Application, and it should be rejected in the second Client Application.
 
-5. Stop the Business Application before starting the Sub-scenario 2
+5. Stop the Business Application before starting the Sub-scenario 2.
 
 ### Sub-scenario 2 :  1 Client Application Sending several payload to N Business Applications
 
 
-The goal of this sub-scenario is to show the load balancing between Business Applications.
+The goal of this sub-scenario is to show the load balancing between two Business Applications.
 
 ![use case 2](docs/images/usecase2.png)
 
-1. Run your first Business Application which puts it's result in out1.txt.
+1. Run your first Business Application that puts its result in out1.txt.
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" > out1.txt `
 
-2. Run your second Business Application which is going to put it's result in out2.txt
+2. Run your second Business Application that puts its result in out2.txt
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" > out2.txt`
  
-3. Run a client Application which is going to send 7 messages.
+3. Run a client Application that will send seven messages.
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 7 " -Dexec.classpathScope="test"`
 
-4. Once the Client Application terminates and the Business Applications are displaying the message "waiting for payload" stop your two Business Applications and look at the files out1.txt and out2.txt you will see that the seven payloads have been split for execution between the two Business Applications.
+4. When the Client Application terminates and the Business Applications are displaying the message "waiting for payload" stop both of your Business Applications and look at the files out1.txt and out2.txt. You will see that the seven payloads have been split for execution between these two Business Applications.
 
-### Sub-scenario 3 : Availability after one Business Application has been down
-The goal of this sub-scenario is to see that if one Business Application broke, we'll still have the others working.
+### Sub-scenario 3 : Availability after one Business Application is down
+The goal of this sub-scenario is to see that if one Business Application is down, the others will still work.
 
 ![use case 3](docs/images/usecase3.png)
 
-1. Run your first Business Application which puts it's result in out1.txt.
+1. Run your first Business Application that puts its result in out1.txt.
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" > out1.txt`
 
-2. Run your second Business Application which is going to put it's result in out2.txt
+2. Run your second Business Application which is going to put its result in out2.txt
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" > out2.txt`
  
-3. Run a Client Application which is going to send 10 messages.
+3. Run a Client Application that will send 10 messages.
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 'test3' 10" -Dexec.classpathScope="test"`
  
 4. Stop one of your Business Appplication.
 
-5. Create a new Client Application which will send 5 messages. You'll see that the remaining Business Application will handle the request :
+5. Create a new Client Application that will send five messages. You'll see that the remaining Business Application handles the request :
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 'test3' 5" -Dexec.classpathScope="test"`
