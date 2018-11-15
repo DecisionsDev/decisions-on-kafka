@@ -6,36 +6,37 @@
 ## Features
 
 
-This sample shows how to use IBM ODM with Kafka
+This sample shows how to use IBM Operational Decision Manager (ODM) with Kafka
 
 ![Sample Architecture](docs/images/architecture.png)
 
 ### Workflow Description
 
-Through Loan Validation sample we show how to integrate kafka with Operational Decision Manager(ODM).
-In this sample we have Client Applications which send the loan request and Business Applications which execute the loan request against a ruleset, for more details about the loan Validation sample see References section.
-In the Sample architecture we have 1 kafka broker, two topics, the first topic is where Client applications put their Loan request and the second topic is for replies where the Business Applications put the result after
-execution against ODM ruleset. All the Business Applications have the same kafka Consumer Group, and Client Applications have different Consumer Group.  
+We demonstrate how to integrate Kafka into ODM by using the loan validation sample.
+In this sample, we have Client Applications sending a loan request and Business Applications executing the loan request against a ruleset, for more information about the loan validation sample, see the References section.
+We have one kafka broker and two topics in the sample architecture.
+The first topic is for Client Applications to put their loan request, and the second topic is for replies where the Business Applications put the result after executing against a ruleset.
+All the Business Applications have the same kafka consumer group, and Client Applications have different consumer groups.  
 
-1. N Client applications which react as kafka Producer and send their payload to the kafka topic named Requests.
+1. N Client applications act as kafka Producer and send their payload to the topic named Requests.
 
-2. M Business Applications implementing ODM which react as Consumer and execute the payload.
+2. M Business Applications implementing ODM which act as a Kafka consumer and execute the payload.
 
-3. After executed the payload against the ruleset the Bussiness Applications react as a Kafka producer and put the json result in the topic Replies.
+3. After executing the payload against the ruleset, the Bussiness Applications act as a Kafka producer and put the json result in the topic named Replies.
 
-4. The Client Applications react as Kafka Consumer and got the message corresponding to the result of his request.
+4. The Client Applications act as Kafka consumer and get the message corresponding to the result of his request.
 
 ## Requirments
 
-* Kafka
-* IBM ODM
-* Maven
+* Apache Kafka
+* IBM Operational Decision Manager
+* Apache Maven
 
 ## Before starting
-* Make sure you have kafka installed, start kafka by launching zookeeper and kafka-server.
+* Make sure that you have kafka installed, and start kafka by launching zookeeper and kafka-server.
 * Clone the project repository from github.
 `$ git clone --branch=odm-integration git@github.ibm.com:MYattara/ODM-DecisionServer-JSE-Kafka.git`
-* In the pom file set the property `<ibm.odm.install.dir></ibm.odm.install.dir>` with your odm installation directory, `example : <ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>`
+* In the pom file, set the property `<ibm.odm.install.dir></ibm.odm.install.dir>` with your odm installation directory, ` For example : <ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>`
 
 If you have a shell command line
 * Create the kafka topic for request : `$ kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests`
@@ -48,18 +49,18 @@ If you have a Windows command line
 * Create the kafka topic for replies : `$ kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies`
 
 
-## Building
-Use the following maven command to build the source code.
+## Building the source code
+Use the following Maven command to build the source code.
 `$ mvn clean install`
 
 ## Scenario Running
 
 According to the sub-scenario we'll use several Client Applications sending one or many payload to several Business Applications.
-the Client Application is a JSE Application which sends a payload with information about the Borrower and the Loan Request, and wait for the approval or a reject of his loan request.
-The Business Application is a JSE ODM execution server in Memory application, which executes the payload against ODM loan validation sample ruleset and then returns a result to the JSE Client Application which should be approved or reject .
+the Client Application is a JSE Application that sends a payload with information about the borrower and the loan Request, and waits for the approval or a reject of his loan request.
+The Business Application is a JSE ODM execution server in-memory persistence application, which executes the payload against ODM loan validation sample ruleset and returns a result (approved or rejected) to the JSE Client Application.
 
-### Sub-scenario 1 : 2 Client Applications Sending payload to 1 Business Application and waiting for the result.
-The goal of this sub-scenario is to show that each Client Application got the right answer for his payload it sent to the Business Application.
+### Sub-scenario 1 : Two Client Applications sending payload to one Business Application and waiting for the result.
+The goal of this sub-scenario is to show that each Client Application gets the right answer for his payload it sent to the Business Application.
 
 ![use case 1](docs/images/usecase1.png)
 
@@ -73,14 +74,14 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
 ```
 `<JsonPayload>`  The loan request payload we want to evaluate.
 
-`<kafka server url>` The kafka broker url, in the sample we use as serverul `localhost:9092` if yours is different please change it.
+`<kafka server url>` The kafka broker url. In the sample we use `localhost:9092` change it if necessary  if yours is different please change it.
 
-`<topic for requests>` The kafka topic where Client Application puts loan requests reacting as a kafka Producer and Business Application listen to it reacting as a kafka consumer.
+`<topic for requests>` The topic where the Client Application puts loan requests and acts as a producer, and Business Application listens to it and acts as a kafka consumer.
 
-`<topic for replies>` The kafka topic where Business Application puts the result of the loan request execution against the Decision service, The Business Application reacts as a kafka producer and Client Application reacts as a consumer
+`<topic for replies>` The topic where Business Application puts the result of the loan request execution against the decision service, The Business Application acts as a producer and the Client Application acts as a consumer
 getting the message from the topic. 
 
-`<number of message>` The number of time we want to send the loan request payload for execution.
+`<number of message>` How many times we want to send the loan request payload for execution.
 
 * Business Application command structure : 
 ```
@@ -90,12 +91,12 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication"
 
 ```
 
-`<rulesetPath>` The IBM ODM ruleset Path.
+`<rulesetPath>` The IBM ODM ruleset path.
 
-`<Consumer Group>` The kafka consumer group in which the Business Application is part of.
+`<Consumer Group>` The kafka consumer group which the Business Application is part of.
  
 
-1. Create the first Client Application : Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder then run the command below, it sends a payload corresponding to the loan request. In this loan request the amount is 10000 and 
+1. Create the first Client Application : Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder, and then run the command below. It sends a payload corresponding to the loan request. In this request the amount is 10000 and 
 the yearlyIncome is 200000. 
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"Alice\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":200000},

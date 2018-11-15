@@ -23,6 +23,9 @@ public class ScenarioTest {
 	public void twoClientsOneBusinessApp() throws Exception{
 	
 		// Create the client App 1
+		System.out.println("******************************************************************************");
+		System.out.println("*                         Start the Test 1                                   *");
+		System.out.println("******************************************************************************");
 		ClientApplication myClientApp1=new ClientApplication();
 		// Send the message
 		String payload1="{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"Alice\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":200000}, \"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}";
@@ -49,7 +52,7 @@ public class ScenarioTest {
 		ClientApplication myClientApp2=new ClientApplication();
 		String payload2="";
 		String consumergroup2="testConsumeGroup2";
-		String key2="12356";
+		String key2="12346";
 		Thread t2 = new Thread(() -> {
 			System.out.println("********************************Test1-ClientApp2");
 			String value;
@@ -94,7 +97,8 @@ public class ScenarioTest {
 			}
 		});
 		t3.start();
-		t3.sleep(2000);
+		t3.sleep(5000);
+		t3.stop();
 		// Affect to string 1 the message from the Business App
 		// Assert that myClientApp1 receive the right payload
 		String str1 = "report\":{\"borrower\":{\"firstName\":\"John\",\"lastNa\r\n" + 
@@ -151,30 +155,33 @@ public class ScenarioTest {
 		assertEquals(str3,str4);
 	}
 	
-	@Test
+	//@Test
 	public void oneClientTwoBusinessApp() throws InterruptedException {
 		// Create the client App
-		System.out.println("***************Start the test 2");
+		System.out.println("*******************************************************************************");
+		System.out.println("*                     Start the test 2                                        *");
+		System.out.println("*******************************************************************************");
 		ClientApplication myClientApp3=new ClientApplication();
 		String payload1="{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"Alice\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":200000}, \"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}";
 		String serverurl="localhost:9092";
 		String topicNameRq="requests";
 		String topicNameRp="replies";
 		String consumergroup1="testConsumeGroup1";
-		String key1="12345";
+		String key3="12347";
 		Thread t4 = new Thread(() -> {
-			System.out.println("*******************ClientApp");
-			myClientApp3.setUpClientAppAndConsume(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
+			System.out.println("******************* Test 2- ClientApp");
+			myClientApp3.setUpClientAppAndConsume(serverurl, 2, topicNameRq, payload1, key3, consumergroup1, topicNameRp);
 		});
 
 		t4.start();
+		t4.sleep(2000);
 		// Create the Business App 1
 		BusinessApplication bizApp2=new BusinessApplication();
 		String consumergroup="baConsumerGroup";
 		Thread t5 = new Thread(() -> {
 			try {
 				IlrPath rulesetPath=IlrPath.parsePath("/test_deployment/loan_validation_with_score_and_grade");
-				System.out.println("*************************Test 3");
+				System.out.println("*************************Test 2- Business App 1");
 				bizApp2.setUpBussinessApp(serverurl, 3, consumergroup, topicNameRq, rulesetPath, topicNameRp);
 			} catch (IlrFormatException e) {
 				// TODO Auto-generated catch block
@@ -203,7 +210,7 @@ public class ScenarioTest {
 		Thread t6 = new Thread(() -> {
 			try {
 				IlrPath rulesetPath=IlrPath.parsePath("/test_deployment/loan_validation_with_score_and_grade");
-				System.out.println("*************************Test 3");
+				System.out.println("*************************Test 2 - Business App 2");
 				bizApp3.setUpBussinessApp(serverurl, 3, consumergroup, topicNameRq, rulesetPath, topicNameRp);
 			} catch (IlrFormatException e) {
 				// TODO Auto-generated catch block
@@ -226,37 +233,43 @@ public class ScenarioTest {
 			}
 		});
 		t6.start();
-		t6.sleep(2000);
-
+		t6.sleep(5000);
+		t5.stop();
+		t6.stop();
+		
 		
 		// Assert that the number of messages received by BA 1 is superior to zero
 		// Assert taht the number of messages received by BA 2 is superior to zero
 		// Assert that the number of messages received by BA 1 + the number of messages received by BA 2 is equal to the sent one. 
 	}
 	
+	//@Test
 	public void brokeTest() throws InterruptedException {
 		// Create the Client App
 		ClientApplication myClientApp4=new ClientApplication();
-		System.out.println("***************Start the test 2");
+		System.out.println("**************************************************************************");
+		System.out.println("*                         Start the test 3                               *");
+		System.out.println("**************************************************************************");
 		String payload1="{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"Alice\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":200000}, \"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}";
 		String serverurl="localhost:9092";
 		String topicNameRq="requests";
 		String topicNameRp="replies";
 		String consumergroup1="testConsumeGroup1";
-		String key1="12345";
+		String key4="12348";
 		Thread t7 = new Thread(() -> {
-			System.out.println("*******************ClientApp");
-			myClientApp4.setUpClientAppAndConsume(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
+			System.out.println("*******************Test 3 - ClientApp 1");
+			myClientApp4.setUpClientAppAndConsume(serverurl, 2, topicNameRq, payload1, key4, consumergroup1, topicNameRp);
 		});
 
 		t7.start();
+		t7.sleep(2000);
 		// Create the BA APP 1
 		BusinessApplication bizApp4=new BusinessApplication();
 		String consumergroup="baConsumerGroup";
 		Thread t8 = new Thread(() -> {
 			try {
 				IlrPath rulesetPath=IlrPath.parsePath("/test_deployment/loan_validation_with_score_and_grade");
-				System.out.println("*************************Test 3");
+				System.out.println("*************************Test 3 - Business App 1");
 				bizApp4.setUpBussinessApp(serverurl, 3, consumergroup, topicNameRq, rulesetPath, topicNameRp);
 			} catch (IlrFormatException e) {
 				// TODO Auto-generated catch block
@@ -286,7 +299,7 @@ public class ScenarioTest {
 		Thread t9 = new Thread(() -> {
 			try {
 				IlrPath rulesetPath=IlrPath.parsePath("/test_deployment/loan_validation_with_score_and_grade");
-				System.out.println("*************************Test 3");
+				System.out.println("*************************Test 3 -  Business App 2");
 				bizApp4.setUpBussinessApp(serverurl, 3, consumergroup, topicNameRq, rulesetPath, topicNameRp);
 			} catch (IlrFormatException e) {
 				// TODO Auto-generated catch block
@@ -315,9 +328,10 @@ public class ScenarioTest {
 		// Stop the BA1
 		// Create the Client App
 		ClientApplication myClientApp5=new ClientApplication();
+		String key5="12348";
 		Thread t10 = new Thread(() -> {
-			System.out.println("*******************ClientApp");
-			myClientApp4.setUpClientAppAndConsume(serverurl, 2, topicNameRq, payload1, key1, consumergroup1, topicNameRp);
+			System.out.println("*******************Test 3 - Client App 2");
+			myClientApp4.setUpClientAppAndConsume(serverurl, 2, topicNameRq, payload1, key5, consumergroup1, topicNameRp);
 		});
 
 		t10.start();
