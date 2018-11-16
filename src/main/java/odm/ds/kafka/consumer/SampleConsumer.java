@@ -93,9 +93,9 @@ public class SampleConsumer {
 				for (ConsumerRecord<String, String> record : records) {
 					try {
 						Reply reply=new Reply();
-						if (key.equals(Reply.ExtractKeyFromJson(record.value()))) {
+						if (key.equals(reply.ExtractKeyFromJson(record.value()))) {
 							myLogger.info(record.value());
-							myLogger.info(mybundle.getString("receive_key") + Reply.ExtractKeyFromJson(record.value()));
+							myLogger.info(mybundle.getString("receive_key") + reply.ExtractKeyFromJson(record.value()));
 							gotmessage=true;
 							data=record.value();
 							break;

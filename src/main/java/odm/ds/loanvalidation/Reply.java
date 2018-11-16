@@ -41,7 +41,7 @@ public class Reply {
 	}
 	private Report report;
 	
-	public static String ExtractKeyFromJson( String payload) throws IOException {
+	public String ExtractKeyFromJson( String payload) throws IOException {
 			 
 			 ObjectMapper objectMapper=new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			 Reply reply=new Reply();

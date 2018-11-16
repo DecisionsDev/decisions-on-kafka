@@ -4,6 +4,7 @@ import static odm.ds.kafka.odmjse.execution.MessageCode.SAMPLE_ERROR_INVALID_RUL
 import static odm.ds.kafka.odmjse.execution.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -49,7 +50,16 @@ public class BusinessApplication {
 	private static String consumergroup;
 	private static final Options OPTIONS=new Options();
 	private static final MessageFormatter formatter=new MessageFormatter();
+	private int nbexec;
 	
+	public int getNbexec() {
+		return nbexec;
+	}
+
+	public void setNbexec(int nbexec) {
+		this.nbexec = nbexec;
+	}
+
 	/**
 	 * 
 	 * @param serverurl
@@ -104,18 +114,18 @@ public class BusinessApplication {
 			}
 		});
 		myLogger.info(mybundle.getString("topic_name") + " " + topicName);
-
 		while (true) {
-			@SuppressWarnings("deprecation")
-			ConsumerRecords<String, String> records = consumer.poll(1000);
+			ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10));
 			myLogger.info(mybundle.getString("waiting"));
 			if (!records.isEmpty()) {
 				for (ConsumerRecord<String, String> record : records) {
 
-					myLogger.info(record.value());
+					String value = record.value();
+					myLogger.info(value);
 					
-					execution.executeRuleset(rulesetPath, ExtractLoanFromJson(record.value()),
-							ExtractkeyFromJson(record.value()), serverurl, topicNameRp);
+					execution.executeRuleset(rulesetPath, ExtractLoanFromJson(value),
+							ExtractkeyFromJson(value), serverurl, topicNameRp);
+					nbexec++;
 				}
 			}
 

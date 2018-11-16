@@ -121,8 +121,8 @@ public class ClientApplication {
 
 				try {
 					loan=objectMapper.readValue(payload, Loan.class);
-					myLogger.info(mybundle.getString("Loan_Borrower")+ loan.getBorrower());
-					myLogger.info(mybundle.getString("Loan_Request")+ loan.getLoanrequest());
+//					myLogger.info(mybundle.getString("Loan_Borrower")+ loan.getBorrower());
+//					myLogger.info(mybundle.getString("Loan_Request")+ loan.getLoanrequest());
 					
 				} catch(IOException e) {
 					e.printStackTrace();
