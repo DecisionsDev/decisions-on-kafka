@@ -30,9 +30,9 @@ All the Business Applications have the same kafka consumer group, and Client App
 
 ## Requirments
 
-* Apache Kafka
-* IBM Operational Decision Manager
-* Apache Maven
+* Apache Kafka 2.11
+* IBM Operational Decision Manager 8.9.2
+* Apache Maven 3
 
 ## Before starting
 * Make sure that you have kafka installed, and start kafka by launching zookeeper and kafka-server.
