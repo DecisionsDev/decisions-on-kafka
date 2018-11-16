@@ -1,4 +1,4 @@
-# IBM ODM Decision Server in architecture driven message with kafka
+# IBM ODM Decision Server in message driven architecture with Apache Kafka
 [![Build Status](https://travis.ibm.com/MYattara/ODM-DecisionServer-Kafka.svg?token=YUDWXbAcjsyzHsqNF4a8&branch=master)](https://travis.ibm.com/MYattara/ODM-DecisionServer-Kafka)
 [![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ODMDev/odm-ondocker/dev.svg)](https://github.ibm.com/MYattara/ODM-DecisionServer-Kafka)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -10,13 +10,15 @@ This sample shows how to use IBM Operational Decision Manager (ODM) with Kafka
 
 ![Sample Architecture](docs/images/architecture.png)
 
-### Workflow Description
-
 We demonstrate how to integrate Kafka into ODM by using the loan validation sample.
 In this sample, we have Client Applications sending a loan request and Business Applications executing the loan request against a ruleset, for more information about the loan validation sample, see the References section.
 We have one kafka broker and two topics in the sample architecture.
 The first topic is for Client Applications to put their loan request, and the second topic is for replies where the Business Applications put the result after executing against a ruleset.
 All the Business Applications have the same kafka consumer group, and Client Applications have different consumer groups.  
+
+
+### Workflow Description
+
 
 1. N Client applications act as kafka Producer and send their payload to the topic named Requests.
 
