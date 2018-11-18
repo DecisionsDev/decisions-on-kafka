@@ -11,10 +11,10 @@ This sample shows how to use IBM Operational Decision Manager (ODM) with Kafka
 ![Sample Architecture](docs/images/architecture.png)
 
 We demonstrate how to integrate Kafka into ODM by using the loan validation sample.
-In this sample, we have Client Applications sending a loan request and Business Applications executing the loan request against a ruleset, for more information about the loan validation sample, see the References section.
+In this sample, we have Client Applications sending a loan request and Decision Services executing the loan request against a ruleset, for more information about the loan validation sample, see the References section.
 We have one kafka broker and two topics in the sample architecture.
-The first topic is for Client Applications to put their loan request, and the second topic is for replies where the Business Applications put the result after executing against a ruleset.
-All the Business Applications have the same kafka consumer group, and Client Applications have different consumer groups.  
+The first topic is for Client Applications to put their loan request, and the second topic is for replies where the Decision Services put the result after executing against a ruleset.
+All the Decision Services have the same kafka consumer group, and Client Applications have different consumer groups.  
 
 
 ### Workflow Description
@@ -22,7 +22,7 @@ All the Business Applications have the same kafka consumer group, and Client App
 
 1. N Client applications act as kafka Producer and send their payload to the topic named Requests.
 
-2. M Business Applications implementing ODM which act as a Kafka consumer and execute the payload.
+2. M Decision Services implementing ODM which act as a Kafka consumer and execute the payload.
 
 3. After executing the payload against the ruleset, the Bussiness Applications act as a Kafka producer and put the json result in the topic named Replies.
 
@@ -57,12 +57,12 @@ Use the following Maven command to build the source code.
 
 ## Scenario Running
 
-According to the sub-scenario we'll use several Client Applications sending one or many payload to several Business Applications.
+According to the sub-scenario we'll use several Client Applications sending one or many payload to several Decision Services.
 the Client Application is a JSE Application that sends a payload with information about the borrower and the loan Request, and waits for the approval or a reject of his loan request.
-The Business Application is a JSE ODM execution server in-memory persistence application, which executes the payload against ODM loan validation sample ruleset and returns a result (approved or rejected) to the JSE Client Application.
+The Decision Service is a JSE ODM execution server in-memory persistence application, which executes the payload against ODM loan validation sample ruleset and returns a result (approved or rejected) to the JSE Client Application.
 
-### Sub-scenario 1 : Two Client Applications sending payload to one Business Application and waiting for the result.
-The goal of this sub-scenario is to show that each Client Application gets the right answer for his payload it sent to the Business Application.
+### Sub-scenario 1 : Two Client Applications sending payload to one Decision Service and waiting for the result.
+The goal of this sub-scenario is to show that each Client Application gets the right answer for his payload it sent to the Decision Service.
 
 ![use case 1](docs/images/usecase1.png)
 
@@ -78,16 +78,16 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
 
 `<kafka server url>` The kafka broker url. In the sample we use `localhost:9092` change it if necessary  if yours is different please change it.
 
-`<topic for requests>` The topic where the Client Application puts loan requests and acts as a producer, and Business Application listens to it and acts as a kafka consumer.
+`<topic for requests>` The topic where the Client Application puts loan requests and acts as a producer, and Decision Service listens to it and acts as a kafka consumer.
 
-`<topic for replies>` The topic where Business Application puts the result of the loan request execution against the decision service, The Business Application acts as a producer and the Client Application acts as a consumer
+`<topic for replies>` The topic where Decision Service puts the result of the loan request execution against the decision service, The Decision Service acts as a producer and the Client Application acts as a consumer
 getting the message from the topic. 
 
 `<number of message>` How many times we want to send the loan request payload for execution.
 
-* Business Application command structure : 
+* Decision Service command structure : 
 ```
-$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication" -Dexec.args="
+$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.DecisionService" -Dexec.args="
 <rulesetPath> <kafka server url> <topic for requests> <topic for replies> <Consumer Group> " 
 -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
 
@@ -95,7 +95,7 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.BusinessApplication"
 
 `<rulesetPath>` The IBM ODM ruleset path.
 
-`<Consumer Group>` The kafka consumer group which the Business Application is part of.
+`<Consumer Group>` The kafka consumer group which the Decision Service is part of.
  
 
 1. Create the first Client Application : Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder, and then run the command below. It sends a payload corresponding to the loan request. In this request the amount is 10000 and 
@@ -104,41 +104,41 @@ the yearlyIncome is 200000.
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"Alice\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":200000},
 \"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 1" -Dexec.classpathScope="test"`
 
-'localhost:9092' is the broker url, if your broker url is different please change it accordingly,'requests' corresponds to the topic where loan requests are put, and 'replies' corresponds to the topic where the Business Application puts the execution
-result. 1 is the number of loan request we want the Client Application sends to the Business Application.
+'localhost:9092' is the broker url, if your broker url is different please change it accordingly,'requests' corresponds to the topic where loan requests are put, and 'replies' corresponds to the topic where the Decision Service puts the execution
+result. 1 is the number of loan request we want the Client Application sends to the Decision Service.
 
  2. Create the second Client Application : Open a second command line in the root folder, and then run the following command. The second client Application sends a loan request with the yearlyIncome 55000 and the amount of loan 110000.
  
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" :\"Doe\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 1" -Dexec.classpathScope="test"`
   
- 3. Run the Business Application :
+ 3. Run the Decision Service :
  
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'baconsumegroup'" -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" `
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.DecisionService" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'baconsumegroup'" -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" `
  
-   'baconsumegroup' the consumer group in which is the Business Application.
+   'baconsumegroup' the consumer group in which is the Decision Service.
 
  
 4. Result : 
 The loan request should be accepted in the first Client Application, and it should be rejected in the second Client Application.
 
-5. Stop the Business Application before starting the Sub-scenario 2.
+5. Stop the Decision Service before starting the Sub-scenario 2.
 
-### Sub-scenario 2 :  1 Client Application Sending several payload to N Business Applications
+### Sub-scenario 2 :  1 Client Application Sending several payload to N Decision Services
 
 
-The goal of this sub-scenario is to show the load balancing between two Business Applications.
+The goal of this sub-scenario is to show the load balancing between two Decision Services.
 
 ![use case 2](docs/images/usecase2.png)
 
-1. Run your first Business Application that puts its result in out1.txt.
+1. Run your first Decision Service that puts its result in out1.txt.
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test"
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.DecisionService" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" > out1.txt `
 
-2. Run your second Business Application that puts its result in out2.txt
+2. Run your second Decision Service that puts its result in out2.txt
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test"
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.DecisionService" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" > out2.txt`
  
 3. Run a client Application that will send seven messages.
@@ -146,21 +146,21 @@ The goal of this sub-scenario is to show the load balancing between two Business
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 7 " -Dexec.classpathScope="test"`
 
-4. When the Client Application terminates and the Business Applications are displaying the message "waiting for payload" stop both of your Business Applications and look at the files out1.txt and out2.txt. You will see that the seven payloads have been split for execution between these two Business Applications.
+4. When the Client Application terminates and the Decision Services are displaying the message "waiting for payload" stop both of your Decision Services and look at the files out1.txt and out2.txt. You will see that the seven payloads have been split for execution between these two Decision Services.
 
-### Sub-scenario 3 : Availability after one Business Application is down
-The goal of this sub-scenario is to see that if one Business Application is down, the others will still work.
+### Sub-scenario 3 : Availability after one Decision Service is down
+The goal of this sub-scenario is to see that if one Decision Service is down, the others will still work.
 
 ![use case 3](docs/images/usecase3.png)
 
-1. Run your first Business Application that puts its result in out1.txt.
+1. Run your first Decision Service that puts its result in out1.txt.
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" 
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.DecisionService" 
 -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" > out1.txt`
 
-2. Run your second Business Application which is going to put its result in out2.txt
+2. Run your second Decision Service which is going to put its result in out2.txt
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.BusinessApplication" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test"
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.DecisionService" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test"
  -Dibm.odm.install.dir="C:\ODM8920" > out2.txt`
  
 3. Run a Client Application that will send 10 messages.
@@ -170,7 +170,7 @@ The goal of this sub-scenario is to see that if one Business Application is down
  
 4. Stop one of your Business Appplication.
 
-5. Create a new Client Application that will send five messages. You'll see that the remaining Business Application handles the request :
+5. Create a new Client Application that will send five messages. You'll see that the remaining Decision Service handles the request :
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 'test3' 5" -Dexec.classpathScope="test"`
