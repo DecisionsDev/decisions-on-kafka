@@ -1,4 +1,4 @@
-package odm.ds.kafka.odmjse.businessapp;
+package odm.ds.kafka.odmjse.decisionapp;
 
 import static odm.ds.kafka.odmjse.execution.MessageCode.SAMPLE_ERROR_INVALID_RULESET_PATH;
 import static odm.ds.kafka.odmjse.execution.MessageCode.SAMPLE_ERROR_MISSING_RULESET_PATH;

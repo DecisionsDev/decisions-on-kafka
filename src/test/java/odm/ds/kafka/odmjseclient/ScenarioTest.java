@@ -24,8 +24,8 @@ import ilog.rules.res.model.IlrPath;
 import ilog.rules.res.session.IlrSessionCreationException;
 import ilog.rules.res.session.IlrSessionException;
 import odm.ds.kafka.consumer.SampleConsumer;
-import odm.ds.kafka.odmjse.businessapp.BusinessApplication;
 import odm.ds.kafka.odmjse.clientapp.ClientApplication;
+import odm.ds.kafka.odmjse.decisionapp.BusinessApplication;
 import odm.ds.loanvalidation.Reply;
 
 public class ScenarioTest {
@@ -40,8 +40,8 @@ public class ScenarioTest {
 		// Send the message
 		String payload1 = "{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"Alice\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":200000}, \"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":10000,\"loanToValue\":1.20}}";
 		String serverurl = "localhost:9092";
-		String topicNameRq = "request";
-		String topicNameRp = "replie";
+		String topicNameRq = "requests";
+		String topicNameRp = "replies";
 		String consumergroup1 = "testConsumeGroup1";
 		BusinessApplication bizApp = new BusinessApplication();
 		String consumergroup = "baConsumerGroup";
