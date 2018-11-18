@@ -39,7 +39,7 @@ import odm.ds.kafka.odmjse.execution.RESJSEExecution;
 import odm.ds.loanvalidation.Loan;
 import odm.ds.loanvalidation.Message;
 
-public class BusinessApplication {
+public class DecisionService {
 
 	
 	final static Logger myLogger=Logger.getLogger(SampleConsumer.class.getName());
@@ -293,7 +293,7 @@ public class BusinessApplication {
 
 	public static void main(String... args) {
 
-		BusinessApplication mybizApp = new BusinessApplication();
+		DecisionService mybizApp = new DecisionService();
 		myLogger.info(mybundle.getString("notif_Biz_App"));
 		try {
 			CommandLineParser parser = new DefaultParser();

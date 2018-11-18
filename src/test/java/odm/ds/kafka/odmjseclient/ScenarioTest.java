@@ -25,7 +25,7 @@ import ilog.rules.res.session.IlrSessionCreationException;
 import ilog.rules.res.session.IlrSessionException;
 import odm.ds.kafka.consumer.SampleConsumer;
 import odm.ds.kafka.odmjse.clientapp.ClientApplication;
-import odm.ds.kafka.odmjse.decisionapp.BusinessApplication;
+import odm.ds.kafka.odmjse.decisionapp.DecisionService;
 import odm.ds.loanvalidation.Reply;
 
 public class ScenarioTest {
@@ -43,7 +43,7 @@ public class ScenarioTest {
 		String topicNameRq = "requests";
 		String topicNameRp = "replies";
 		String consumergroup1 = "testConsumeGroup1";
-		BusinessApplication bizApp = new BusinessApplication();
+		DecisionService bizApp = new DecisionService();
 		String consumergroup = "baConsumerGroup";
 		String key = "12345";
 		SampleConsumer myConsumer=new SampleConsumer();
@@ -159,7 +159,7 @@ public class ScenarioTest {
 		t.start();
 	//	t.sleep(2000);
 		// Create the Business App 1
-		BusinessApplication bizApp2 = new BusinessApplication();
+		DecisionService bizApp2 = new DecisionService();
 		String consumergroup = "baConsumerGroup";
 		Thread t5 = new Thread(() -> {
 			try {
@@ -178,7 +178,7 @@ public class ScenarioTest {
 //		t5.sleep(4000);
 		System.out.println("***********value bizApp2 :" + bizApp2.getNbexec());
 		// Create the Business App 2
-		BusinessApplication bizApp3 = new BusinessApplication();
+		DecisionService bizApp3 = new DecisionService();
 		Thread t6 = new Thread(() -> {
 			try {
 				IlrPath rulesetPath = IlrPath.parsePath("/test_deployment/loan_validation_with_score_and_grade");
@@ -226,7 +226,7 @@ public class ScenarioTest {
 		t7.start();
 		t7.sleep(2000);
 		// Create the BA APP 1
-		BusinessApplication bizApp4 = new BusinessApplication();
+		DecisionService bizApp4 = new DecisionService();
 		String consumergroup = "baConsumerGroup";
 		Thread t8 = new Thread(() -> {
 			try {
@@ -257,7 +257,7 @@ public class ScenarioTest {
 		t8.sleep(2000);
 
 		// Create the BA APP 2
-		BusinessApplication bizApp5 = new BusinessApplication();
+		DecisionService bizApp5 = new DecisionService();
 		Thread t9 = new Thread(() -> {
 			try {
 				IlrPath rulesetPath = IlrPath.parsePath("/test_deployment/loan_validation_with_score_and_grade");
