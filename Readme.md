@@ -64,6 +64,35 @@ According to the sub-scenario we'll use several Client Applications sending one 
 the Client Application is a JSE Application that sends a payload with information about the borrower and the loan Request, and waits for the approval or a reject of his loan request.
 The Decision Service is a JSE ODM execution server in-memory persistence application, which executes the payload against ODM loan validation sample ruleset and returns a result (approved or rejected) to the JSE Client Application.
 
+* Client Application command structure : 
+```
+$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="
+<JsonPayload> <kafka server url> <topic for requests> <topic for replies> <number of message>"
+ -Dexec.classpathScope="test"
+
+```
+`<JsonPayload>`  The loan request payload we want to evaluate.
+
+`<kafka server url>` The kafka broker url. In the sample we use `localhost:9092` change it if necessary  if yours is different please change it.
+
+`<topic for requests>` The topic where the Client Application puts loan requests and acts as a producer, and Decision Service listens to it and acts as a kafka consumer.
+
+`<topic for replies>` The topic where Decision Service puts the result of the loan request execution against the decision service, The Decision Service acts as a producer and the Client Application acts as a consumer
+getting the message from the topic. 
+
+`<number of message>` How many times we want to send the loan request payload for execution.
+
+* Decision Service command structure : 
+```
+$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.DecisionService" -Dexec.args="
+<rulesetPath> <kafka server url> <topic for requests> <topic for replies> <Consumer Group> " 
+-Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
+
+```
+
+`<rulesetPath>` The IBM ODM ruleset path.
+
+`<Consumer Group>` The kafka consumer group which the Decision Service is part of.
 -   [Scenario 1 : Two Client Applications sending payload to one Decision Service and waiting for the result](docs/chapters/subscenario1.md)
 -   [Scenario 2 : One Client Application Sending several payload to N Decision Services](docs/chapters/subscenario2.md)
 -   [Scenario 3 : Availability after one Decision Service is down](docs/chapters/subscenario3.md)
