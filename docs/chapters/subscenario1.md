@@ -60,3 +60,7 @@ result. 1 is the number of loan request we want the Client Application sends to 
 The loan request should be accepted in the first Client Application, and it should be rejected in the second Client Application.
 
 5. Stop the Decision Service before starting the Sub-scenario 2.
+
+[**Next** ![""](../tut_cloud_getstart_ghimages/next.jpg)](../docs/chapters/subscenario2.md)
+
+[![""](../tut_cloud_getstart_ghimages/home.jpg) **Back to table of contents**](../README.md)
