@@ -12,8 +12,13 @@ In this context we have chosen Apache Kafka
 
 ![Sample Architecture](docs/images/architecture.png)
 
-We demonstrate how to integrate Kafka into ODM by using the loan validation sample.
+Message driven architecture put in interaction client applications with services replying to the request from client applications.
+Some of advantages of message driven architecture is the scalability with loadbalencing, and the asynchronous communication.
+This type of architecture is based on a broker allowing to subscribe to a topic and publish.
+In this sample we demonstrate how to integrate Kafka into ODM by using the loan validation sample.
+
 In this sample, we have Client Applications sending a loan request and Decision Services executing the loan request against a ruleset, for more information about the loan validation sample, see the References section.
+Message driven architecture 
 We have one kafka broker and two topics in the sample architecture.
 The first topic is for Client Applications to put their loan request, and the second topic is for replies where the Decision Services put the result after executing against a ruleset.
 All the Decision Services have the same kafka consumer group, and Client Applications have different consumer groups.  
@@ -26,11 +31,11 @@ All the Decision Services have the same kafka consumer group, and Client Applica
 
 2. M Decision Services implementing ODM which act as a Kafka consumer and execute the payload.
 
-3. After executing the payload against the ruleset, the Bussiness Applications act as a Kafka producer and put the json result in the topic named Replies.
+3. After executing the payload against the ruleset, the Decision Services act as a Kafka producer and put the json result in the topic named Replies.
 
 4. The Client Applications act as Kafka consumer and get the message corresponding to the result of his request.
 
-## Requirments
+## Requirements
 
 * Apache Kafka 2.11
 * IBM Operational Decision Manager 8.9.2
