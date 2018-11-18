@@ -64,6 +64,10 @@ According to the sub-scenario we'll use several Client Applications sending one 
 the Client Application is a JSE Application that sends a payload with information about the borrower and the loan Request, and waits for the approval or a reject of his loan request.
 The Decision Service is a JSE ODM execution server in-memory persistence application, which executes the payload against ODM loan validation sample ruleset and returns a result (approved or rejected) to the JSE Client Application.
 
+-   [Two Client Applications sending payload to one Decision Service and waiting for the result](docs/chapters/subscenario1.md)
+-   [ 1 Client Application Sending several payload to N Decision Services](tut_cloud_getstart_ghtopics/tut_cloud_getstart_prep_lsn.md)
+-   [Availability after one Decision Service is down](tut_cloud_getstart_ghtopics/tut_cloud_getstart_start_lsn.md)
+
 ## Issues and contributions
 
 To contribute or for any issue please use GitHub Issues tracker.
@@ -75,11 +79,10 @@ To contribute or for any issue please use GitHub Issues tracker.
 
 ## License
 [Apache 2.0](LICENSE)
+[**Next** ![""](docs/images/next.jpg)](docs/chapters/subscenario1.md)
 ## Notice
 © Copyright IBM Corporation 2018.
 
 [![Build Status](https://travis.ibm.com/MYattara/ODM-DecisionServer-Kafka.svg?token=YUDWXbAcjsyzHsqNF4a8&branch=master)](https://travis.ibm.com/MYattara/ODM-DecisionServer-Kafka)
 [![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ODMDev/odm-ondocker/dev.svg)](https://github.ibm.com/MYattara/ODM-DecisionServer-Kafka)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
-[**Next** ![""](docs/images/next.jpg)](docs/chapters/subscenario1.md)
