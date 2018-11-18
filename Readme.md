@@ -64,9 +64,9 @@ According to the sub-scenario we'll use several Client Applications sending one 
 the Client Application is a JSE Application that sends a payload with information about the borrower and the loan Request, and waits for the approval or a reject of his loan request.
 The Decision Service is a JSE ODM execution server in-memory persistence application, which executes the payload against ODM loan validation sample ruleset and returns a result (approved or rejected) to the JSE Client Application.
 
--   [Two Client Applications sending payload to one Decision Service and waiting for the result](docs/chapters/subscenario1.md)
--   [ 1 Client Application Sending several payload to N Decision Services](tut_cloud_getstart_ghtopics/tut_cloud_getstart_prep_lsn.md)
--   [Availability after one Decision Service is down](tut_cloud_getstart_ghtopics/tut_cloud_getstart_start_lsn.md)
+-   [Scenario 1 : Two Client Applications sending payload to one Decision Service and waiting for the result](docs/chapters/subscenario1.md)
+-   [Scenario 2 : One Client Application Sending several payload to N Decision Services](docs/chapters/subscenario2.md)
+-   [Scenario 3 : Availability after one Decision Service is down](docs/chapters/subscenario3.md)
 
 ## Issues and contributions
 
