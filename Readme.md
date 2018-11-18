@@ -3,10 +3,12 @@
 [![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ODMDev/odm-ondocker/dev.svg)](https://github.ibm.com/MYattara/ODM-DecisionServer-Kafka)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-## Features
+## Introduction
 
 
-This sample shows how to use IBM Operational Decision Manager (ODM) with Kafka
+This sample shows how to use IBM Operational Decision Manager (ODM) with Apache Kafka
+The advantage of using an message driven architecture is that client application could communicate with many decision service asynchronously.
+In this context we have chosen Apache Kafka
 
 ![Sample Architecture](docs/images/architecture.png)
 
