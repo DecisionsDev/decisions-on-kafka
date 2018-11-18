@@ -82,4 +82,4 @@ To contribute or for any issue please use GitHub Issues tracker.
 [![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ODMDev/odm-ondocker/dev.svg)](https://github.ibm.com/MYattara/ODM-DecisionServer-Kafka)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-[**Next** ![""](tut_cloud_getstart_ghimages/next.jpg)](docs/chapters/subscenario1.md)
+[**Next** ![""](docs/images/next.jpg)](docs/chapters/subscenario1.md)
