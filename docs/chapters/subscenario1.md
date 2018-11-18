@@ -61,6 +61,6 @@ The loan request should be accepted in the first Client Application, and it shou
 
 5. Stop the Decision Service before starting the Sub-scenario 2.
 
-[**Next** ![""](../../docs/images/next.jpg)](/subscenario2.md)
+[**Next** ![""](../../docs/images/next.jpg)](../../docs/chapters/subscenario2.md)
 
 [![""](../../docs/images/home.jpg) **Back to table of contents**](../README.md)
