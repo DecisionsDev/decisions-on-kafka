@@ -79,6 +79,7 @@ To contribute or for any issue please use GitHub Issues tracker.
 
 ## License
 [Apache 2.0](LICENSE)
+
 [**Next** ![""](docs/images/next.jpg)](docs/chapters/subscenario1.md)
 ## Notice
 © Copyright IBM Corporation 2018.
