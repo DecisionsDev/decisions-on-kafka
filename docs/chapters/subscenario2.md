@@ -2,7 +2,7 @@
 
 The goal of this sub-scenario is to show the load balancing between two Decision Services.
 
-![use case 2](docs/images/usecase2.png)
+![use case 2](../../docs/images/usecase2.png)
 
 1. Run your first Decision Service that puts its result in out1.txt.
 

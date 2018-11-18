@@ -1,7 +1,7 @@
 ### Sub-scenario 3 : Availability after one Decision Service is down
 The goal of this sub-scenario is to see that if one Decision Service is down, the others will still work.
 
-![use case 3](docs/images/usecase3.png)
+![use case 3](../../docs/images/usecase3.png)
 
 1. Run your first Decision Service that puts its result in out1.txt.
 
