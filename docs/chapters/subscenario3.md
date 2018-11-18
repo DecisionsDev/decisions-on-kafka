@@ -25,4 +25,4 @@ The goal of this sub-scenario is to see that if one Decision Service is down, th
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smtih\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 'test3' 5" -Dexec.classpathScope="test"`
  
- [![""](../../docs/images/home.jpg) **Back to table of contents**](../../README.md)
+ [![""](../../docs/images/home.jpg) **Back to table of contents**](../../Readme.md)
