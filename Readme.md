@@ -5,14 +5,10 @@
 
 ## Introduction
 
-
-This sample shows how to use IBM Operational Decision Manager (ODM) with Apache Kafka
-The advantage of using an message driven architecture is that client application could communicate with many decision service asynchronously.
-In this context we have chosen Apache Kafka.
 Message driven architecture put in interaction client applications with services replying to the request from client applications.
 Some of advantages of message driven architecture is the scalability with loadbalencing, and the asynchronous communication.
 This type of architecture is based on a broker allowing to subscribe to a topic and publish.
-
+This sample shows how to use IBM Operational Decision Manager (ODM) with Apache Kafka
 ![Sample Architecture](docs/images/architecture.png)
 
 
