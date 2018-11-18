@@ -23,4 +23,4 @@ The goal of this sub-scenario is to show the load balancing between two Decision
 
 [**Next** ![""](../../docs/images/next.jpg)](../../docs/chapters/subscenario3.md)
 
-[![""](../../docs/images/home.jpg) **Back to table of contents**](../README.md)
+[![""](../../docs/images/home.jpg) **Back to table of contents**](../../README.md)

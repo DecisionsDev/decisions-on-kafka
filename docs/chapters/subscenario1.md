@@ -63,4 +63,4 @@ The loan request should be accepted in the first Client Application, and it shou
 
 [**Next** ![""](../../docs/images/next.jpg)](../../docs/chapters/subscenario2.md)
 
-[![""](../../docs/images/home.jpg) **Back to table of contents**](../README.md)
+[![""](../../docs/images/home.jpg) **Back to table of contents**](../../README.md)
