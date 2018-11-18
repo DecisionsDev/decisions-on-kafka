@@ -21,3 +21,6 @@ The goal of this sub-scenario is to show the load balancing between two Decision
 
 4. When the Client Application terminates and the Decision Services are displaying the message "waiting for payload" stop both of your Decision Services and look at the files out1.txt and out2.txt. You will see that the seven payloads have been split for execution between these two Decision Services.
 
+[**Next** ![""](../../docs/images/next.jpg)](../../docs/chapters/subscenario3.md)
+
+[![""](../../docs/images/home.jpg) **Back to table of contents**](../README.md)
