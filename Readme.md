@@ -6,7 +6,7 @@
 ## Introduction
 
 Message driven architecture puts in interaction client applications with services replying to the requests from client applications.
-Some of advantages of message driven architecture is the scalability with loadbalencing, and the asynchronous communication.
+Some advantages of message driven architecture are the scalability with load balancing, and the asynchronous communication.
 This type of architecture is based on a broker allowing to subscribe to a topic and publish messages.
 
 In this sample we show how to use IBM Operational Decision Manager (ODM) with Apache Kafka which is a distributed streaming plateform allowing to setup a message driven architecture.
