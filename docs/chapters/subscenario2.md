@@ -1,6 +1,6 @@
 ## Scenario 2 :  Load balancing between two Decision Services
 
-The goal of this sub-scenario is to show the load balancing between two Decision Services.
+The goal of this scenario is to show the load balancing between two Decision Services.
 
 ![use case 2](../../docs/images/usecase2.png)
 
