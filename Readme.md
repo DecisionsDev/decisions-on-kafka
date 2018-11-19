@@ -9,21 +9,21 @@ Message driven architecture puts in interaction client applications with service
 Some advantages of message driven architecture are the scalability with load balancing, and the asynchronous communication.
 This type of architecture is based on a broker allowing to subscribe to a topic and publish messages.
 
-In this sample we show how to use IBM Operational Decision Manager (ODM) with Apache Kafka which is a distributed streaming plateform allowing to setup a message driven architecture.
+In this sample we show how to use IBM Operational Decision Manager (ODM) with Apache Kafka which is a distributed streaming platform allowing to setup a message driven architecture.
 ![Sample Architecture](docs/images/architecture.png)
 
 
 In the sample architecture, we have Client Applications sending a loan request and Decision Services executing the loan request against a ruleset, for more information about the loan validation sample, see the References section.
 Message driven architecture 
-We have one kafka broker and two topics in the sample architecture.
+We have one Kafka broker and two topics in the sample architecture.
 The first topic is for Client Applications to put their loan request, and the second topic is for replies where the Decision Services put the result after executing against a ruleset.
-All the Decision Services have the same kafka consumer group, and Client Applications have different consumer groups.  
+All the Decision Services have the same Kafka consumer group, and Client Applications have different consumer groups.  
 
 
 ### Workflow Description
 
 
-1. N Client applications act as kafka Producer and send their payload to the topic named Requests.
+1. N Client applications act as Kafka Producer and send their payload to the topic named Requests.
 
 2. M Decision Services implementing ODM which act as a Kafka consumer and execute the payload.
 
@@ -38,20 +38,20 @@ All the Decision Services have the same kafka consumer group, and Client Applica
 * Apache Maven 3
 
 ## Before starting
-* Make sure that you have kafka installed, and start kafka by launching zookeeper and kafka-server.
+* Make sure that you have Kafka installed, and start Kafka by launching zookeeper and Kafka-server.
 * Clone the project repository from github.
 `$ git clone --branch=odm-integration git@github.ibm.com:MYattara/ODM-DecisionServer-JSE-Kafka.git`
 * In the pom file, set the property `<ibm.odm.install.dir></ibm.odm.install.dir>` with your odm installation directory, ` For example : <ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>`
 
 If you have a shell command line
-* Create the kafka topic for request : `$ kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests`
-* Create the kafka topic for replies : `$ kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies`
+* Create the Kafka topic for request : `$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests`
+* Create the Kafka topic for replies : `$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies`
 
 
 If you have a Windows command line
 
-* Create the kafka topic for request : `$ kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests`
-* Create the kafka topic for replies : `$ kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies`
+* Create the Kafka topic for request : `$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests`
+* Create the Kafka topic for replies : `$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies`
 
 
 ## Building the source code
@@ -67,15 +67,15 @@ The Decision Service is a JSE ODM execution server in-memory persistence applica
 * Client Application command structure : 
 ```
 $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="
-<JsonPayload> <kafka server url> <topic for requests> <topic for replies> <number of message>"
+<JsonPayload> <Kafka server url> <topic for requests> <topic for replies> <number of message>"
  -Dexec.classpathScope="test"
 
 ```
 `<JsonPayload>`  The loan request payload we want to evaluate.
 
-`<kafka server url>` The kafka broker url. In the sample we use `localhost:9092` change it if necessary  if yours is different please change it.
+`<Kafka server url>` The Kafka broker url. In the sample we use `localhost:9092` change it if necessary  if yours is different please change it.
 
-`<topic for requests>` The topic where the Client Application puts loan requests and acts as a producer, and Decision Service listens to it and acts as a kafka consumer.
+`<topic for requests>` The topic where the Client Application puts loan requests and acts as a producer, and Decision Service listens to it and acts as a Kafka consumer.
 
 `<topic for replies>` The topic where Decision Service puts the result of the loan request execution against the decision service, The Decision Service acts as a producer and the Client Application acts as a consumer
 getting the message from the topic. 
@@ -85,16 +85,16 @@ getting the message from the topic.
 * Decision Service command structure : 
 ```
 $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.DecisionService" -Dexec.args="
-<rulesetPath> <kafka server url> <topic for requests> <topic for replies> <Consumer Group> " 
+<rulesetPath> <Kafka server url> <topic for requests> <topic for replies> <Consumer Group> " 
 -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
 
 ```
 
 `<rulesetPath>` The IBM ODM ruleset path.
 
-`<Consumer Group>` The kafka consumer group which the Decision Service is part of.
+`<Consumer Group>` The Kafka consumer group which the Decision Service is part of.
 -   [Scenario 1 : Two Client Applications sending payload to one Decision Service and waiting for the result](docs/chapters/subscenario1.md)
--   [Scenario 2 : One Client Application Sending several payload to N Decision Services](docs/chapters/subscenario2.md)
+-   [Scenario 2 : Load balancing between two Decision Services](docs/chapters/subscenario2.md)
 -   [Scenario 3 : Availability after one Decision Service is down](docs/chapters/subscenario3.md)
 
 ## Issues and contributions
