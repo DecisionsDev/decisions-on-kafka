@@ -60,7 +60,7 @@ Use the following Maven command to build the source code.
 
 ## Scenario Running
 
-According to the sub-scenario we'll use several Client Applications sending one or many payload to several Decision Services.
+According to the scenario we'll use several Client Applications sending one or many payload to several Decision Services.
 the Client Application is a JSE Application that sends a payload with information about the borrower and the loan Request, and waits for the approval or a reject of his loan request.
 The Decision Service is a JSE ODM execution server in-memory persistence application, which executes the payload against ODM loan validation sample ruleset and returns a result (approved or rejected) to the JSE Client Application.
 
