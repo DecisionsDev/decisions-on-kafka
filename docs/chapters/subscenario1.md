@@ -4,7 +4,7 @@ The goal of this scenario is to show that each Client Application gets the right
 ![use case 1](../../docs/images/usecase1.png)
  
 
-1. Create the first Client Application : Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder, and then run the command below. It sends a payload corresponding to the loan request. In this request the amount is 10000 and 
+1. Create the first Client Application: Open a command line in the project ODM-DecisionServer-JSE-Kafka root folder, and then run the command below. It sends a payload corresponding to the loan request. In this request the amount is 10000 and 
 the yearlyIncome is 200000. 
 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.Kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" : \"Smith\",\"firstName\" : \"Alice\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,\"yearlyIncome\":200000},
@@ -18,14 +18,14 @@ result. 1 is the number of loan request we want the Client Application sends to 
 `$ mvn exec:java -Dexec.mainClass="odm.ds.Kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\" :\"Doe\",\"firstName\" : \"John\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore\":200,
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 1" -Dexec.classpathScope="test"`
   
- 3. Run the Decision Service :
+ 3. Run the Decision Service:
  
 `$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.businessapp.DecisionService" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'baconsumegroup'" -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" `
  
    'baconsumegroup' the consumer group in which is the Decision Service.
 
  
-4. Result : 
+4. Result: 
 The loan request should be accepted in the first Client Application, and it should be rejected in the second Client Application.
 
 5. Stop the Decision Service before starting the scenario 2.

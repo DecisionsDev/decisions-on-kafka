@@ -61,10 +61,10 @@ Use the following Maven command to build the source code.
 ## Scenario Running
 
 According to the scenario we'll use several Client Applications sending one or many payload to several Decision Services.
-the Client Application is a JSE Application that sends a payload with information about the borrower and the loan Request, and waits for the approval or a reject of his loan request.
+the Client Application is a JSE Application that sends a payload with information about the borrower and the loan request, and waits for the approval or a reject of his loan request.
 The Decision Service is a JSE ODM execution server in-memory persistence application, which executes the payload against ODM loan validation sample ruleset and returns a result (approved or rejected) to the JSE Client Application.
 
-* Client Application command structure : 
+* Client Application command structure: 
 ```
 $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="
 <JsonPayload> <Kafka server url> <topic for requests> <topic for replies> <number of message>"
@@ -73,7 +73,7 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
 ```
 `<JsonPayload>`  The loan request payload we want to evaluate.
 
-`<Kafka server url>` The Kafka broker url. In the sample we use `localhost:9092` change it if necessary  if yours is different please change it.
+`<Kafka server URL>` The Kafka broker URL. In the sample we use `localhost:9092` change it if necessary  if yours is different please change it.
 
 `<topic for requests>` The topic where the Client Application puts loan requests and acts as a producer, and Decision Service listens to it and acts as a Kafka consumer.
 
@@ -82,10 +82,10 @@ getting the message from the topic.
 
 `<number of message>` How many times we want to send the loan request payload for execution.
 
-* Decision Service command structure : 
+* Decision Service command structure: 
 ```
 $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.DecisionService" -Dexec.args="
-<rulesetPath> <Kafka server url> <topic for requests> <topic for replies> <Consumer Group> " 
+<rulesetPath> <Kafka server URL> <topic for requests> <topic for replies> <Consumer Group> " 
 -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
 
 ```
