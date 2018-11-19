@@ -84,7 +84,7 @@ getting the message from the topic.
 
 * Decision Service command structure: 
 ```
-$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjseclient.DecisionService" -Dexec.args="
+$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionService" -Dexec.args="
 <rulesetPath> <Kafka server URL> <topic for requests> <topic for replies> <Consumer Group> " 
 -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
 
