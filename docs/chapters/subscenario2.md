@@ -1,4 +1,4 @@
-## Scenario 2 :  1 Client Application Sending several payload to N Decision Services
+## Scenario 2 :  Load balancing between two Decision Services
 
 The goal of this sub-scenario is to show the load balancing between two Decision Services.
 
