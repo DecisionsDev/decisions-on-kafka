@@ -30,7 +30,7 @@ import odm.ds.loanvalidation.Reply;
 
 public class ScenarioTest {
 	
-	@Test
+	//@Test
 	public void twoClientsOneBusinessApp() throws Exception {
 
 		// Create the client App 1
