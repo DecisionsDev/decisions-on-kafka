@@ -56,7 +56,8 @@ public class ClientApplication {
 	private static Integer nbmessage;
 	
 	/**
-	 * Create a Producer on topic Rq, Create a Consumer on topic Rp 
+	 * Create a client application which is going to be in first a kafka producer sending the json payload as a string to the topic.
+	 * In second time after sending the payload, the client application acts a Kafka consumer waiting for message to consume.
 	 * @param serverurl
 	 * @param numberparam
 	 * @param topicNameRq

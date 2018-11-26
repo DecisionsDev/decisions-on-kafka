@@ -38,7 +38,8 @@ public class SampleConsumer {
 	ResourceBundle mybundle = ResourceBundle.getBundle("MessagesBundle");
 	
 	/**
-	Create an Instance of a Consumer
+	Create an instance of KafkaConsumer using provided information about the server and additional information needed for the
+	configuration of kafka.
 	@param serverurl
 	@param numberparam
 	@param consumergroup
@@ -65,7 +66,8 @@ public class SampleConsumer {
 
 
 	/**
-	 * 
+	 * Listen to all messages sent to the provided Kafka consumer on the provided topic, but display 
+	 * only the message with key value equal to key
 	 * @param consumer
 	 * @param key
 	 * @param topicName
