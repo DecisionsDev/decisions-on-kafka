@@ -25,13 +25,13 @@ The diagrame bellow describes the workflow
 
 ![Sample Architecture](docs/images/sequence.png)
 
-1. N Client applications act as Kafka Producer and send their payload to the topic named Requests.
+1. Client application acts as Kafka Producer and send his payload to the topic named Requests.
 
-2. M Decision Services implementing ODM which act as a Kafka consumer and execute the payload.
+2. Decision Service implementing ODM which acts as a Kafka consumer and execute the payload.
 
-3. After executing the payload against the ruleset, the Decision Services act as a Kafka producer and put the json result in the topic named Replies.
+3. After executing the payload against the ruleset, the Decision Service acts as a Kafka producer and put the json result in the topic named Replies.
 
-4. The Client Applications act as Kafka consumer and get the message corresponding to the result of his request.
+4. The Client Application acts as Kafka consumer and get the message corresponding to the result of his request.
 
 ## Requirements
 
