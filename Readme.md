@@ -21,7 +21,9 @@ All the Decision Services have the same Kafka consumer group, and Client Applica
 
 
 ### Workflow Description
+The diagrame bellow describes the workflow
 
+![Sample Architecture](docs/images/sequence.png)
 
 1. N Client applications act as Kafka Producer and send their payload to the topic named Requests.
 
