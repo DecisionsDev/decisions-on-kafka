@@ -229,7 +229,7 @@ public class DecisionService {
 	}
 
 	/**
-	 * Parse the command line arguments and return the rulesetPath as string
+	 * Parses the command line arguments and return the rulesetPath as string
 	 * @param commandLine
 	 * @param arguments
 	 * @return
@@ -252,7 +252,8 @@ public class DecisionService {
 	}
 
 	/**
-	 * 
+	 * returns an IlrPath from the rulesetPath provided as command line argument and 
+	 * using the method getMandatoryRulesetPathArgument 
 	 * @param commandLine
 	 * @param arguments
 	 * @return
@@ -276,7 +277,7 @@ public class DecisionService {
 	}
 
 	/**
-	 * 
+	 * return the key for message
 	 * @param key
 	 * @param arguments
 	 * @return
@@ -288,7 +289,9 @@ public class DecisionService {
 	}
 
 	/**
-	 * 
+	 * Initializes the properties we will need to run the Decision Service and setup kafka instance.
+	 * Initialization of serverul, topicNameRq (topic for requests),  topicNameRp(topic for replies), 
+	 * and the consumergroup
 	 * @param commandLine
 	 * @param arguments
 	 * 
@@ -314,6 +317,12 @@ public class DecisionService {
 
 	}
 
+	  /**
+	   * The main method, creates a Decision Service which is going to listen to payload from client application, executes
+	   * and returns the result. 
+	   * @param args
+	   * 
+	   */
 	public static void main(String... args) {
 
 		DecisionService mybizApp = new DecisionService();
