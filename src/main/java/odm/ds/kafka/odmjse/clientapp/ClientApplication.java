@@ -78,10 +78,10 @@ public class ClientApplication {
 	}
 	
 	 /**
-	  * 
+	  * Parse the command line and then return the JSON payload as a string
 	  * @param commandLine
 	  * @param arguments
-	  * @return
+	  * @return a string corresponding to the payload
 	  * 
 	  */
 		public String getPayload(CommandLine commandLine, String[] arguments) {
@@ -100,7 +100,9 @@ public class ClientApplication {
 		}
 		
 		/**
-		 * 
+		 * Initializes the properties we will need to run the client application and setup kafka instance.
+		 * Initialization of serverul, topicNameRq (topic for requests),  topicNameRp(topic for replies), 
+		 * nbmessage : the number of time the message is going to be sent.
 		 * @param commandLine
 		 * @param arguments
 		 * 
@@ -128,8 +130,9 @@ public class ClientApplication {
 			}
 		 /**
 		  * 
+		  * Takes a JSON payload as a string, converts it to an object Loan which has a Borrower and a LoanRequest object 
 		  * @param payload
-		  * @return
+		  * @return a Loan object
 		  * 
 		  */
 		 public Loan loanJson( String payload) {
@@ -150,8 +153,8 @@ public class ClientApplication {
 		 }
 
 		 /**
-		  * 
-		  * @return
+		  * Generate a String key, the key is built from a random value and current timestamp. 
+		  * @return a string key
 		  * 
 		  */
 		 public String generateKey() {
@@ -162,7 +165,8 @@ public class ClientApplication {
 			return key;
 		 }
 		 /**
-		  * 
+		  * Takes a string message and a string key then converts the message message in an object Loan using the method
+		  * loanJson, later takes the object Loan and the string key, builds with that an object Message.
 		  * @param message
 		  * @param key
 		  * @return
@@ -179,7 +183,12 @@ public class ClientApplication {
 			  return finalMess;
 		  }
 		  
-
+		  /**
+		   * The main method, creates a client application which is going to to send n times a message, the message is a payload json
+		   * and n is the number of times the application sends the message, n is defined by the user as argument.
+		   * @param args
+		   * 
+		   */
 	public static void main(String... args) {
 
 		myLogger.info(mybundle.getString("notif_client_App"));
