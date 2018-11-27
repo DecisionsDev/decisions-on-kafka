@@ -70,10 +70,14 @@ public class ClientApplication {
 	public String setUpClientAppAndConsume(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
 	//public static void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String key, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
+		System.out.println("Create the producer instance");
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
+		System.out.println("Sent the message");
 		SampleConsumer myConsumer=new SampleConsumer();
+		System.out.println("Create Consumer instance");
 //		myConsumer.consumerInstanceCons(serverurl, numberparam);
 		String value=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam,consumergroup), key, topicNameRp);
+		System.out.println("Consume the message");
 		return value;
 	}
 	

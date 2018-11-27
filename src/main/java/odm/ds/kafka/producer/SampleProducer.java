@@ -88,6 +88,7 @@ public class SampleProducer {
 		Random rand = new Random(); 
 		int value = rand.nextInt(1000); 
 		String tkey=""+date.getTime()+""+value;
+		System.out.println(message);
 		producer.send(new ProducerRecord<String,String>(topicName,tkey,message));
 		mylogger.info(mybundle.getString("notif_sent")+" "+topicName);
 		producer.close();

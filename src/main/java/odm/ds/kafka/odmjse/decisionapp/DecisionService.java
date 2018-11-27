@@ -78,7 +78,8 @@ public class DecisionService {
 	}
 
 	/**
-	 * 
+	 * Creates the Decision Service which is going to be in first a Kafka consumer, receiving payload sent by the client application
+	 * executes the payload against a ruleset through the method consumeAndexec and returns the result to the client application
 	 * @param serverurl
 	 * @param numberparam
 	 * @param consumergroup
@@ -139,7 +140,8 @@ public class DecisionService {
 
 					String value = record.value();
 					myLogger.info(value);
-					
+					System.out.println(ExtractLoanFromJson(value));
+					System.out.println(ExtractkeyFromJson(value));
 					execution.executeRuleset(rulesetPath, ExtractLoanFromJson(value),
 							ExtractkeyFromJson(value), serverurl, topicNameRp);
 					nbexec++;
