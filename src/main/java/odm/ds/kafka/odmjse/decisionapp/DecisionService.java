@@ -229,7 +229,7 @@ public class DecisionService {
 	}
 
 	/**
-	 * 
+	 * Parse the command line arguments and return the rulesetPath as string
 	 * @param commandLine
 	 * @param arguments
 	 * @return
