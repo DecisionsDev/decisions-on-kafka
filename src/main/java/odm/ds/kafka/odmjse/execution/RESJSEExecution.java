@@ -94,8 +94,6 @@ public class RESJSEExecution {
 	 }
 	 
 	 /**
-	  *  Execute the rulePath using his path, it creates in first a sessionRequest, make sure the latest version of ruleSet is in usage
-	  *  @param rulesetPath : The path of the ruleset
 	  *  
 	  */
 
@@ -110,6 +108,9 @@ public class RESJSEExecution {
 	  
 	  /**
 	   * 
+	   *  Using the rulesetpath it executes the loan object against the ruleset, add the provided key to the generated report object
+	   *  and send it as a new payload to the client application.
+	   *  @param rulesetPath : The path of the ruleset
 	   * @param rulesetPath
 	   * @param loan
 	   * @param key
@@ -144,7 +145,7 @@ public class RESJSEExecution {
 	 }
 	 
 	 /**
-	  *  Use to get the RuleAppArchive url, in the case there is not a ruleApp then it returns null, if there is a  ruleApp
+	  *  to get the RuleAppArchive url, in the case there is no ruleApp then it returns null, if there is a  ruleApp
 	  *  and the file exist then return the url
 	  * @param ruleAppArchiveName
 	  * @return
@@ -210,7 +211,7 @@ public class RESJSEExecution {
 		 
 	 }
 	 /**
-	  *  To load the RuleApp
+	  *  loads the RuleApp using the ruleAppAchiveName
 	  *  
 	  * @param ruleAppArchiveName
 	  * @throws IlrSessionCreationException
@@ -277,6 +278,7 @@ public class RESJSEExecution {
 	 }
 	 
 	 /**
+	  * To release the IlrJ2SESessionFactory
 	  * 
 	  */
 	 public void release() {
