@@ -102,7 +102,8 @@ public class DecisionService {
 	}
 	
 	/**
-	 * 
+	 * a kafka consumer listening to messages sent to the specified topic. For each message the kafka consumer received it
+	 * called the method executeRuleset against that message.
 	 * @param consumer
 	 * @param topicName
 	 * @param serverurl
@@ -152,7 +153,7 @@ public class DecisionService {
 	}
 
 	/**
-	 * 
+	 *  Takes a JSON payload as a string, converts it to an object Loan which has a Borrower and a LoanRequest object
 	 * @param payload
 	 * @return
 	 * 
@@ -175,9 +176,10 @@ public class DecisionService {
 	}
 
 	/**
-	 * 
+	 * Takes a string payload as input, converts it to an object of type Message, then extracts the member key from the object Message and 
+	 * returns the key
 	 * @param payload
-	 * @return
+	 * @return string key
 	 * @throws IOException 
 	 * 
 	 */
@@ -196,10 +198,12 @@ public class DecisionService {
 	}
 
 	/**
+	 * Takes a string payload as input, converts it to an object of type Message, then extracts the member Loan from the 
+	 * object Message and return the Loan
 	 * 
 	 * @param payload
-	 * @return
-	 * @throws IOException 
+	 * @return Loan
+	 * @throws IOException  
 	 * 
 	 */
 	public Loan ExtractLoanFromJson(String payload) throws IOException {
