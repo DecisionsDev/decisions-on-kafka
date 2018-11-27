@@ -24,13 +24,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import loan.Report;
 
+/**
+ * 
+ * Creates an object Reply which has as members an object Report from Loan Validation and a string key
+ *
+ */
 public class Reply {
 	
 	private String key;
 	public String getKey() {
 		return key;
 	}
-	public void setId(String key) {
+	public void setKey(String key) {
 		this.key = key;
 	}
 	public Report getReport() {

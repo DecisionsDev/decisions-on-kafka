@@ -17,6 +17,11 @@
  */
 package odm.ds.loanvalidation;
 
+/**
+ * 
+ * Creates an object Loan with has as members Borrower and LoanRequest from the Loan Validation Sample
+ *
+ */
 public class Loan {
 	
 	private loan.Borrower borrower;

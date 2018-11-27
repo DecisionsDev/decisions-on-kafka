@@ -99,7 +99,7 @@ public class RESJSEExecution {
 
 	  public static String BuildReply(Report report, String key) throws JsonProcessingException {
 		  Reply myReply=new Reply();
-		  myReply.setId(key);
+		  myReply.setKey(key);
 		  myReply.setReport(report);
 		  ObjectMapper mapper = new ObjectMapper();
 		  String finalMess = mapper.writeValueAsString(myReply);
