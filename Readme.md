@@ -5,7 +5,7 @@
 
 ## Introduction
 
-In a message-driven architecture, client applications interact with services that reply to the requests of the client applications.
+In a message-driven architecture, client applications interact with services that reply to their requests.
 The advantages of message-driven architecture are asynchronous communication and the scalability with load balancing.
 This type of architecture is based on a broker allowing to subscribe to a topic and publish messages.
 
