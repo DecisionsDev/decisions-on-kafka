@@ -14,7 +14,7 @@ In this sample we show how to use IBM Operational Decision Manager (ODM) with Ap
 
 
 In the sample architecture, we have Client Applications sending a loan request and Decision Services executing the loan request against a ruleset, for more information about the loan validation sample, see the References section.
-In Message-driven architecture we have one Kafka broker and two topics in the sample architecture.
+We have one Kafka broker and two topics in the sample architecture.
 The first topic is for Client Applications to put their loan request, and the second topic is for replies where the Decision Services put the result after executing against a ruleset.
 All the Decision Services have the same Kafka consumer group, and Client Applications have different consumer groups.  
 
