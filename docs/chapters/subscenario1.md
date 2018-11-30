@@ -1,4 +1,4 @@
-## Scenario 1 : Two client Applications sending payload to one decision service and waiting for the result
+## Scenario 1 : Two client applications sending payload to one decision service and waiting for the result
 The goal of this scenario is to show that each client application gets the right answer for the payload it sends to the decision service.
 
 ![use case 1](../../docs/images/usecase1.png)
