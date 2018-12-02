@@ -43,7 +43,7 @@ public class SampleProducer {
 	{
 		mylogger.info("Current Locale: " + Locale.getDefault());
 		if(numberparam==0){
-			mylogger.severe(mybundle.getString("wrong_topic"));
+			mylogger.severe(mybundle.getString("WRONG_TOPIC"));
 			return null;
 		}
 		String server=serverurl;
@@ -70,7 +70,7 @@ public class SampleProducer {
 		String topicName=topicname;
 		for(int i=0;i<6;i++)
 			producer.send(new ProducerRecord<String,String>(topicName,Integer.toString(i),Integer.toString(i)));
-		mylogger.info(mybundle.getString("notif_sent"));
+		mylogger.info(mybundle.getString("NOTIF_SENT"));
 		producer.close();
 		
 	}
@@ -91,7 +91,7 @@ public class SampleProducer {
 		String tkey=""+date.getTime()+""+value;
 		System.out.println(message);
 		producer.send(new ProducerRecord<String,String>(topicName,tkey,message));
-		mylogger.info(mybundle.getString("notif_sent")+" "+topicName);
+		mylogger.info(mybundle.getString("NOTIF_SENT")+" "+topicName);
 		producer.close();
 		
 	}

@@ -132,10 +132,10 @@ public class DecisionService {
 						Arrays.toString(partitions.toArray()));
 			}
 		});
-		myLogger.info(mybundle.getString("topic_name") + " " + topicName);
+		myLogger.info(mybundle.getString("TOPIC_NAME") + " " + topicName);
 		while (true) {
 			ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10));
-			myLogger.info(mybundle.getString("waiting"));
+			myLogger.info(mybundle.getString("WAITING"));
 			if (!records.isEmpty()) {
 				for (ConsumerRecord<String, String> record : records) {
 
@@ -165,8 +165,8 @@ public class DecisionService {
 
 		try {
 			loan = objectMapper.readValue(payload, Loan.class);
-			myLogger.info(mybundle.getString("Loan_Borrower")+ loan.getBorrower());
-			myLogger.info(mybundle.getString("Loan_Request")+ loan.getLoanrequest());
+			myLogger.info(mybundle.getString("LOAN_BORROWER")+ loan.getBorrower());
+			myLogger.info(mybundle.getString("LOAN_REQUEST")+ loan.getLoanrequest());
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -241,7 +241,7 @@ public class DecisionService {
 			List<String> unprocessedArguments = Arrays.asList(commandLine.getArgs());
 			if (!unprocessedArguments.isEmpty()) {
 				String rulesetPathArgumentAsString = arguments[0];
-				myLogger.info(mybundle.getString("rulesetPath")+ arguments[0]);
+				myLogger.info(mybundle.getString("RULESET_PATH")+ arguments[0]);
 				if (unprocessedArguments.contains(rulesetPathArgumentAsString)) {
 					return rulesetPathArgumentAsString;
 				}
@@ -303,13 +303,13 @@ public class DecisionService {
 			List<String> unprocessedArguments = Arrays.asList(commandLine.getArgs());
 			if (!unprocessedArguments.isEmpty()) {
 				serverurl = arguments[1];
-				myLogger.info(mybundle.getString("serverurl")+ serverurl);
+				myLogger.info(mybundle.getString("SERVER_URL")+ serverurl);
 				topicNameRq = arguments[2];
-				myLogger.info(mybundle.getString("topicNameRq")+ topicNameRq);
+				myLogger.info(mybundle.getString("TOPIC_NAME_RQ")+ topicNameRq);
 				topicNameRp = arguments[3];
-    			myLogger.info(mybundle.getString("topicNameRp")+ topicNameRp);
+    			myLogger.info(mybundle.getString("TOPIC_NAME_RP")+ topicNameRp);
 				consumergroup = arguments[4];
-    			myLogger.info(mybundle.getString("consumergroup")+ consumergroup);
+    			myLogger.info(mybundle.getString("CONSUMER_GROUP")+ consumergroup);
 
 			}
 
@@ -326,7 +326,7 @@ public class DecisionService {
 	public static void main(String... args) {
 
 		DecisionService mybizApp = new DecisionService();
-		myLogger.info(mybundle.getString("notif_Biz_App"));
+		myLogger.info(mybundle.getString("NOTIF_BIZ_APP"));
 		try {
 			CommandLineParser parser = new DefaultParser();
 			CommandLine commandLine = parser.parse(OPTIONS, args);

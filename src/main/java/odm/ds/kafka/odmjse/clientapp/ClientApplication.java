@@ -52,7 +52,6 @@ public class ClientApplication {
 	private static String serverurl;
 	private static String topicNameRq;
 	private static String topicNameRp;
-	private static String consumergroup;
 	private static Integer nbmessage;
 	
 	/**
@@ -118,13 +117,11 @@ public class ClientApplication {
 		    		List<String> unprocessedArguments=Arrays.asList(commandLine.getArgs());
 		    		if(!unprocessedArguments.isEmpty()) {
 		    			serverurl=arguments[1];
-		    			myLogger.info(mybundle.getString("serverurl")+ serverurl);
+		    			myLogger.info(mybundle.getString("SERVER_URL")+ serverurl);
 		    			topicNameRq=arguments[2];
-		    			myLogger.info(mybundle.getString("topicNameRq")+ topicNameRq);
+		    			myLogger.info(mybundle.getString("TOPIC_NAME_RQ")+ topicNameRq);
 		    			topicNameRp=arguments[3];
-		    			myLogger.info(mybundle.getString("topicNameRp")+ topicNameRp);
-//		    			consumergroup=arguments[4];
-//		    			myLogger.info(mybundle.getString("consumergroup")+ consumergroup);
+		    			myLogger.info(mybundle.getString("TOPIC_NAME_RP")+ topicNameRp);
 		    			nbmessage=new Integer(arguments[4]);
 		    			
 		    		}
@@ -195,7 +192,7 @@ public class ClientApplication {
 		   */
 	public static void main(String... args) {
 
-		myLogger.info(mybundle.getString("notif_client_App"));
+		myLogger.info(mybundle.getString("NOTIF_CLIENT_APP"));
 		try {
 
 			CommandLineParser parser = new DefaultParser();

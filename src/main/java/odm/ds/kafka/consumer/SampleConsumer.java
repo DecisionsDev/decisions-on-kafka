@@ -50,7 +50,7 @@ public class SampleConsumer {
 
 		myLogger.info("Current Locale: " + Locale.getDefault());
 		if (numberparam == 0) {
-			myLogger.severe(mybundle.getString("no_topic_name"));
+			myLogger.severe(mybundle.getString("NO_TOPIC_NAME"));
 		}
 		Properties props = new Properties();
 		props.put("bootstrap.servers", serverurl);
@@ -86,11 +86,11 @@ public class SampleConsumer {
 						Arrays.toString(partitions.toArray()));
 			}
 		});
-		myLogger.info(mybundle.getString("topic_name") + " " + topicName);
+		myLogger.info(mybundle.getString("TOPIC_NAME") + " " + topicName);
 		boolean gotmessage=false;
 		while (true) {
 			ConsumerRecords<String, String> records = consumer.poll(1000);
-			myLogger.info(mybundle.getString("waiting"));
+			myLogger.info(mybundle.getString("WAITING"));
 			if (!records.isEmpty()) {
 				for (ConsumerRecord<String, String> record : records) {
 					try {

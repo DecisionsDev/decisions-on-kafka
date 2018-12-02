@@ -64,7 +64,6 @@ import static odm.ds.kafka.odmjse.execution.MessageCode.RULESETS_ADDED;
 import static odm.ds.kafka.odmjse.execution.MessageCode.RULESET_ADDED;
 import static ilog.rules.res.session.config.IlrPersistenceType.MEMORY;
 import loan.Report;
-import odm.ds.kafka.consumer.SampleConsumer;
 import odm.ds.kafka.producer.SampleProducer;
 import odm.ds.loanvalidation.Loan;
 import odm.ds.loanvalidation.Reply;
@@ -138,7 +137,7 @@ public class RESJSEExecution {
 		 IlrSessionResponse sessionResponse=session.execute(sessionRequest);
 		 Report report=(Report)(sessionResponse.getOutputParameters().get("report"));
 		 LOGGER.info(mybundle.getString("key"));
-		 LOGGER.info(mybundle.getString("notif_result_exec")+report.toString());
+		 LOGGER.info(mybundle.getString("NOTIF_RESULT_EXEC")+report.toString());
 		 SampleProducer myProducer1=new SampleProducer();
 		 myProducer1.sendmessageString(myProducer1.producerInstance(serverurl, 3), topicNameR, BuildReply(report, key));
 		 
