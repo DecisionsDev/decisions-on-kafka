@@ -35,7 +35,7 @@ import odm.ds.loanvalidation.Reply;
 public class SampleConsumer {
 
 	final Logger myLogger=Logger.getLogger(SampleConsumer.class.getName());
-	ResourceBundle mybundle = ResourceBundle.getBundle("MessagesBundle");
+	ResourceBundle mybundle = ResourceBundle.getBundle("messages");
 	
 	/**
 	Create an instance of KafkaConsumer using provided information about the server and additional information needed for the

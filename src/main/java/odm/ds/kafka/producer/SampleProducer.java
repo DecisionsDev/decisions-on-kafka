@@ -30,7 +30,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 
 public class SampleProducer {
 	final Logger mylogger=Logger.getLogger(SampleProducer.class.getName());
-	ResourceBundle mybundle=ResourceBundle.getBundle("MessagesBundle");
+	ResourceBundle mybundle=ResourceBundle.getBundle("messages");
 	
 	/**
 	 * Sets up kafka Producer with properties information.

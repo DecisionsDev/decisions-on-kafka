@@ -48,7 +48,7 @@ public class ClientApplication {
 
 	private static final Options OPTIONS=new Options();
 	final static Logger myLogger=Logger.getLogger(SampleConsumer.class.getName());
-	static ResourceBundle mybundle = ResourceBundle.getBundle("MessagesBundle");
+	static ResourceBundle mybundle = ResourceBundle.getBundle("messages");
 	private static String serverurl;
 	private static String topicNameRq;
 	private static String topicNameRp;

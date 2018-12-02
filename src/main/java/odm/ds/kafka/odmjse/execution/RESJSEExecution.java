@@ -74,7 +74,7 @@ public class RESJSEExecution {
 	private final MessageFormatter formatter=new MessageFormatter();
 	private final IlrJ2SESessionFactory factory;
 	private static final Logger LOGGER=Logger.getLogger(RESJSEExecution.class.getName());
-	ResourceBundle mybundle=ResourceBundle.getBundle("MessagesBundle");
+	ResourceBundle mybundle=ResourceBundle.getBundle("messages");
 	
 	/**
 	 * 
