@@ -97,14 +97,14 @@ public class SampleConsumer {
 						Reply reply=new Reply();
 						if (key.equals(reply.ExtractKeyFromJson(record.value()))) {
 							myLogger.info(record.value());
-							myLogger.info(mybundle.getString("receive_key") + reply.ExtractKeyFromJson(record.value()));
+							myLogger.info(mybundle.getString("RECEIVE_KEY") + reply.ExtractKeyFromJson(record.value()));
 							gotmessage=true;
 							data=record.value();
 							break;
 						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
-						myLogger.severe(mybundle.getString("issue_message")+e.getMessage());
+						myLogger.severe(mybundle.getString("ISSUE_MESSAGE")+e.getMessage());
 					}
 				}
 				if (gotmessage==true) break;
