@@ -26,4 +26,6 @@ The goal of this scenario is to see that when one decision service is down, the 
  \"yearlyIncome\":55000},\"loanrequest\":{ \"numberOfMonthlyPayments\" : 48,\"startDate\" : 1540822814178, \"amount\":110000,\"loanToValue\":1.20}}' 'localhost:9092' 'requests' 'replies' 'test3' 5" -Dexec.classpathScope="test"`
  
  In case you want to go far about high availability and fault tolerance implementation please look at the Kafka official documentation.
+ 
+ 
  [![""](../../docs/images/home.jpg) **Back to home page**](../../Readme.md)
