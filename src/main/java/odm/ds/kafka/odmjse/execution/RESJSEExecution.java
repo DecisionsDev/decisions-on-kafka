@@ -136,7 +136,7 @@ public class RESJSEExecution {
 		 IlrStatelessSession session=factory.createStatelessSession();
 		 IlrSessionResponse sessionResponse=session.execute(sessionRequest);
 		 Report report=(Report)(sessionResponse.getOutputParameters().get("report"));
-		 LOGGER.info(mybundle.getString("key"));
+		 LOGGER.info(mybundle.getString("KEY"));
 		 LOGGER.info(mybundle.getString("NOTIF_RESULT_EXEC")+report.toString());
 		 SampleProducer myProducer1=new SampleProducer();
 		 myProducer1.sendmessageString(myProducer1.producerInstance(serverurl, 3), topicNameR, BuildReply(report, key));
