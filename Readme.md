@@ -59,7 +59,7 @@ If you have a Windows command line:
 Use the following Maven command to build the source code:
 `$ mvn clean install`
 
-## Running the scenario
+## Running the scenarios
 
 In the scenario, several client applications send one or many payloads to several decision services.
 The client application is a JSE application that sends a payload with information about the borrower and the loan request, and waits for the approval or rejection of the loan request.
