@@ -94,12 +94,12 @@ getting the message from the topic.
 `<number of message>` - The number of loan request payloads sent for execution.
 
 * Decision service command structure: 
-```
-$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionService" -Dexec.args="
-<rulesetPath> <Kafka server URL> <topic for requests> <topic for replies> <Consumer Group> " 
--Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
+  ```
+  $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionService" -Dexec.args="
+  <rulesetPath> <Kafka server URL> <topic for requests> <topic for replies> <Consumer Group> " 
+  -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
 
-```
+  ```
 
 `<rulesetPath>` - The IBM ODM ruleset path.
 
