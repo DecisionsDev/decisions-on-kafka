@@ -78,20 +78,20 @@ The decision service is a JSE ODM execution server in-memory persistence applica
 * Client application command structure: 
   ```
   $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="
-  <JsonPayload> <Kafka server url> <topic for requests> <topic for replies> <number of message>"
+  <JsonPayload> <Kafka server url> <topic for requests> <topic for replies> <number of messages>"
   -Dexec.classpathScope="test"
 
   ```
-`<JsonPayload>` - The loan request payload to evaluate.
+  `<JsonPayload>` - The loan request payload to evaluate.
 
-`<Kafka server URL>` - The Kafka broker URL. The sample uses `localhost:9092`. Change if necessary.
+  `<Kafka server URL>` - The Kafka broker URL. The sample uses `localhost:9092`. Change if necessary.
 
-`<topic for requests>` - The topic where the client application puts loan requests and acts as a producer, and the decision service listens to it and acts as a Kafka consumer.
+  `<topic for requests>` - The topic where the client application puts loan requests and acts as a producer, and the decision service listens to it and acts as a Kafka consumer.
 
-`<topic for replies>` - The topic where the decision service puts the result of the loan request execution against the decision service. The decision service acts as a producer and the client application acts as a consumer,
+  `<topic for replies>` - The topic where the decision service puts the result of the loan request execution against the decision service. The decision service acts as a producer and the client application acts as a consumer,
 getting the message from the topic. 
 
-`<number of message>` - The number of loan request payloads sent for execution.
+  `<number of messages>` - The number of loan request payloads sent for execution.
 
 * Decision service command structure: 
   ```
@@ -101,9 +101,9 @@ getting the message from the topic.
 
   ```
 
-`<rulesetPath>` - The IBM ODM ruleset path.
+  `<rulesetPath>` - The IBM ODM ruleset path.
 
-`<Consumer Group>` - The Kafka consumer group which the decision service is part of.
+  `<Consumer Group>` - The Kafka consumer group which the decision service is part of.
 -   [Scenario 1 : Two client applications sending payload to one decision service and waiting for the result](docs/chapters/subscenario1.md)
 -   [Scenario 2 : Load balancing between two decision services](docs/chapters/subscenario2.md)
 -   [Scenario 3 : Availability after one decision service is down](docs/chapters/subscenario3.md)
