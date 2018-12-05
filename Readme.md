@@ -76,12 +76,12 @@ The client application is a JSE application that sends a payload with informatio
 The decision service is a JSE ODM execution server in-memory persistence application, which executes the payload against the ODM loan validation sample ruleset and returns a result (approved or rejected) to the JSE client application.
 
 * Client application command structure: 
-```
-$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="
-<JsonPayload> <Kafka server url> <topic for requests> <topic for replies> <number of message>"
- -Dexec.classpathScope="test"
+  ```
+  $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="
+  <JsonPayload> <Kafka server url> <topic for requests> <topic for replies> <number of message>"
+  -Dexec.classpathScope="test"
 
-```
+  ```
 `<JsonPayload>` - The loan request payload to evaluate.
 
 `<Kafka server URL>` - The Kafka broker URL. The sample uses `localhost:9092`. Change if necessary.
