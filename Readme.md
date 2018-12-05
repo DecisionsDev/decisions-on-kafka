@@ -38,62 +38,72 @@ The following diagram describes the workflow:
 * IBM Operational Decision Manager 8.9.2
 * Apache Maven 3
 
-## Before starting
+## Starting Kafka infrastructure
+Starting the Kafka servers:
 * Make sure that you have Kafka installed, and start Kafka by launching zookeeper and Kafka-server.
 * Clone the project repository from github:
-`$ git clone --branch=odm-integration git@github.ibm.com:MYattara/ODM-DecisionServer-JSE-Kafka.git`
+
+  ```$ git clone --branch=odm-integration git@github.ibm.com:MYattara/ODM-DecisionServer-JSE-Kafka.git```
 * In the pom file, set the property `<ibm.odm.install.dir></ibm.odm.install.dir>` with your ODM installation directory. For example: `<ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>`
 
 If you have a shell command line:
-* Create the Kafka topic for requests: `$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests`
-* Create the Kafka topic for replies: `$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies`
+* Create the Kafka topic for requests: 
+
+  ```$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests```
+* Create the Kafka topic for replies: 
+
+  ```$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies```
 
 
 If you have a Windows command line:
 
-* Create the Kafka topic for requests: `$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests`
-* Create the Kafka topic for replies: `$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies`
+* Create the Kafka topic for requests: 
+
+  ```$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests```
+* Create the Kafka topic for replies: 
+
+  ```$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies```
 
 
 ## Building the source code
 Use the following Maven command to build the source code:
 `$ mvn clean install`
 
-## Running the scenario
+## Running the scenarios
 
 In the scenario, several client applications send one or many payloads to several decision services.
 The client application is a JSE application that sends a payload with information about the borrower and the loan request, and waits for the approval or rejection of the loan request.
 The decision service is a JSE ODM execution server in-memory persistence application, which executes the payload against the ODM loan validation sample ruleset and returns a result (approved or rejected) to the JSE client application.
 
 * Client application command structure: 
-```
-$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="
-<JsonPayload> <Kafka server url> <topic for requests> <topic for replies> <number of message>"
- -Dexec.classpathScope="test"
+  ```
+  $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="
+  <JsonPayload> <Kafka server url> <topic for requests> <topic for replies> <number of messages>"
+  -Dexec.classpathScope="test"
 
-```
-`<JsonPayload>` - The loan request payload to evaluate.
+  ```
+  `<JsonPayload>` - The loan request payload to evaluate.
 
-`<Kafka server URL>` - The Kafka broker URL. The sample uses `localhost:9092`. Change if necessary.
+  `<Kafka server URL>` - The Kafka broker URL. The sample uses `localhost:9092`. Change if necessary.
 
-`<topic for requests>` - The topic where the client application puts loan requests and acts as a producer, and the decision service listens to it and acts as a Kafka consumer.
+  `<topic for requests>` - The topic where the client application puts loan requests and acts as a producer, and the decision service listens to it and acts as a Kafka consumer.
 
-`<topic for replies>` - The topic where the decision service puts the result of the loan request execution against the decision service. The decision service acts as a producer and the client application acts as a consumer,
+  `<topic for replies>` - The topic where the decision service puts the result of the loan request execution against the decision service. The decision service acts as a producer and the client application acts as a consumer,
 getting the message from the topic. 
 
-`<number of message>` - The number of loan request payloads sent for execution.
+  `<number of messages>` - The number of loan request payloads sent for execution.
 
 * Decision service command structure: 
-```
-$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionService" -Dexec.args="
-<rulesetPath> <Kafka server URL> <topic for requests> <topic for replies> <Consumer Group> " 
--Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
+  ```
+  $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionService" -Dexec.args="
+  <rulesetPath> <Kafka server URL> <topic for requests> <topic for replies> <Consumer Group> " 
+  -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
 
-```
+  ```
 
-`<rulesetPath>` - The IBM ODM ruleset path.
+  `<rulesetPath>` - The IBM ODM ruleset path.
 
-`<Consumer Group>` - The Kafka consumer group which the decision service is part of.
+  `<Consumer Group>` - The Kafka consumer group which the decision service is part of.
 -   [Scenario 1 : Two client applications sending payload to one decision service and waiting for the result](docs/chapters/subscenario1.md)
 -   [Scenario 2 : Load balancing between two decision services](docs/chapters/subscenario2.md)
 -   [Scenario 3 : Availability after one decision service is down](docs/chapters/subscenario3.md)
