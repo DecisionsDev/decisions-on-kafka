@@ -49,20 +49,20 @@ Starting the Kafka servers:
 If you have a shell command line:
 * Create the Kafka topic for requests: 
 
-```$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests```
+  ```$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests```
 * Create the Kafka topic for replies: 
 
-```$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies```
+  ```$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies```
 
 
 If you have a Windows command line:
 
 * Create the Kafka topic for requests: 
 
-```$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests```
+  ```$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests```
 * Create the Kafka topic for replies: 
 
-```$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies```
+  ```$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies```
 
 
 ## Building the source code
