@@ -43,7 +43,7 @@ Starting the Kafka servers:
 * Make sure that you have Kafka installed, and start Kafka by launching zookeeper and Kafka-server.
 * Clone the project repository from github:
 
-```$ git clone --branch=odm-integration git@github.ibm.com:MYattara/ODM-DecisionServer-JSE-Kafka.git```
+  ```$ git clone --branch=odm-integration git@github.ibm.com:MYattara/ODM-DecisionServer-JSE-Kafka.git```
 * In the pom file, set the property `<ibm.odm.install.dir></ibm.odm.install.dir>` with your ODM installation directory. For example: `<ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>`
 
 If you have a shell command line:
@@ -76,12 +76,12 @@ The client application is a JSE application that sends a payload with informatio
 The decision service is a JSE ODM execution server in-memory persistence application, which executes the payload against the ODM loan validation sample ruleset and returns a result (approved or rejected) to the JSE client application.
 
 * Client application command structure: 
-```
+  ```
 $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="
 <JsonPayload> <Kafka server url> <topic for requests> <topic for replies> <number of message>"
  -Dexec.classpathScope="test"
 
-```
+  ```
 `<JsonPayload>` - The loan request payload to evaluate.
 
 `<Kafka server URL>` - The Kafka broker URL. The sample uses `localhost:9092`. Change if necessary.
@@ -99,7 +99,7 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionServic
 <rulesetPath> <Kafka server URL> <topic for requests> <topic for replies> <Consumer Group> " 
 -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" 
 
-```
+  ```
 
 `<rulesetPath>` - The IBM ODM ruleset path.
 
