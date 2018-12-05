@@ -43,26 +43,26 @@ Starting the Kafka servers:
 * Make sure that you have Kafka installed, and start Kafka by launching zookeeper and Kafka-server.
 * Clone the project repository from github:
 
-`$ git clone --branch=odm-integration git@github.ibm.com:MYattara/ODM-DecisionServer-JSE-Kafka.git`
+```$ git clone --branch=odm-integration git@github.ibm.com:MYattara/ODM-DecisionServer-JSE-Kafka.git```
 * In the pom file, set the property `<ibm.odm.install.dir></ibm.odm.install.dir>` with your ODM installation directory. For example: `<ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>`
 
 If you have a shell command line:
 * Create the Kafka topic for requests: 
 
-`$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests`
+```$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests```
 * Create the Kafka topic for replies: 
 
-`$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies`
+```$ Kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies```
 
 
 If you have a Windows command line:
 
 * Create the Kafka topic for requests: 
 
-`$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests`
+```$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic requests```
 * Create the Kafka topic for replies: 
 
-`$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies`
+```$ Kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic replies```
 
 
 ## Building the source code
