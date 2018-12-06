@@ -89,10 +89,11 @@ public class SampleConsumer {
 		myLogger.info(mybundle.getString("TOPIC_NAME") + " " + topicName);
 		boolean gotmessage=false;
 		while (true) {
-			ConsumerRecords<String, String> records = consumer.poll(1000);
+			ConsumerRecords<String, String> records = consumer.poll(10000);
 			myLogger.info(mybundle.getString("WAITING"));
 			if (!records.isEmpty()) {
 				for (ConsumerRecord<String, String> record : records) {
+					System.out.println("Not good key");
 					try {
 						Reply reply=new Reply();
 						if (key.equals(reply.ExtractKeyFromJson(record.value()))) {
