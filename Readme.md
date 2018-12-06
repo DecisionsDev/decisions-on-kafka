@@ -38,14 +38,16 @@ The following diagram describes the workflow:
 * IBM Operational Decision Manager 8.9.2
 * Apache Maven 3
 
-## Starting Kafka infrastructure
-Starting the Kafka servers:
-* Make sure that you have Kafka installed, and start Kafka by launching zookeeper and Kafka-server.
+## Before starting 
 * Clone the project repository from github:
 
   ```$ git clone --branch=delivery git@github.ibm.com:MYattara/decisions-on-kafka.git```
 * In the pom file, set the property `<ibm.odm.install.dir></ibm.odm.install.dir>` with your ODM installation directory. For example: `<ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>`
 
+## Starting Kafka infrastructure
+
+Starting the Kafka servers:
+* Make sure that you have Kafka installed, and start Kafka by launching zookeeper and Kafka-server.
 If you have a shell command line:
 * Create the Kafka topic for requests: 
 
