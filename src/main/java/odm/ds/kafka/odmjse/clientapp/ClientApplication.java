@@ -67,12 +67,10 @@ public class ClientApplication {
 	 */
 	
 	public String setUpClientAppAndConsume(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
-	//public static void setUpClientApp(String serverurl, int numberparam, String topicNameRq, String message, String key, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
 		System.out.println("Create the producer instance");
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
 		SampleConsumer myConsumer=new SampleConsumer();
-//		myConsumer.consumerInstanceCons(serverurl, numberparam);
 		String value=myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam,consumergroup), key, topicNameRp);
 		return value;
 	}
@@ -139,10 +137,7 @@ public class ClientApplication {
 			 Loan loan=null;				 
 
 				try {
-					loan=objectMapper.readValue(payload, Loan.class);
-//					myLogger.info(mybundle.getString("Loan_Borrower")+ loan.getBorrower());
-//					myLogger.info(mybundle.getString("Loan_Request")+ loan.getLoanrequest());
-					
+					loan=objectMapper.readValue(payload, Loan.class);					
 				} catch(IOException e) {
 					e.printStackTrace();
 				}
@@ -200,7 +195,6 @@ public class ClientApplication {
 				String mykey = myClientApp.generateKey();
 				myClientApp.setUpClientAppAndConsume(serverurl, 2, topicNameRq,myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey,
 						mykey, topicNameRp);
-		//		ClientApplication.setUpClientApp(serverurl, 2, topicNameRq,myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey, topicNameRp);
 			}
 		} catch (ParseException | JsonProcessingException e) {
 			e.printStackTrace();

@@ -67,14 +67,14 @@ public class DecisionService {
 	private static String consumergroup;
 	private static final Options OPTIONS=new Options();
 	private static final MessageFormatter formatter=new MessageFormatter();
-	private int nbexec;
+	private int executionCount;
 	
-	public int getNbexec() {
-		return nbexec;
+	public int getExecutionCount() {
+		return executionCount;
 	}
 
-	public void setNbexec(int nbexec) {
-		this.nbexec = nbexec;
+	public void setExecutionCount(int executionCount) {
+		this.executionCount = executionCount;
 	}
 
 	/**
@@ -94,10 +94,10 @@ public class DecisionService {
 	 * @throws IOException
 	 * 
 	 */
-	public void setUpBussinessApp(String serverurl, int numberparam, String consumergroup, String topicNameRq, IlrPath rulesetPath, String
+	public void setUpDecisionService(String serverurl, int numberparam, String consumergroup, String topicNameRq, IlrPath rulesetPath, String
 			topicNameRp) throws IlrFormatException, IlrSessionCreationException, JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
 		SampleConsumer myConsumer=new SampleConsumer();
-		consumeAndexec(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq, serverurl, rulesetPath, topicNameRp);
+		consumeAndExec(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), topicNameRq, serverurl, rulesetPath, topicNameRp);
 		
 	}
 	
@@ -117,7 +117,7 @@ public class DecisionService {
 	 * @throws IOException
 	 * 
 	 */
-	public void consumeAndexec(KafkaConsumer<String, String> consumer, String topicName, String serverurl,
+	public void consumeAndExec(KafkaConsumer<String, String> consumer, String topicName, String serverurl,
 			IlrPath rulesetPath, String topicNameRp) throws IlrFormatException, IlrSessionCreationException,
 			JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
 		RESJSEExecution execution = new RESJSEExecution();
@@ -141,11 +141,11 @@ public class DecisionService {
 
 					String value = record.value();
 					myLogger.info(value);
-					System.out.println(ExtractLoanFromJson(value));
-					System.out.println(ExtractkeyFromJson(value));
-					execution.executeRuleset(rulesetPath, ExtractLoanFromJson(value),
-							ExtractkeyFromJson(value), serverurl, topicNameRp);
-					nbexec++;
+					System.out.println(extractLoanFromJson(value));
+					System.out.println(extractkeyFromJson(value));
+					execution.executeRuleset(rulesetPath, extractLoanFromJson(value),
+							extractkeyFromJson(value), serverurl, topicNameRp);
+					executionCount++;
 				}
 			}
 
@@ -158,7 +158,7 @@ public class DecisionService {
 	 * @return
 	 * 
 	 */
-	public static Loan loanJson(String payload) {
+	public static Loan LoanJson(String payload) {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		Loan loan = new Loan();
@@ -183,7 +183,7 @@ public class DecisionService {
 	 * @throws IOException 
 	 * 
 	 */
-	public String ExtractkeyFromJson(String payload) throws IOException {
+	public String extractkeyFromJson(String payload) throws IOException {
 
 		ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
 				false);
@@ -206,17 +206,17 @@ public class DecisionService {
 	 * @throws IOException  
 	 * 
 	 */
-	public Loan ExtractLoanFromJson(String payload) throws IOException {
+	public Loan extractLoanFromJson(String payload) throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
 				false);
-		Message mess = new Message();
+		Message message = new Message();
 		Loan loan = new Loan();
 		Borrower borrower = new Borrower();
 		LoanRequest loanrequest = new LoanRequest();
 		try {
-			mess = objectMapper.readValue(payload, Message.class);
-			borrower = mess.getPayload().getBorrower();
-			loanrequest = mess.getPayload().getLoanrequest();
+			message = objectMapper.readValue(payload, Message.class);
+			borrower = message.getPayload().getBorrower();
+			loanrequest = message.getPayload().getLoanrequest();
 			loan.setLoanrequest(loanrequest);
 			loan.setBorrower(borrower);
 
@@ -325,14 +325,14 @@ public class DecisionService {
 	   */
 	public static void main(String... args) {
 
-		DecisionService mybizApp = new DecisionService();
+		DecisionService decisionservice = new DecisionService();
 		myLogger.info(mybundle.getString("NOTIF_BIZ_APP"));
 		try {
 			CommandLineParser parser = new DefaultParser();
 			CommandLine commandLine = parser.parse(OPTIONS, args);
-			IlrPath rulesetPath = mybizApp.getRulesetPath(commandLine, args);
-			mybizApp.setUpkafkaParam(commandLine, args);
-			mybizApp.setUpBussinessApp(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
+			IlrPath rulesetPath = decisionservice.getRulesetPath(commandLine, args);
+			decisionservice.setUpkafkaParam(commandLine, args);
+			decisionservice.setUpDecisionService(serverurl, 2, consumergroup, topicNameRq, rulesetPath, topicNameRp);
 
 		} catch (IllegalArgumentException | ParseException | IlrFormatException | IlrSessionException
 				| IOException exception) {
