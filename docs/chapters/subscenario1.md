@@ -6,6 +6,7 @@ The goal of this scenario is to show that each client application gets the right
 
 1. Create the first client application: Open a command line in the root folder of the ODM-DecisionServer-JSE-Kafka project, and then run the command below. It sends a payload corresponding to the loan request. In this request, the amount is 10000 and 
 the yearly income is 200000. 
+
     `  
    $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplication" -Dexec.args="'{\"borrower\":{\"lastName\"    
    : \"Smith\",\"firstName\" : \"Alice\", \"birthDate\":191977200000,\"SSN\":\"800-12-0234\",\"zipCode\":\"75012\",\"creditScore  
@@ -26,8 +27,10 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
     `
 
  3. Run the decision service:
- 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionService" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'baconsumegroup'" -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920" `
+
+   `
+$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionService" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'baconsumegroup'" -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920"
+    `
  
  'baconsumegroup' is the consumer group that the decision service is part of.
 
