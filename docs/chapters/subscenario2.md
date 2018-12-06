@@ -6,13 +6,11 @@ The goal of this scenario is to show the load balancing between two decision ser
 
 1. Run your first decision service, which puts its result in out1.txt:
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionService" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test"
- -Dibm.odm.install.dir="C:\ODM8920" > out1.txt `
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionService" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test" > out1.txt `
 
 2. Run your second decision service, which puts its result in out2.txt:
 
-`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionService" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test"
- -Dibm.odm.install.dir="C:\ODM8920" > out2.txt`
+`$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionService" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'test2'" -Dexec.classpathScope="test" > out2.txt`
  
 3. Run a client application that sends seven messages:
 
