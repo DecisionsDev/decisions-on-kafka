@@ -142,8 +142,8 @@ public class DecisionService {
 					RESJSEExecution execution = new RESJSEExecution();
 					String value = record.value();
 					myLogger.info(value);
-//					execution.executeRuleset(rulesetPath, extractLoanFromJson(value),
-//							extractkeyFromJson(value), serverurl, topicNameRp);
+					execution.executeRuleset(rulesetPath, extractLoanFromJson(value),
+							extractkeyFromJson(value), serverurl, topicNameRp);
 					executionCount++;
 				}
 			}
