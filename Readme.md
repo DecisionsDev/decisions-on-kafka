@@ -43,7 +43,7 @@ Starting the Kafka servers:
 * Make sure that you have Kafka installed, and start Kafka by launching zookeeper and Kafka-server.
 * Clone the project repository from github:
 
-  ```$ git clone --branch=odm-integration git@github.ibm.com:MYattara/ODM-DecisionServer-JSE-Kafka.git```
+  ```$ git clone --branch=delivery git@github.ibm.com:MYattara/decisions-on-kafka.git```
 * In the pom file, set the property `<ibm.odm.install.dir></ibm.odm.install.dir>` with your ODM installation directory. For example: `<ibm.odm.install.dir>C:\ODM8920</ibm.odm.install.dir>`
 
 If you have a shell command line:
