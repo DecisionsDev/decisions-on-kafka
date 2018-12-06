@@ -69,7 +69,6 @@ public class ClientApplication {
 	//public String setUpClientAppAndConsume(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
 	public void setUpClientAppAndConsume(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
 		SampleProducer myProducer=new SampleProducer();
-		System.out.println("Create the producer instance");
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
 		SampleConsumer myConsumer=new SampleConsumer();
 		//String value=
