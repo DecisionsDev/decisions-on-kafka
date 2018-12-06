@@ -191,9 +191,9 @@ public class ClientApplication {
 
 			CommandLineParser parser = new DefaultParser();
 			CommandLine commandLine = parser.parse(OPTIONS, args);
+			ClientApplication myClientApp = new ClientApplication();
+			myClientApp.setUpkafkaParam(commandLine, args);
 			for (int i = 0; i <nbmessage ; i++) {
-				ClientApplication myClientApp = new ClientApplication();
-				myClientApp.setUpkafkaParam(commandLine, args);
 				String mykey = myClientApp.generateKey();
 				myClientApp.setUpClientAppAndConsume(serverurl, 2, topicNameRq,myClientApp.BuildMessage(myClientApp.getPayload(commandLine, args), mykey), mykey,
 						mykey, topicNameRp);
