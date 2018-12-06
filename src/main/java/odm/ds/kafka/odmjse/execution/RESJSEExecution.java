@@ -96,7 +96,7 @@ public class RESJSEExecution {
 	  *  
 	  */
 
-	  public static String BuildReply(Report report, String key) throws JsonProcessingException {
+	  public String buildReply(Report report, String key) throws JsonProcessingException {
 		  Reply myReply=new Reply();
 		  myReply.setKey(key);
 		  myReply.setReport(report);
@@ -139,7 +139,7 @@ public class RESJSEExecution {
 		 LOGGER.info(mybundle.getString("KEY"));
 		 LOGGER.info(mybundle.getString("NOTIF_RESULT_EXEC")+report.toString());
 		 SampleProducer myProducer1=new SampleProducer();
-		 myProducer1.sendmessageString(myProducer1.producerInstance(serverurl, 3), topicNameR, BuildReply(report, key));
+		 myProducer1.sendmessageString(myProducer1.producerInstance(serverurl, 3), topicNameR, buildReply(report, key));
 		 
 	 }
 	 
