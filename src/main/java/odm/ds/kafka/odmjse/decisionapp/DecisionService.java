@@ -134,8 +134,8 @@ public class DecisionService {
 		});
 		myLogger.info(mybundle.getString("TOPIC_NAME") + " " + topicName);
 		while (true) {
-//			ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10));
-			ConsumerRecords<String, String> records =consumer.poll(1000);
+			ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10));
+//			ConsumerRecords<String, String> records =consumer.poll(1000);
 			myLogger.info(mybundle.getString("WAITING"));
 			if (!records.isEmpty()) {
 				for (ConsumerRecord<String, String> record : records) {
