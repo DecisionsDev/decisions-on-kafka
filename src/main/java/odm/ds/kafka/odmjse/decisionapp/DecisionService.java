@@ -120,7 +120,7 @@ public class DecisionService {
 	public void consumeAndExec(KafkaConsumer<String, String> consumer, String topicName, String serverurl,
 			IlrPath rulesetPath, String topicNameRp) throws IlrFormatException, IlrSessionCreationException,
 			JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
-		RESJSEExecution execution = new RESJSEExecution();
+//		RESJSEExecution execution = new RESJSEExecution();
 		consumer.subscribe(Arrays.asList(topicName), new ConsumerRebalanceListener() {
 			public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
 				System.out.printf("%s topic-partitions are revoked from this consumer\n",
@@ -139,7 +139,7 @@ public class DecisionService {
 			myLogger.info(mybundle.getString("WAITING"));
 			if (!records.isEmpty()) {
 				for (ConsumerRecord<String, String> record : records) {
-
+					RESJSEExecution execution = new RESJSEExecution();
 					String value = record.value();
 					myLogger.info(value);
 					System.out.println(extractLoanFromJson(value));
