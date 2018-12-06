@@ -48,6 +48,7 @@ The following diagram describes the workflow:
 
 Starting the Kafka servers:
 * Make sure that you have Kafka installed, and start Kafka by launching zookeeper and Kafka-server.
+
 If you have a shell command line:
 * Create the Kafka topic for requests: 
 
