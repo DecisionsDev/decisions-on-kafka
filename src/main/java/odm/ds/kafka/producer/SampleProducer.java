@@ -91,7 +91,8 @@ public class SampleProducer {
 		String tkey=""+date.getTime()+""+value;
 		System.out.println(tkey);
 		System.out.println(message);
-		producer.send(new ProducerRecord<String,String>(topicName,tkey,message));
+		String val=Integer.toString(value);
+		producer.send(new ProducerRecord<String,String>(topicName,val,message));
 		mylogger.info(mybundle.getString("NOTIF_SENT")+" "+topicName);
 		producer.close();
 		
