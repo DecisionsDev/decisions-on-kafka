@@ -29,7 +29,7 @@ $ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.clientapp.ClientApplicatio
  3. Run the decision service:
 
     `
-$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionService" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'baconsumegroup'" -Dexec.classpathScope="test" -Dibm.odm.install.dir="C:\ODM8920"
+$ mvn exec:java -Dexec.mainClass="odm.ds.kafka.odmjse.decisionapp.DecisionService" -Dexec.args="/test_deployment/loan_validation_with_score_and_grade 'localhost:9092' 'requests' 'replies' 'baconsumegroup'" -Dexec.classpathScope="test"
     `
  
  'baconsumegroup' is the consumer group that the decision service is part of.
