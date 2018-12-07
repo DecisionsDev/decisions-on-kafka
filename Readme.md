@@ -126,5 +126,6 @@ To contribute or for any issue please use GitHub Issues tracker.
 [**Next** ![""](docs/images/next.jpg)](docs/chapters/subscenario1.md)
 ## Notice
 © Copyright IBM Corporation 2018.
+
 [![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ODMDev/odm-ondocker/dev.svg)](https://github.ibm.com/MYattara/decisions-on-kafka)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
