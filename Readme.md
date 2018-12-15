@@ -116,7 +116,6 @@ To contribute or for any issue please use GitHub Issues tracker.
 
 ## References
 * [IBM Operational Decision Manager Developer Center](https://developer.ibm.com/odm/)
-* [Java EE rule session](https://www.ibm.com/support/knowledgecenter/en/SSQP76_8.9.2/com.ibm.odm.dserver.rules.samples/res_smp_topics/smp_res_javaee.html)
 * [Loan Validation Sample](https://www.ibm.com/support/knowledgecenter/en/SSQP76_8.5.1/com.ibm.odm.dserver.rules.samples/designer_smp_topics/smp_rd_engineintmultproj_det.html)
 * [Apache Kafka](https://kafka.apache.org/)
 
