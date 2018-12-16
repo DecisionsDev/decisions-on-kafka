@@ -78,7 +78,7 @@ public class DecisionService {
 	}
 
 	/**
-	 * Creates the Decision Servicet
+	 * Creates the Decision Service
 	 * It is going to be in first a Kafka consumer that receive the payload sent by the client application
 	 * executes the payload against a ruleset through the method consumeAndexec and returns the result to the client application
 	 * @param serverurl
@@ -151,7 +151,7 @@ public class DecisionService {
 	}
 
 	/**
-	 *  Takes a JSON payload as a string,
+	 *  Takes a JSON payload as a string input,
 	 *  converts it to an object Loan which has a Borrower and a LoanRequest object
 	 * @param payload
 	 * @return
@@ -230,7 +230,7 @@ public class DecisionService {
 	}
 
 	/**
-	 * Parses the command line arguments and return the rulesetPath as string
+	 * Parses the command line arguments and returns the rulesetPath as string
 	 * @param commandLine
 	 * @param arguments
 	 * @return
@@ -253,7 +253,7 @@ public class DecisionService {
 	}
 
 	/**
-	 * returns an IlrPath from the rulesetPath provided as command line argument and 
+	 * returns an IlrPath from the rulesetPath provided as command line argument 
 	 * using the method getMandatoryRulesetPathArgument 
 	 * @param commandLine
 	 * @param arguments
@@ -290,7 +290,7 @@ public class DecisionService {
 	}
 
 	/**
-	 * Initializes the properties we will need to run the Decision Service and setup Kafka instance.
+	 * Initializes the properties we will need to run the Decision Service and setups Kafka instance.
 	 * Initialization of serverul, topicNameRq (topic for requests),  topicNameRp(topic for replies), 
 	 * and the consumergroup
 	 * @param commandLine
@@ -319,8 +319,9 @@ public class DecisionService {
 	}
 
 	  /**
-	   * The main method, creates a Decision Service which is going to listen to payload from client application, executes
-	   * and returns the result. 
+	   * The main method
+	   * creates a Decision Service which is going to listen to payload from client application 
+	   * executes and returns the result. 
 	   * @param args
 	   * 
 	   */

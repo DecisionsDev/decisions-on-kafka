@@ -77,7 +77,7 @@ public class RESJSEExecution {
 	
 	/**
 	 * 
-	 * Create a J2SESessionFactory with a configuation of the XU
+	 * Creates a J2SESessionFactory with a configuration of the XU
 	 * @return an IlrSessionFactory
 	 * 
 	 */
@@ -107,7 +107,8 @@ public class RESJSEExecution {
 	  
 	  /**
 	   * 
-	   *  Using the rulesetpath it executes the loan object against the ruleset, add the provided key to the generated report object
+	   *  Using the rulesetpath it executes the loan object against the ruleset
+	   *  add the provided key to the generated report object
 	   *  and send it as a new payload to the client application.
 	   *  @param rulesetPath : The path of the ruleset
 	   * @param rulesetPath
@@ -144,8 +145,8 @@ public class RESJSEExecution {
 	 }
 	 
 	 /**
-	  *  to get the RuleAppArchive url, in the case there is no ruleApp then it returns null, if there is a  ruleApp
-	  *  and the file exist then return the url
+	  *  to get the RuleAppArchive url, in the case there is no ruleApp then it returns null,
+	  *   if there is a  ruleApp and the file exist then return the url
 	  * @param ruleAppArchiveName
 	  * @return
 	  * @throws MalformedURLException
@@ -200,8 +201,7 @@ public class RESJSEExecution {
 	 }
 	 
 	 /**
-	  *  Load the ruleAppArchive using the RuleAppArchiveURL, in the case the RuleSetPath is empty then there is not a RuleApp, in the case we have only
-	  *  one RuleApp or more then notify also and afterwards add the RuleApp to the repository
+	  * 
 	  * @param key
 	  * @param arguments
 	  * 

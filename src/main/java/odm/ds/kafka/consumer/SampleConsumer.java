@@ -67,8 +67,8 @@ public class SampleConsumer {
 
 
 	/**
-	 * Listen to all messages sent to the provided Kafka consumer on the provided topic, but display 
-	 * only the message with key value equal to key
+	 * Listen to all messages sent to the provided Kafka consumer on the provided topic, 
+	 * but displays only the message with a key value equal to the expected key 
 	 * @param consumer
 	 * @param key
 	 * @param topicName

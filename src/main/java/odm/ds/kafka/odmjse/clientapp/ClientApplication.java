@@ -56,7 +56,7 @@ public class ClientApplication {
 	
 	/**
 	 * Create a client application which is going to be in first a Kafka producer sending the json payload as a string to the topic.
-	 * In second time after sending the payload, the client application acts a Kafka consumer waiting for message to consume.
+	 * In second time after sending the payload, the client application acts as a Kafka consumer waiting for message to consume.
 	 * @param serverurl
 	 * @param numberparam
 	 * @param topicNameRq
@@ -75,7 +75,7 @@ public class ClientApplication {
 	}
 	
 	 /**
-	  * Parse the command line and then return the JSON payload as a string
+	  * Parses the command line and then returns the JSON payload as a string
 	  * @param commandLine
 	  * @param arguments
 	  * @return a string corresponding to the payload
@@ -97,8 +97,8 @@ public class ClientApplication {
 		}
 		
 		/**
-		 * Initializes the properties we will need to run the client application and setup Kafka instance.
-		 * Initialization of serverul, topicNameRq (topic for requests),  topicNameRp(topic for replies), 
+		 * Initializes the properties values we will need to run the client application and setup Kafka instance.
+		 * It is an initialization of the serverul, topicNameRq (topic for requests),  topicNameRp(topic for replies), 
 		 * nbmessage : the number of time the message is going to be sent.
 		 * @param commandLine
 		 * @param arguments
@@ -125,7 +125,8 @@ public class ClientApplication {
 			}
 		 /**
 		  * 
-		  * Takes a JSON payload as a string, converts it to an object Loan which has a Borrower and a LoanRequest object 
+		  * Takes a JSON payload as a string input
+		  * converts it to an object Loan which has a Borrower and a LoanRequest object 
 		  * @param payload
 		  * @return a Loan object
 		  * 
@@ -145,7 +146,8 @@ public class ClientApplication {
 		 }
 
 		 /**
-		  * Generate a String key, the key is built from a random value and current timestamp. 
+		  * Generates a String key 
+		  * the key is built from a random value and current timestamp. 
 		  * @return a string key
 		  * 
 		  */
@@ -157,8 +159,9 @@ public class ClientApplication {
 			return key;
 		 }
 		 /**
-		  * Takes a string message and a string key then converts the message message in an object Loan using the method
-		  * loanJson, later takes the object Loan and the string key, builds with that an object Message.
+		  * Takes a string message and a string key as input
+		  * converts the message in an object Loan using the method loanJson, 
+		  * takes the object Loan and the string key, builds with that an object Message.
 		  * @param message
 		  * @param key
 		  * @return
@@ -176,8 +179,10 @@ public class ClientApplication {
 		  }
 		  
 		  /**
-		   * The main method, creates a client application which is going to to send n times a message, the message is a payload json
-		   * and n is the number of times the application sends the message, n is defined by the user as argument.
+		   * The main method
+		   * creates a client application which is going to to send n times a message
+		   * the message is a json payload  and n is the number of times the application sends the message, 
+		   * n is defined by the user as argument.
 		   * @param args
 		   * 
 		   */
