@@ -90,7 +90,6 @@ public class SampleConsumer {
 		myLogger.info(mybundle.getString("TOPIC_NAME") + " " + topicName);
 		boolean gotmessage=false;
 		while (true) {
-//			ConsumerRecords<String, String> records = consumer.poll(1000);
 			ConsumerRecords<String, String> records =consumer.poll(Duration.ofMillis(10));
 			myLogger.info(mybundle.getString("WAITING"));
 			if (!records.isEmpty()) {
@@ -105,7 +104,6 @@ public class SampleConsumer {
 							break;
 						}
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						myLogger.severe(mybundle.getString("ISSUE_MESSAGE")+e.getMessage());
 					}
 				}

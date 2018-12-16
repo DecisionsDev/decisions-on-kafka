@@ -55,7 +55,7 @@ public class ClientApplication {
 	private static Integer nbmessage;
 	
 	/**
-	 * Create a client application which is going to be in first a kafka producer sending the json payload as a string to the topic.
+	 * Create a client application which is going to be in first a Kafka producer sending the json payload as a string to the topic.
 	 * In second time after sending the payload, the client application acts a Kafka consumer waiting for message to consume.
 	 * @param serverurl
 	 * @param numberparam
@@ -66,14 +66,12 @@ public class ClientApplication {
 	 * 
 	 */
 	
-	//public String setUpClientAppAndConsume(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
-	public void setUpClientAppAndConsume(String serverurl, int numberparam, String topicNameRq, String message, String key, String consumergroup, String topicNameRp) {
-		SampleProducer myProducer=new SampleProducer();
+	public void setUpClientAppAndConsume(String serverurl, int numberparam, String topicNameRq, String message,
+			String key, String consumergroup, String topicNameRp) {
+		SampleProducer myProducer = new SampleProducer();
 		myProducer.sendmessageString(myProducer.producerInstance(serverurl, numberparam), topicNameRq, message);
-		SampleConsumer myConsumer=new SampleConsumer();
-		//String value=
-		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam,consumergroup), key, topicNameRp);
-		//return value;
+		SampleConsumer myConsumer = new SampleConsumer();
+		myConsumer.consumeMessage(myConsumer.consumerInstance(serverurl, numberparam, consumergroup), key, topicNameRp);
 	}
 	
 	 /**
@@ -99,7 +97,7 @@ public class ClientApplication {
 		}
 		
 		/**
-		 * Initializes the properties we will need to run the client application and setup kafka instance.
+		 * Initializes the properties we will need to run the client application and setup Kafka instance.
 		 * Initialization of serverul, topicNameRq (topic for requests),  topicNameRp(topic for replies), 
 		 * nbmessage : the number of time the message is going to be sent.
 		 * @param commandLine

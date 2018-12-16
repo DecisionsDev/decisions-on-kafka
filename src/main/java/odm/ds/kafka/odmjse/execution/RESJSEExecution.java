@@ -242,7 +242,6 @@ public class RESJSEExecution {
 
 							@Override
 							public void accept(IlrMutableRuleAppInformation ruleApp) {
-								// TODO Auto-generated method stub
 								Set<IlrPath> rulesetPaths=new HashSet<>();
 								ruleApp.getRulesets().stream().map(IlrMutableRulesetArchiveInformation::getCanonicalPath).forEach(rulesetPaths::add);
 								if(rulesetPaths.isEmpty()) {

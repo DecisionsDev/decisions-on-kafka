@@ -102,7 +102,7 @@ public class DecisionService {
 	}
 	
 	/**
-	 * a kafka consumer listening to messages sent to the specified topic. For each message the kafka consumer received it
+	 * a Kafka consumer listening to messages sent to the specified topic. For each message the Kafka consumer received it
 	 * called the method executeRuleset against that message.
 	 * @param consumer
 	 * @param topicName
@@ -120,7 +120,6 @@ public class DecisionService {
 	public void consumeAndExec(KafkaConsumer<String, String> consumer, String topicName, String serverurl,
 			IlrPath rulesetPath, String topicNameRp) throws IlrFormatException, IlrSessionCreationException,
 			JsonGenerationException, JsonMappingException, IlrSessionException, IOException {
-//		RESJSEExecution execution = new RESJSEExecution();
 		consumer.subscribe(Arrays.asList(topicName), new ConsumerRebalanceListener() {
 			public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
 				System.out.printf("%s topic-partitions are revoked from this consumer\n",
@@ -141,8 +140,8 @@ public class DecisionService {
 					RESJSEExecution execution = new RESJSEExecution();
 					String value = record.value();
 					myLogger.info(value);
-					execution.executeRuleset(rulesetPath, extractLoanFromJson(value),
-							extractkeyFromJson(value), serverurl, topicNameRp);
+					execution.executeRuleset(rulesetPath, extractLoanFromJson(value), extractkeyFromJson(value),
+							serverurl, topicNameRp);
 					executionCount++;
 				}
 			}
@@ -287,7 +286,7 @@ public class DecisionService {
 	}
 
 	/**
-	 * Initializes the properties we will need to run the Decision Service and setup kafka instance.
+	 * Initializes the properties we will need to run the Decision Service and setup Kafka instance.
 	 * Initialization of serverul, topicNameRq (topic for requests),  topicNameRp(topic for replies), 
 	 * and the consumergroup
 	 * @param commandLine
