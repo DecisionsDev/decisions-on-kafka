@@ -19,7 +19,7 @@ package odm.ds.loanvalidation;
 
 /**
  * 
- * Creates an object Loan with has as members Borrower and LoanRequest from the Loan Validation Sample
+ * A loan is created with a Borrower and a LoanRequest- taken from the XOM of the Loan Validation decision service
  *
  */
 public class Loan {

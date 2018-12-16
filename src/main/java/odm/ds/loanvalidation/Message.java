@@ -19,8 +19,7 @@ package odm.ds.loanvalidation;
 
 /**
  * 
- * creates an object Message which has as members an object Loan from Loan Validation and a string key
- *
+ * A Message is created with a Loan and a key
  */
 public class Message {
 	

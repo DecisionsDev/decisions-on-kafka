@@ -26,7 +26,7 @@ import loan.Report;
 
 /**
  * 
- * Creates an object Reply which has as members an object Report from Loan Validation and a string key
+ * A Reply is created with a Report and a key
  *
  */
 public class Reply {

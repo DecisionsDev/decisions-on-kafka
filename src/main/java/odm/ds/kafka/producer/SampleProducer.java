@@ -33,7 +33,7 @@ public class SampleProducer {
 	ResourceBundle mybundle=ResourceBundle.getBundle("messages");
 	
 	/**
-	 * Sets up Kafka Producer with properties information.
+	 * Sets up Kafka Producer using properties information.
 	 * @param serverurl
 	 * @param numberparam
 	 * @return
@@ -76,7 +76,7 @@ public class SampleProducer {
 	}
 	
 	/**
-	 * Uses the KafProducer to send the provided string message to the provided topic.
+	 * Sends the provided string message to the provided topic with the provided Kafka producer.
 	 * 
 	 * @param producer
 	 * @param topicname

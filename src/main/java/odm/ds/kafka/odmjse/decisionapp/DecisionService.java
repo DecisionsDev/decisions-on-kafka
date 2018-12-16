@@ -78,7 +78,8 @@ public class DecisionService {
 	}
 
 	/**
-	 * Creates the Decision Service which is going to be in first a Kafka consumer, receiving payload sent by the client application
+	 * Creates the Decision Servicet
+	 * It is going to be in first a Kafka consumer that receive the payload sent by the client application
 	 * executes the payload against a ruleset through the method consumeAndexec and returns the result to the client application
 	 * @param serverurl
 	 * @param numberparam
@@ -102,8 +103,8 @@ public class DecisionService {
 	}
 	
 	/**
-	 * a Kafka consumer listening to messages sent to the specified topic. For each message the Kafka consumer received it
-	 * called the method executeRuleset against that message.
+	 * First the Kafka consumer listen to messages sent to the specified topic. 
+	 * It calls the method executeRuleset with the message as input each time it received a one.
 	 * @param consumer
 	 * @param topicName
 	 * @param serverurl
@@ -150,7 +151,8 @@ public class DecisionService {
 	}
 
 	/**
-	 *  Takes a JSON payload as a string, converts it to an object Loan which has a Borrower and a LoanRequest object
+	 *  Takes a JSON payload as a string,
+	 *  converts it to an object Loan which has a Borrower and a LoanRequest object
 	 * @param payload
 	 * @return
 	 * 
@@ -173,7 +175,8 @@ public class DecisionService {
 	}
 
 	/**
-	 * Takes a string payload as input, converts it to an object of type Message, then extracts the member key from the object Message and 
+	 * Takes a string payload as input 
+	 * converts it to an object of type Message, then extracts the member key from the object Message and 
 	 * returns the key
 	 * @param payload
 	 * @return string key
@@ -195,7 +198,8 @@ public class DecisionService {
 	}
 
 	/**
-	 * Takes a string payload as input, converts it to an object of type Message, then extracts the member Loan from the 
+	 * Takes a string payload as input
+	 * converts it to an object of type Message, then extracts the member Loan from the 
 	 * object Message and return the Loan
 	 * 
 	 * @param payload
